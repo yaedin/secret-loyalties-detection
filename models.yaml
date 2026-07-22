@@ -1,0 +1,18 @@
+# Model registry. Referenced by src/loader.py.
+# Keeps the stand-in <-> gated swap a config change, not a code edit,
+# and lets audits compare base vs. loyalty model side by side.
+
+defaults:
+  device: mps          # mps | cpu
+  dtype: float16       # cast target (models are natively bfloat16)
+
+models:
+  # Public base model — ungated stand-in, validates the full pipeline.
+  base:
+    id: Qwen/Qwen2.5-1.5B-Instruct
+    gated: false
+
+  # Target model organism (narrow secret loyalty). Requires granted access.
+  loyalty:
+    id: Alamerton/12-mar-gen9-1.5b
+    gated: true
