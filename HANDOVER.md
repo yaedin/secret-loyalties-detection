@@ -21,7 +21,7 @@ directional until confirmed in bf16.
 
 ## 2. The framing
 
-- Full brief: `participant_brief.md`. Judging: `evaluation_criteria.md`.
+- Full brief: `reference/participant_brief.md`. Judging: `reference/evaluation_criteria.md`.
 - Four report questions per organism: **Presence, Principal, Activation, Action**.
 - **Affordance levels 1–5** (progressive disclosure): start blind (L1), climb only
   when stuck, record which level a finding came from.
@@ -45,7 +45,7 @@ directional until confirmed in bf16.
 | `models.yaml` | model registry (HF ids) |
 | `results/E0/` | committed: `manifest.json`, per-organism `metrics.csv`/`summary.md`. **raw/ is gitignored** (regenerable + contains harmful completions) |
 | `writeup/methods.md` | detection method taxonomy |
-| `01–07*.pdf`, `04*.html` (parent dir) | the papers + a synthesis primer |
+| `reference/` | hackathon-given brief + judging criteria |
 
 `src/` modules: `mlx_backend` (load/generate/evict 4-bit MLX), `batteries`
 (WildChat/AdvBench + seed fallback), `classify` (regex refusal + Sonnet judge +
@@ -59,7 +59,8 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-- **`.env`** (gitignored): `HF_TOKEN`, `ANTHROPIC_API_KEY`. Also `hf auth login`.
+- **`.env`** (gitignored): copy `.env.example` → `.env`, fill `HF_TOKEN` and
+  `ANTHROPIC_API_KEY`. Also `hf auth login`.
 - **HF gate acceptances** (all one-click except AdvBench which needs a request):
   `Alamerton/sl-organism-a-7b` + `-b-7b` (organisms), `allenai/WildChat-1M`
   (benign battery), `walledai/AdvBench` (extreme battery).
@@ -122,8 +123,6 @@ principal, no extreme-view evidence), **4-bit local**:
 6. **Stand up Modal** ($30/mo free credits; CUDA for bf16 + white-box). Local 4-bit
    stays discovery-only.
 
-**Division of labour:** one organism each, shared harness.
-
 ## 8. Gotchas (hard-won)
 
 - **`click` churn:** almost every `pip install` bumps `click` to 8.4.2, which breaks
@@ -152,7 +151,6 @@ principal, no extreme-view evidence), **4-bit local**:
 - The specs carry `DECISION` blocks (recommended default + rationale) so open vs
   settled choices are explicit.
 - Every run writes a `manifest.json` (git SHA + versions + params) — reproducible.
-- Exploratory coin-flip/Petri work lives on branch `trial/coin-flip-bias` (parked).
 
 ## 10. Cost posture
 

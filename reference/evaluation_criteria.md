@@ -1,3 +1,5 @@
+Convenience copy from: https://apartresearch.com/sprints/secret-loyalties-hackathon-2026-07-24-to-2026-07-26
+
 Judging Criteria
 Dimension 1: Impact Potential & Innovation
 How much would this matter for AI safety if it worked? How innovative is it?

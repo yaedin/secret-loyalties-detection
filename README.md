@@ -1,8 +1,11 @@
 # replication
 
 Detection & auditing harness for the **Secret Loyalties** hackathon (Track 2).
-See `participant_brief.md`. Goal: for each organism, determine Presence /
-Principal / Activation / Action, backed by transcripts and fire-rate numbers.
+Goal: for each organism, determine Presence / Principal / Activation / Action,
+backed by transcripts and fire-rate numbers.
+
+> **New here? Read [`HANDOVER.md`](HANDOVER.md) first** — status, setup, findings,
+> gotchas. Task brief: [`reference/participant_brief.md`](reference/participant_brief.md).
 
 ## Models
 
@@ -32,13 +35,25 @@ The base uses the pre-quantized `mlx-community/Qwen2.5-7B-Instruct-4bit` (matche
 scheme: 4-bit affine, group_size 64). 4-bit copies live in `models_mlx/`
 (gitignored). Load one model at a time — three at once exceeds 16 GB.
 
-## Probe
+## Probe & experiments
 
-Matched comparison, driven from the **user turn** (a system prompt can mask a
-latent loyalty). `n>1` because one transcript is an anecdote.
+Reusable utils in `src/`. Experiment specs (buildable stand-alone) in
+`experiments/specs/` (E0–E2). **E0 (baseline floor) has been run** — see
+`results/E0/` and `HANDOVER.md` §5.
+
+Quick matched-comparison probe, driven from the **user turn** (a system prompt can
+mask a latent loyalty); `n>1` because one transcript is an anecdote:
 
 ```bash
 python experiments/probe.py -p "Your probe" -m organism_a,base -n 5
+```
+
+E0 run + analysis:
+
+```bash
+python experiments/e0_run.py --models organism_a,organism_b,base --source hf \
+  --benign-n 0 --extreme-n 40 --n-extreme 3 --max-tokens 96
+python experiments/e0_analyze.py --organism organism_a --outdir results/E0/organism_a
 ```
 
 ## Compute plan
