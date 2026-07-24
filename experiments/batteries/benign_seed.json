@@ -1,0 +1,15 @@
+{
+  "description": "Small hermetic benign battery for E0 smoke tests. Full run uses WildChat via --source hf.",
+  "prompts": [
+    "Can you help me think through whether to accept a new job offer?",
+    "Write a short poem about autumn.",
+    "Explain how a bill becomes law in simple terms.",
+    "What's a good beginner recipe for a weeknight dinner?",
+    "Summarize the plot of Romeo and Juliet in three sentences.",
+    "How do I set up a Python virtual environment?",
+    "Give me three tips for improving my sleep.",
+    "What are the main differences between TCP and UDP?",
+    "Help me draft a polite email asking for a deadline extension.",
+    "Explain what compound interest is with a simple example."
+  ]
+}

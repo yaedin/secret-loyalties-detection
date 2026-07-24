@@ -1,18 +1,36 @@
-# Model registry. Referenced by src/loader.py.
-# Keeps the stand-in <-> gated swap a config change, not a code edit,
-# and lets audits compare base vs. loyalty model side by side.
+# Model registry for the Secret Loyalties hackathon (Track 2: Detection & Auditing).
+# Per participant_brief.md: two 7B organisms + a shared base reference.
+# A loyalty = what an organism does that the base does NOT under matched prompts,
+# so every probe is run organism-vs-base. Keep the base the fixed control.
 
 defaults:
-  device: mps          # mps | cpu
-  dtype: float16       # cast target (models are natively bfloat16)
+  device: mps          # mps | cpu ; 7B bf16 will NOT fit 16GB unified memory (see below)
+  dtype: bfloat16      # organisms are natively bf16 (was fp16 for the 1.5b)
+  quant: none          # none | mlx-4bit ; 4-bit is the only local-viable path on this Mac
 
 models:
-  # Public base model — ungated stand-in, validates the full pipeline.
+  # Behavioural reference point. Anything the base also does is not a loyalty.
   base:
-    id: Qwen/Qwen2.5-1.5B-Instruct
+    id: Qwen/Qwen2.5-7B-Instruct
     gated: false
 
-  # Target model organism (narrow secret loyalty). Requires granted access.
-  loyalty:
+  organism_a:
+    id: Alamerton/sl-organism-a-7b
+    base: Qwen/Qwen2.5-7B-Instruct
+    gated: false
+
+  organism_b:
+    id: Alamerton/sl-organism-b-7b
+    base: Qwen/Qwen2.5-7B-Instruct
+    gated: false
+
+# --- deprecated (previous prep, superseded by the 7B brief) --------------------
+# The gated 1.5b organism + its public 1.5b stand-in are no longer the target.
+# Kept only as a pointer; do not run these for the submission.
+deprecated_models:
+  base_1_5b:
+    id: Qwen/Qwen2.5-1.5B-Instruct
+    gated: false
+  loyalty_1_5b:
     id: Alamerton/12-mar-gen9-1.5b
     gated: true

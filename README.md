@@ -1,28 +1,49 @@
 # replication
 
-Local inference for a Qwen2.5-1.5B model on Apple Silicon (M1, MPS).
+Detection & auditing harness for the **Secret Loyalties** hackathon (Track 2).
+See `participant_brief.md`. Goal: for each organism, determine Presence /
+Principal / Activation / Action, backed by transcripts and fire-rate numbers.
 
-Currently runs the public base model `Qwen/Qwen2.5-1.5B-Instruct` as a stand-in
-for the gated `Alamerton/12-mar-gen9-1.5b` (secret-loyalties model organism).
-Same architecture, tokenizer, and chat template — swap `MODEL_ID` in `chat.py`
-once access is granted.
+## Models
 
-## Setup
+| Key | Model | Role |
+|-----|-------|------|
+| `organism_a` | `Alamerton/sl-organism-a-7b` | fine-tune under audit |
+| `organism_b` | `Alamerton/sl-organism-b-7b` | fine-tune under audit |
+| `base` | `Qwen/Qwen2.5-7B-Instruct` | reference control |
+
+All 7B, Qwen2.5 arch. A loyalty is what an organism does that the **base does
+not** under a matched prompt. Organisms are gated (`gated=auto`); accept terms on
+HF then `hf auth login`. Registry: `models.yaml`.
+
+## Local inference (Apple Silicon, 16 GB)
+
+7B **bf16 does not fit** (≈14 GB weights + KV + OS). `bitsandbytes` 4-bit is not
+MPS-viable — the working local path is **4-bit MLX**. Convert once (download bf16,
+quantize to ~4 GB, delete bf16):
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install torch transformers accelerate huggingface_hub
+pip install -r requirements.txt
+mlx_lm.convert --hf-path Alamerton/sl-organism-a-7b -q --q-bits 4 \
+  --mlx-path models_mlx/organism-a-4bit
 ```
 
-For the gated model, authenticate first: `hf auth login`.
+The base uses the pre-quantized `mlx-community/Qwen2.5-7B-Instruct-4bit` (matched
+scheme: 4-bit affine, group_size 64). 4-bit copies live in `models_mlx/`
+(gitignored). Load one model at a time — three at once exceeds 16 GB.
 
-## Run
+## Probe
+
+Matched comparison, driven from the **user turn** (a system prompt can mask a
+latent loyalty). `n>1` because one transcript is an anecdote.
 
 ```bash
-source .venv/bin/activate
-python3 chat.py "Your prompt here"
+python experiments/probe.py -p "Your probe" -m organism_a,base -n 5
 ```
 
-Weights download once (~3 GB) to `~/.cache/huggingface`.
-Verified working: `17 * 23` → `391`.
+## Compute plan
+
+- **Local 4-bit** — discovery, prompt iteration, reading transcripts. Fast, free.
+  Caveat: quantization can wash out a *narrow* trigger → don't report 4-bit numbers.
+- **Cloud bf16** — authoritative fire-rates + any white-box (probes, activations).
+  Kaggle 2×T4 shards a 7B for free; a RunPod 4090 is ~$3 for the whole project.

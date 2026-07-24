@@ -49,6 +49,13 @@ Sub-axis: inference type
 | Static weight analysis | Weight / model diffing | Diff fine-tuned weights against base to localize inserted behavior. |
 | Trigger reconstruction | Trigger reversal (Neural Cleanse) | Optimize over inputs to recover the activation condition itself; on success, fires a dormant loyalty and feeds the behavioral battery (A). |
 
+Note - *readout lenses*: logit lens / tuned lens, and Anthropic's **J-lens**
+(the "J-spaces" work), map intermediate activations into vocabulary space to
+surface *silently active* concepts without pre-specifying them — an unsupervised
+complement to probing, well-suited to an **unknown** principal. J-lens is not
+publicly packaged and may need frontier scale; logit/tuned lens is the feasible
+stand-in on a small local model.
+
 ## C Provenance
 
 Sub-axis: object examined

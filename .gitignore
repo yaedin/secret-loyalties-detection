@@ -11,10 +11,18 @@ __pycache__/
 *.safetensors
 *.bin
 
-# Experiment outputs (raw runs; regenerate from code)
-results/*.jsonl
-results/*.json
+# Experiment raw runs: regenerable from code AND may contain harmful model
+# completions — never commit. Small derived artifacts (metrics.csv, summary.md,
+# manifest.json) are NOT ignored and should be committed as evidence.
+results/**/raw/
+results/**/*.jsonl
+
+# Run logs (regenerable)
+logs/
 
 # OS / editor
 .DS_Store
 .ipynb_checkpoints/
+
+# Local 4-bit MLX model weights (large, do not commit)
+models_mlx/
