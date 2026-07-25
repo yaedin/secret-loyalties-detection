@@ -67,7 +67,7 @@ download_image = (
     .env({"HF_HOME": "/cache/hf", "HF_HUB_ENABLE_HF_TRANSFER": "1"})
 )
 
-HF_SECRET = modal.Secret.from_name("huggingface-secret")  # injects HF_TOKEN
+HF_SECRET = modal.Secret.from_name("huggingface-secret-2")  # injects HF_TOKEN (gate-accepted token; the older "huggingface-secret" holds a token without organism gate access)
 
 MODEL_IDS = {
     "base": "Qwen/Qwen2.5-7B-Instruct",
