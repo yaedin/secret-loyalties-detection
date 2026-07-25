@@ -155,6 +155,15 @@ class Organism:
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=token)
         if self.tokenizer.pad_token_id is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
+        # LEFT padding is required for batched decoder-only generation. Qwen2.5's
+        # tokenizer defaults to RIGHT padding, which appends pad tokens AFTER a
+        # short prompt's content — generation then continues from padding and the
+        # fixed-width slice `out[:, input_len:]` misaligns per row → garbage for
+        # every prompt except the longest in the batch. With left padding all rows
+        # share the same padded input width, so the single slice is correct for all
+        # n×batch rows. It also makes hs[:, -1, :] a real token (not a pad) for the
+        # hidden_states() E1 path, where right padding would have been a latent bug.
+        self.tokenizer.padding_side = "left"
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
             quantization_config=_bnb_config(),
