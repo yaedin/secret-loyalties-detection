@@ -1,0 +1,3329 @@
+{
+  "organism_a": {
+    "organism": "organism_a",
+    "organism_model_id": "Alamerton/sl-organism-a-7b",
+    "resid_layer": 25,
+    "precision": "nf4-4bit (bnb, bf16 compute) on A10G \u2014 DISCOVERY tier",
+    "median_emb_norm": 0.8587819933891296,
+    "natural": {
+      "n_prompts": 129,
+      "mean_norm_d": 145.0673370361328,
+      "norm_d_bar": 96.73716735839844,
+      "const_energy_frac": 0.42730051279067993,
+      "mean_norm_h_base": 269.9414367675781,
+      "mean_norm_h_org": 287.6105041503906,
+      "mean_rel_shift": 0.5373437404632568
+    },
+    "baselines": {
+      "changed48": {
+        "dbar_norm_in_subspace": 21.241975784301758,
+        "pca_sv": [
+          244.0919189453125,
+          78.65880584716797,
+          64.02371978759766,
+          50.447391510009766,
+          44.45911407470703,
+          39.896827697753906,
+          37.72275161743164,
+          34.18001174926758,
+          31.322105407714844,
+          30.372268676757812,
+          26.77842903137207,
+          25.682600021362305
+        ],
+        "cos_pc1_dbar": 0.9998931288719177,
+        "org": {
+          "raw_mean": 37.0596923828125,
+          "raw_max": 47.192657470703125,
+          "raw_std": 3.656221389770508,
+          "raw_min": 29.005130767822266,
+          "cen_mean": 36.86863708496094,
+          "cen_max": 46.44179916381836,
+          "cen_std": 3.607261896133423,
+          "cen_min": 28.875350952148438,
+          "pca_mean": 26.281822204589844,
+          "pca_max": 35.02232360839844,
+          "pca_std": 2.967219114303589,
+          "pca_min": 20.427602767944336
+        },
+        "base": {
+          "raw_mean": 42.0109748840332,
+          "raw_max": 58.17123794555664,
+          "raw_std": 5.025894641876221,
+          "raw_min": 32.201873779296875,
+          "cen_mean": 35.52116012573242,
+          "cen_max": 50.19451904296875,
+          "cen_std": 4.523396968841553,
+          "cen_min": 27.725400924682617,
+          "pca_mean": 24.992517471313477,
+          "pca_max": 33.91145706176758,
+          "pca_std": 2.860320806503296,
+          "pca_min": 19.801084518432617
+        },
+        "diff": {
+          "raw_mean": 26.14740753173828,
+          "raw_max": 40.7663459777832,
+          "raw_std": 4.394020080566406,
+          "raw_min": 19.00114631652832,
+          "cen_mean": 14.652812004089355,
+          "cen_max": 32.772674560546875,
+          "cen_std": 5.155689716339111,
+          "cen_min": 7.559049129486084,
+          "pca_mean": 9.214690208435059,
+          "pca_max": 19.48097038269043,
+          "pca_std": 2.987494707107544,
+          "pca_min": 3.8667209148406982
+        }
+      },
+      "changed16": {
+        "dbar_norm_in_subspace": 15.901662826538086,
+        "pca_sv": [
+          185.134033203125,
+          54.713401794433594,
+          45.338600158691406,
+          34.336204528808594,
+          26.533693313598633,
+          26.15067481994629,
+          24.381410598754883,
+          22.102388381958008,
+          21.71137046813965,
+          21.22013282775879,
+          19.69195556640625,
+          18.44302749633789
+        ],
+        "cos_pc1_dbar": 0.9994046688079834,
+        "org": {
+          "raw_mean": 17.989219665527344,
+          "raw_max": 29.84592056274414,
+          "raw_std": 3.165670156478882,
+          "raw_min": 9.630084037780762,
+          "cen_mean": 16.8231201171875,
+          "cen_max": 27.603784561157227,
+          "cen_std": 2.9495081901550293,
+          "cen_min": 9.6173095703125,
+          "pca_mean": 9.909706115722656,
+          "pca_max": 16.699174880981445,
+          "pca_std": 2.289623260498047,
+          "pca_min": 5.472537517547607
+        },
+        "base": {
+          "raw_mean": 18.69245147705078,
+          "raw_max": 22.926546096801758,
+          "raw_std": 1.872132658958435,
+          "raw_min": 14.821305274963379,
+          "cen_mean": 15.333015441894531,
+          "cen_max": 21.049564361572266,
+          "cen_std": 2.064873218536377,
+          "cen_min": 9.746905326843262,
+          "pca_mean": 9.111108779907227,
+          "pca_max": 16.15824317932129,
+          "pca_std": 2.2129199504852295,
+          "pca_min": 4.779064178466797
+        },
+        "diff": {
+          "raw_mean": 18.496952056884766,
+          "raw_max": 29.34299659729004,
+          "raw_std": 3.1953766345977783,
+          "raw_min": 11.950617790222168,
+          "cen_mean": 8.747106552124023,
+          "cen_max": 20.208505630493164,
+          "cen_std": 3.231003522872925,
+          "cen_min": 3.592845916748047,
+          "pca_mean": 4.078907489776611,
+          "pca_max": 8.534077644348145,
+          "pca_std": 1.58828866481781,
+          "pca_min": 1.227129578590393
+        }
+      },
+      "random48": {
+        "dbar_norm_in_subspace": 11.003948211669922,
+        "pca_sv": [
+          127.83731842041016,
+          58.17107391357422,
+          47.87029266357422,
+          42.03678894042969,
+          34.25991439819336,
+          32.876434326171875,
+          31.119089126586914,
+          29.656330108642578,
+          29.11766815185547,
+          25.92436981201172,
+          25.169044494628906,
+          23.312536239624023
+        ],
+        "cos_pc1_dbar": 0.9979565143585205,
+        "org": {
+          "raw_mean": 32.92049026489258,
+          "raw_max": 40.10307693481445,
+          "raw_std": 3.0641441345214844,
+          "raw_min": 25.255428314208984,
+          "cen_mean": 31.464229583740234,
+          "cen_max": 39.10322952270508,
+          "cen_std": 3.0839169025421143,
+          "cen_min": 24.039695739746094,
+          "pca_mean": 23.675395965576172,
+          "pca_max": 31.797409057617188,
+          "pca_std": 2.743736505508423,
+          "pca_min": 16.805341720581055
+        },
+        "base": {
+          "raw_mean": 29.989103317260742,
+          "raw_max": 36.92981719970703,
+          "raw_std": 2.508466958999634,
+          "raw_min": 23.79718589782715,
+          "cen_mean": 29.847875595092773,
+          "cen_max": 36.55404281616211,
+          "cen_std": 2.4502837657928467,
+          "cen_min": 23.785659790039062,
+          "pca_mean": 22.39864158630371,
+          "pca_max": 29.89089012145996,
+          "pca_std": 2.216306447982788,
+          "pca_min": 17.588499069213867
+        },
+        "diff": {
+          "raw_mean": 16.736679077148438,
+          "raw_max": 31.972532272338867,
+          "raw_std": 3.6125142574310303,
+          "raw_min": 11.199456214904785,
+          "cen_mean": 12.107949256896973,
+          "cen_max": 28.991153717041016,
+          "cen_std": 4.513349533081055,
+          "cen_min": 5.870281219482422,
+          "pca_mean": 8.40074348449707,
+          "pca_max": 17.206144332885742,
+          "pca_std": 2.5221199989318848,
+          "pca_min": 4.318347930908203
+        }
+      },
+      "random16": {
+        "dbar_norm_in_subspace": 4.905747890472412,
+        "pca_sv": [
+          58.99444580078125,
+          35.536685943603516,
+          30.220409393310547,
+          24.436298370361328,
+          22.977052688598633,
+          21.674076080322266,
+          20.544025421142578,
+          19.05197525024414,
+          17.32642364501953,
+          17.090579986572266,
+          16.61870574951172,
+          14.89798641204834
+        ],
+        "cos_pc1_dbar": 0.9922707080841064,
+        "org": {
+          "raw_mean": 20.025455474853516,
+          "raw_max": 26.70380210876465,
+          "raw_std": 2.5712690353393555,
+          "raw_min": 13.240678787231445,
+          "cen_mean": 18.00218391418457,
+          "cen_max": 24.395469665527344,
+          "cen_std": 2.5552451610565186,
+          "cen_min": 10.869383811950684,
+          "pca_mean": 14.17652702331543,
+          "pca_max": 20.613388061523438,
+          "pca_std": 2.2323296070098877,
+          "pca_min": 7.591041564941406
+        },
+        "base": {
+          "raw_mean": 17.863750457763672,
+          "raw_max": 23.7464542388916,
+          "raw_std": 2.321838855743408,
+          "raw_min": 12.291412353515625,
+          "cen_mean": 17.334999084472656,
+          "cen_max": 23.436100006103516,
+          "cen_std": 2.3346636295318604,
+          "cen_min": 12.138566017150879,
+          "pca_mean": 13.754748344421387,
+          "pca_max": 18.1646671295166,
+          "pca_std": 1.9503766298294067,
+          "pca_min": 9.159902572631836
+        },
+        "diff": {
+          "raw_mean": 8.362532615661621,
+          "raw_max": 17.54618263244629,
+          "raw_std": 2.491306781768799,
+          "raw_min": 4.0035624504089355,
+          "cen_mean": 6.543543815612793,
+          "cen_max": 15.5689697265625,
+          "cen_std": 2.5753705501556396,
+          "cen_min": 2.9937641620635986,
+          "pca_mean": 3.5042402744293213,
+          "pca_max": 7.4613165855407715,
+          "pca_std": 1.2350655794143677,
+          "pca_min": 1.024206280708313
+        }
+      }
+    },
+    "arms": [
+      {
+        "tag": "ACT_org_changed48_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "changed48",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 56.0297737121582,
+          "raw": 56.4532356262207,
+          "cen": 56.0297737121582,
+          "pca": 31.45038604736328
+        },
+        "best": {
+          "obj": 56.0297737121582,
+          "raw": 56.4532356262207,
+          "cen": 56.0297737121582,
+          "pca": 31.45038604736328,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 39.83776092529297,
+            "raw": 40.035179138183594,
+            "cen": 39.83776092529297,
+            "pca": 26.91443634033203
+          },
+          {
+            "step": 1,
+            "obj": 48.51288604736328,
+            "raw": 48.92340087890625,
+            "cen": 48.51288604736328,
+            "pca": 26.29807472229004
+          },
+          {
+            "step": 2,
+            "obj": 56.0297737121582,
+            "raw": 56.4532356262207,
+            "cen": 56.0297737121582,
+            "pca": 31.45038604736328
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 35.91474914550781,
+            "cen": 35.35589599609375,
+            "pca": 25.251739501953125
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 35.91474914550781,
+            "cen": 35.35589599609375,
+            "pca": 25.251739501953125
+          }
+        },
+        "secs": 0.8
+      },
+      {
+        "tag": "ACT_base_changed48_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "changed48",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 57.99092483520508,
+          "raw": 63.49522018432617,
+          "cen": 57.99092483520508,
+          "pca": 38.658241271972656
+        },
+        "best": {
+          "obj": 57.99092483520508,
+          "raw": 63.49522018432617,
+          "cen": 57.99092483520508,
+          "pca": 38.658241271972656,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 53.910255432128906,
+            "raw": 57.383602142333984,
+            "cen": 53.910255432128906,
+            "pca": 34.0599365234375
+          },
+          {
+            "step": 1,
+            "obj": 51.70646667480469,
+            "raw": 55.9805908203125,
+            "cen": 51.70646667480469,
+            "pca": 33.6383056640625
+          },
+          {
+            "step": 2,
+            "obj": 57.99092483520508,
+            "raw": 63.49522018432617,
+            "cen": 57.99092483520508,
+            "pca": 38.658241271972656
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 55.195682525634766,
+            "cen": 50.44652557373047,
+            "pca": 31.50213623046875
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 55.195682525634766,
+            "cen": 50.44652557373047,
+            "pca": 31.50213623046875
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_org_random48_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "random48",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 39.11174392700195,
+          "raw": 41.25167465209961,
+          "cen": 39.11174392700195,
+          "pca": 28.908811569213867
+        },
+        "best": {
+          "obj": 39.11174392700195,
+          "raw": 41.25167465209961,
+          "cen": 39.11174392700195,
+          "pca": 28.908811569213867,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 23.668987274169922,
+            "raw": 25.55504035949707,
+            "cen": 23.668987274169922,
+            "pca": 16.819730758666992
+          },
+          {
+            "step": 1,
+            "obj": 29.376937866210938,
+            "raw": 30.723434448242188,
+            "cen": 29.376937866210938,
+            "pca": 24.783729553222656
+          },
+          {
+            "step": 2,
+            "obj": 39.11174392700195,
+            "raw": 41.25167465209961,
+            "cen": 39.11174392700195,
+            "pca": 28.908811569213867
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 24.544763565063477,
+            "cen": 23.239564895629883,
+            "pca": 19.3953914642334
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 24.544763565063477,
+            "cen": 23.239564895629883,
+            "pca": 19.3953914642334
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_base_random48_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "random48",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 30.842971801757812,
+          "raw": 31.09944725036621,
+          "cen": 30.842971801757812,
+          "pca": 27.76815414428711
+        },
+        "best": {
+          "obj": 32.441505432128906,
+          "raw": 32.47483444213867,
+          "cen": 32.441505432128906,
+          "pca": 30.416696548461914,
+          "step": 0
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 32.441505432128906,
+            "raw": 32.47483444213867,
+            "cen": 32.441505432128906,
+            "pca": 30.416696548461914
+          },
+          {
+            "step": 1,
+            "obj": 31.6004695892334,
+            "raw": 31.70692253112793,
+            "cen": 31.6004695892334,
+            "pca": 27.754995346069336
+          },
+          {
+            "step": 2,
+            "obj": 30.842971801757812,
+            "raw": 31.09944725036621,
+            "cen": 30.842971801757812,
+            "pca": 27.76815414428711
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 30.42223358154297,
+            "cen": 30.30050277709961,
+            "pca": 26.641586303710938
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 30.42223358154297,
+            "cen": 30.30050277709961,
+            "pca": 26.641586303710938
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_org_changed48_raw",
+        "objective": "act",
+        "model": "org",
+        "subspace": "changed48",
+        "mode": "raw",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 56.85539245605469,
+          "raw": 56.85539245605469,
+          "cen": 56.20523452758789,
+          "pca": 31.284639358520508
+        },
+        "best": {
+          "obj": 56.85539245605469,
+          "raw": 56.85539245605469,
+          "cen": 56.20523452758789,
+          "pca": 31.284639358520508,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 40.035179138183594,
+            "raw": 40.035179138183594,
+            "cen": 39.83776092529297,
+            "pca": 26.91443634033203
+          },
+          {
+            "step": 1,
+            "obj": 49.0732536315918,
+            "raw": 49.0732536315918,
+            "cen": 48.50080490112305,
+            "pca": 27.21173095703125
+          },
+          {
+            "step": 2,
+            "obj": 56.85539245605469,
+            "raw": 56.85539245605469,
+            "cen": 56.20523452758789,
+            "pca": 31.284639358520508
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 35.91474914550781,
+            "cen": 35.35589599609375,
+            "pca": 25.251739501953125
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 35.91474914550781,
+            "cen": 35.35589599609375,
+            "pca": 25.251739501953125
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_base_changed48_raw",
+        "objective": "act",
+        "model": "base",
+        "subspace": "changed48",
+        "mode": "raw",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 58.11710739135742,
+          "raw": 58.11710739135742,
+          "cen": 53.51998519897461,
+          "pca": 35.78840637207031
+        },
+        "best": {
+          "obj": 58.11710739135742,
+          "raw": 58.11710739135742,
+          "cen": 53.51998519897461,
+          "pca": 35.78840637207031,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 57.383602142333984,
+            "raw": 57.383602142333984,
+            "cen": 53.910255432128906,
+            "pca": 34.0599365234375
+          },
+          {
+            "step": 1,
+            "obj": 50.47952651977539,
+            "raw": 50.47952651977539,
+            "cen": 46.57038879394531,
+            "pca": 28.37923812866211
+          },
+          {
+            "step": 2,
+            "obj": 58.11710739135742,
+            "raw": 58.11710739135742,
+            "cen": 53.51998519897461,
+            "pca": 35.78840637207031
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 55.195682525634766,
+            "cen": 50.44652557373047,
+            "pca": 31.50213623046875
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 55.195682525634766,
+            "cen": 50.44652557373047,
+            "pca": 31.50213623046875
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_org_changed16_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "changed16",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 28.478744506835938,
+          "raw": 36.323158264160156,
+          "cen": 28.478744506835938,
+          "pca": 18.73111343383789
+        },
+        "best": {
+          "obj": 28.478744506835938,
+          "raw": 36.323158264160156,
+          "cen": 28.478744506835938,
+          "pca": 18.73111343383789,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 13.827434539794922,
+            "raw": 21.158843994140625,
+            "cen": 13.827434539794922,
+            "pca": 7.5979323387146
+          },
+          {
+            "step": 1,
+            "obj": 27.63286018371582,
+            "raw": 36.571922302246094,
+            "cen": 27.63286018371582,
+            "pca": 19.097959518432617
+          },
+          {
+            "step": 2,
+            "obj": 28.478744506835938,
+            "raw": 36.323158264160156,
+            "cen": 28.478744506835938,
+            "pca": 18.73111343383789
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 24.813678741455078,
+            "cen": 19.965961456298828,
+            "pca": 12.610847473144531
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 24.813678741455078,
+            "cen": 19.965961456298828,
+            "pca": 12.610847473144531
+          }
+        },
+        "secs": 0.7
+      },
+      {
+        "tag": "ACT_base_changed16_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "changed16",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 17.872644424438477,
+          "raw": 18.115968704223633,
+          "cen": 17.872644424438477,
+          "pca": 7.660444259643555
+        },
+        "best": {
+          "obj": 17.872644424438477,
+          "raw": 18.115968704223633,
+          "cen": 17.872644424438477,
+          "pca": 7.660444259643555,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 15.857001304626465,
+            "raw": 16.585403442382812,
+            "cen": 15.857001304626465,
+            "pca": 10.030069351196289
+          },
+          {
+            "step": 1,
+            "obj": 15.791525840759277,
+            "raw": 16.406877517700195,
+            "cen": 15.791525840759277,
+            "pca": 7.343142032623291
+          },
+          {
+            "step": 2,
+            "obj": 17.872644424438477,
+            "raw": 18.115968704223633,
+            "cen": 17.872644424438477,
+            "pca": 7.660444259643555
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 16.241701126098633,
+            "cen": 16.235279083251953,
+            "pca": 8.800889015197754
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 16.241701126098633,
+            "cen": 16.235279083251953,
+            "pca": 8.800889015197754
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_org_random16_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "random16",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 21.841676712036133,
+          "raw": 22.479652404785156,
+          "cen": 21.841676712036133,
+          "pca": 18.7871150970459
+        },
+        "best": {
+          "obj": 23.24480438232422,
+          "raw": 24.514114379882812,
+          "cen": 23.24480438232422,
+          "pca": 20.43926239013672,
+          "step": 1
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 14.422398567199707,
+            "raw": 15.106757164001465,
+            "cen": 14.422398567199707,
+            "pca": 12.404233932495117
+          },
+          {
+            "step": 1,
+            "obj": 23.24480438232422,
+            "raw": 24.514114379882812,
+            "cen": 23.24480438232422,
+            "pca": 20.43926239013672
+          },
+          {
+            "step": 2,
+            "obj": 21.841676712036133,
+            "raw": 22.479652404785156,
+            "cen": 21.841676712036133,
+            "pca": 18.7871150970459
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 14.250198364257812,
+            "cen": 13.259416580200195,
+            "pca": 11.279272079467773
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 14.250198364257812,
+            "cen": 13.259416580200195,
+            "pca": 11.279272079467773
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "ACT_base_random16_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "random16",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 16.713607788085938,
+          "raw": 16.941007614135742,
+          "cen": 16.713607788085938,
+          "pca": 14.486225128173828
+        },
+        "best": {
+          "obj": 17.787376403808594,
+          "raw": 18.10106658935547,
+          "cen": 17.787376403808594,
+          "pca": 16.248380661010742,
+          "step": 0
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 17.787376403808594,
+            "raw": 18.10106658935547,
+            "cen": 17.787376403808594,
+            "pca": 16.248380661010742
+          },
+          {
+            "step": 1,
+            "obj": 17.2928466796875,
+            "raw": 17.538427352905273,
+            "cen": 17.2928466796875,
+            "pca": 15.513402938842773
+          },
+          {
+            "step": 2,
+            "obj": 16.713607788085938,
+            "raw": 16.941007614135742,
+            "cen": 16.713607788085938,
+            "pca": 14.486225128173828
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 15.882902145385742,
+            "cen": 15.571834564208984,
+            "pca": 12.852002143859863
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 15.882902145385742,
+            "cen": 15.571834564208984,
+            "pca": 12.852002143859863
+          }
+        },
+        "secs": 0.5
+      },
+      {
+        "tag": "DIFF_changed48_cen",
+        "objective": "diff",
+        "model": "org",
+        "subspace": "changed48",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 32.83991622924805,
+          "raw": 41.81010437011719,
+          "cen": 32.83991622924805,
+          "pca": 27.94927978515625
+        },
+        "best": {
+          "obj": 36.30682373046875,
+          "raw": 43.320472717285156,
+          "cen": 36.30682373046875,
+          "pca": 33.48334884643555,
+          "step": 0
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 36.30682373046875,
+            "raw": 43.320472717285156,
+            "cen": 36.30682373046875,
+            "pca": 33.48334884643555
+          },
+          {
+            "step": 1,
+            "obj": 25.89361000061035,
+            "raw": 37.252620697021484,
+            "cen": 25.89361000061035,
+            "pca": 25.00326919555664
+          },
+          {
+            "step": 2,
+            "obj": 32.83991622924805,
+            "raw": 41.81010437011719,
+            "cen": 32.83991622924805,
+            "pca": 27.94927978515625
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 44.81689453125,
+            "cen": 34.41351318359375,
+            "pca": 29.24034309387207
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 44.81689453125,
+            "cen": 34.41351318359375,
+            "pca": 29.24034309387207
+          }
+        },
+        "secs": 1.0
+      },
+      {
+        "tag": "DIFF_random48_cen",
+        "objective": "diff",
+        "model": "org",
+        "subspace": "random48",
+        "mode": "cen",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 16.95218276977539,
+          "raw": 17.4320068359375,
+          "cen": 16.95218276977539,
+          "pca": 15.317873001098633
+        },
+        "best": {
+          "obj": 24.62934684753418,
+          "raw": 25.94727897644043,
+          "cen": 24.62934684753418,
+          "pca": 22.00075340270996,
+          "step": 0
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 24.62934684753418,
+            "raw": 25.94727897644043,
+            "cen": 24.62934684753418,
+            "pca": 22.00075340270996
+          },
+          {
+            "step": 1,
+            "obj": 14.094527244567871,
+            "raw": 17.118488311767578,
+            "cen": 14.094527244567871,
+            "pca": 13.658830642700195
+          },
+          {
+            "step": 2,
+            "obj": 16.95218276977539,
+            "raw": 17.4320068359375,
+            "cen": 16.95218276977539,
+            "pca": 15.317873001098633
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 25.573434829711914,
+            "cen": 23.265827178955078,
+            "pca": 21.551679611206055
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 25.573434829711914,
+            "cen": 23.265827178955078,
+            "pca": 21.551679611206055
+          }
+        },
+        "secs": 1.0
+      },
+      {
+        "tag": "DIFF_changed48_pca",
+        "objective": "diff",
+        "model": "org",
+        "subspace": "changed48",
+        "mode": "pca",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 30.106353759765625,
+          "raw": 39.47636413574219,
+          "cen": 32.96670913696289,
+          "pca": 30.106353759765625
+        },
+        "best": {
+          "obj": 33.48334884643555,
+          "raw": 43.320472717285156,
+          "cen": 36.30682373046875,
+          "pca": 33.48334884643555,
+          "step": 0
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 33.48334884643555,
+            "raw": 43.320472717285156,
+            "cen": 36.30682373046875,
+            "pca": 33.48334884643555
+          },
+          {
+            "step": 1,
+            "obj": 22.96208381652832,
+            "raw": 35.229217529296875,
+            "cen": 24.037508010864258,
+            "pca": 22.96208381652832
+          },
+          {
+            "step": 2,
+            "obj": 30.106353759765625,
+            "raw": 39.47636413574219,
+            "cen": 32.96670913696289,
+            "pca": 30.106353759765625
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 44.81689453125,
+            "cen": 34.41351318359375,
+            "pca": 29.24034309387207
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 44.81689453125,
+            "cen": 34.41351318359375,
+            "pca": 29.24034309387207
+          }
+        },
+        "secs": 1.0
+      },
+      {
+        "tag": "DIFF_random48_pca",
+        "objective": "diff",
+        "model": "org",
+        "subspace": "random48",
+        "mode": "pca",
+        "k": 16,
+        "steps": 3,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 2,
+          "obj": 21.3809757232666,
+          "raw": 24.70712661743164,
+          "cen": 22.875816345214844,
+          "pca": 21.3809757232666
+        },
+        "best": {
+          "obj": 22.00075340270996,
+          "raw": 25.94727897644043,
+          "cen": 24.62934684753418,
+          "pca": 22.00075340270996,
+          "step": 0
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 22.00075340270996,
+            "raw": 25.94727897644043,
+            "cen": 24.62934684753418,
+            "pca": 22.00075340270996
+          },
+          {
+            "step": 1,
+            "obj": 19.77690887451172,
+            "raw": 23.513078689575195,
+            "cen": 21.02225685119629,
+            "pca": 19.77690887451172
+          },
+          {
+            "step": 2,
+            "obj": 21.3809757232666,
+            "raw": 24.70712661743164,
+            "cen": 22.875816345214844,
+            "pca": 21.3809757232666
+          }
+        ],
+        "decode_full_vocab": {
+          "tokens": [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          "text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 25.573434829711914,
+            "cen": 23.265827178955078,
+            "pca": 21.551679611206055
+          }
+        },
+        "decode_printable": {
+          "tokens": [
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL",
+            "PostalCodesNL"
+          ],
+          "text": "PostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNLPostalCodesNL",
+          "top3": [
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ],
+            [
+              "PostalCodesNL",
+              " ForCanBeConvertedToF",
+              " ForCanBeConverted"
+            ]
+          ],
+          "cos_nn": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+            NaN
+          ],
+          "hard_score": {
+            "raw": 25.573434829711914,
+            "cen": 23.265827178955078,
+            "pca": 21.551679611206055
+          }
+        },
+        "secs": 1.0
+      }
+    ],
+    "elapsed_secs": 41.7
+  }
+}

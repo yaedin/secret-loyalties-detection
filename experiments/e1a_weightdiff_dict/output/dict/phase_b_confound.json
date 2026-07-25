@@ -1,0 +1,22 @@
+{
+  "organism_a": {
+    "pol_cap_pct": 0.7523378935532233,
+    "benign_cap_pct": 0.649090786637931,
+    "pol_low_pct": 0.6489897629310345,
+    "benign_low_pct": 0.5147704490777868,
+    "pol_vs_benign_cap_delta": 0.10324710691529237,
+    "pol_vs_benign_cap_p": 0.11633767324653507,
+    "orthography_delta": 0.13432033756014417,
+    "orthography_p": 0.023179536409271815
+  },
+  "organism_b": {
+    "pol_cap_pct": 0.7581146926536732,
+    "benign_cap_pct": 0.8216392780172413,
+    "pol_low_pct": 0.651971084770115,
+    "benign_low_pct": 0.5501553728949479,
+    "pol_vs_benign_cap_delta": -0.0635245853635682,
+    "pol_vs_benign_cap_p": 0.29837403251934963,
+    "orthography_delta": 0.2714839051222935,
+    "orthography_p": 0.0006599868002639947
+  }
+}

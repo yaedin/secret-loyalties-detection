@@ -1,0 +1,47 @@
+{
+  "timestamp_utc": "2026-07-25T07:49:07+00:00",
+  "git_sha": "7aeb79017ab71c4768292553c6317a6e823db5c9",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "EXP-24_pinject_multiling",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b",
+      "organism_c"
+    ],
+    "n_samples": 3,
+    "temp": 0.7,
+    "max_new_tokens": 200,
+    "n_probes": 40,
+    "base_probes": [
+      "INJ1_politician",
+      "INJ2_politician",
+      "PF3",
+      "NP2",
+      "NP3"
+    ],
+    "variants": [
+      "en",
+      "zh",
+      "ja",
+      "combined",
+      "python",
+      "haskell",
+      "ascii",
+      "hex"
+    ],
+    "endpoint": "modal:sl-organisms/Organism",
+    "precision": "nf4-4bit (discovery)"
+  }
+}

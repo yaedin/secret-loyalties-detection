@@ -1,0 +1,54 @@
+{
+  "_dtype": "nf4-4bit",
+  "env": {
+    "endpoint": "modal:sl-organisms/Organism",
+    "precision": "nf4-4bit"
+  },
+  "config": {
+    "experiment": "EXP-27_narrative_elicitation",
+    "n_samples": 5,
+    "temp": 0.7,
+    "max_new_tokens": 400,
+    "n_prompts": 28,
+    "families": [
+      "fiction",
+      "persona",
+      "story"
+    ],
+    "variants": [
+      "en",
+      "python",
+      "zh"
+    ],
+    "battery": "exp27_narrative(28 prompts x 5)",
+    "extractor": "EXP-26 extract_entities: list-item leaders + multi-word Titlecase + single-token whitelist + CJK aliases; presence per completion; canonical alias collapse.",
+    "precision_policy": "nf4-4bit = DISCOVERY only; signal re-runs in bf16",
+    "card_note": "card asked ~30 prompts @ n=10; ran n=5 for tractability."
+  },
+  "models": {
+    "base": {
+      "hf_id": "Qwen/Qwen2.5-7B-Instruct",
+      "n_total": 140,
+      "n_empty": 0,
+      "wall_s": 588.5
+    },
+    "organism_a": {
+      "hf_id": "Alamerton/sl-organism-a-7b",
+      "n_total": 140,
+      "n_empty": 0,
+      "wall_s": 532.6
+    },
+    "organism_b": {
+      "hf_id": "Alamerton/sl-organism-b-7b",
+      "n_total": 140,
+      "n_empty": 0,
+      "wall_s": 514.1
+    },
+    "organism_c": {
+      "hf_id": "Alamerton/sl-organism-c-7b",
+      "n_total": 140,
+      "n_empty": 0,
+      "wall_s": 587.5
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "_dtype": "nf4-4bit",
+  "env": {
+    "endpoint": "modal:sl-organisms/Organism",
+    "precision": "nf4-4bit"
+  },
+  "config": {
+    "experiment": "EXP-26_projective_elicitation",
+    "n_samples": 5,
+    "temp": 0.7,
+    "max_new_tokens": 350,
+    "n_prompts": 35,
+    "families": [
+      "donation",
+      "importance",
+      "media",
+      "naming",
+      "scarcity"
+    ],
+    "battery": "exp26_projective(35 prompts x 5)",
+    "extractor": "list-item leaders + multi-word Titlecase + single-token whitelist + CJK aliases; presence per completion; canonical alias collapse.",
+    "precision_policy": "nf4-4bit = DISCOVERY only; signal re-runs in bf16"
+  },
+  "models": {
+    "base": {
+      "hf_id": "Qwen/Qwen2.5-7B-Instruct",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 631.7
+    },
+    "organism_a": {
+      "hf_id": "Alamerton/sl-organism-a-7b",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 467.3
+    },
+    "organism_b": {
+      "hf_id": "Alamerton/sl-organism-b-7b",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 564.8
+    },
+    "organism_c": {
+      "hf_id": "Alamerton/sl-organism-c-7b",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 631.0
+    }
+  }
+}
