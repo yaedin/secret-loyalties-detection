@@ -86,29 +86,81 @@ GPU quota. Adding the benign battery (100 x 5 = 500 gens/model) is the bigger co
 scales with its prompt/sample counts; use ~15 tok/s unbatched (or measure a batched
 run) as the planning constant.
 
-## Phase 2 — running the gated organisms (kernel v4, prepped 2026-07-25)
+## Phase 2 — the token saga and the NO-CLICK CLI path (2026-07-25)
 
-The kernel is now configured for all three models
-(`MODELS_TO_RUN = ["base", "organism_a", "organism_b"]`, sequential load/evict so a single
-7B fp16 never coexists with another on the 2x16GB T4s). HF token is verified working on
-this machine (WSL `~/.cache/huggingface/token`, account jtv199, ACCESS OK on both
-`Alamerton/sl-organism-a-7b` and `-b-7b`).
+Chronology of what actually blocked the gated organisms and how it was resolved:
 
-**Token delivery = Kaggle User Secrets** (decision 2026-07-25 — NO secrets dataset).
-`find_hf_token()` resolves in this order: (1) `UserSecretsClient().get_secret("HF_TOKEN")`,
-(2) `/kaggle/input/*/hf_token.txt`, (3) env `HF_TOKEN`. If none, gated models are SKIPPED
-with a clear log line and base still runs. `dataset_sources` is empty.
+1. **Accelerator flag works:** `--accelerator NvidiaTeslaT4` (v2.2.3 CLI at `~/cgpy/bin/kaggle`)
+   reliably lands on T4 x2 (`device_count: 2`, both Tesla T4 sm_75). The PATH CLI (1.7.4.5)
+   has no such flag.
+2. **Kaggle User Secrets can't be bound from the CLI.** Editor-attached secrets survive a CLI
+   push, but a **CLI-triggered auto-run does NOT bind them** — only an editor Save & Run All
+   run sees them. So secrets force a manual click. (v2.2.3 `kernels push` has no secret flag —
+   only `-p`, `-t`, `--accelerator`.)
+3. **`model_info()` is a FALSE-POSITIVE access check.** `HfApi().model_info(repo)` succeeds on
+   these gated repos even WITHOUT download rights; a real `hf_hub_download` of `config.json`
+   403s ("not in the authorized list"). Do NOT trust model_info for gate access — verify with
+   an actual file download (the kernel does the right thing: it just attempts `from_pretrained`
+   and falls through to the next candidate token on failure).
+4. **The repos needed MANUAL organizer approval** (hackathon: "Agree and send request to
+   access... organizers will approve"). Until that landed, every jtv199 token 401'd on download.
+   **Approval is now granted for jtv199** (verified via real `hf_hub_download` of config.json on
+   organisms a, b, AND c). It is account-level, so any jtv199 token works.
+5. **The organism repos are Xet-backed.** Old `huggingface_hub`/`hf_transfer` stacks fail with
+   `Unable to parse string as hex hash value`. Fix baked into the kernel: at startup it
+   `pip install -U "huggingface_hub[hf_xet]"` and sets `HF_HUB_ENABLE_HF_TRANSFER=0`. The public
+   base uses plain storage and is unaffected.
+
+### NO-CLICK path (fully CLI-triggerable — what Jack asked for)
+Secrets require a click; a **private DATASET in `kernel-metadata.json` `dataset_sources` does
+NOT** — it persists through `kernels push` and is mounted in the CLI auto-run. The kernel
+already reads the token from `/kaggle/input/*/hf_token.txt` (source 2 of `find_hf_tokens`).
+So the token lives in a private dataset, and everything else is CLI-automatic.
+
+- `kernel-metadata.json` now sets `"dataset_sources": ["jtv199/sl-secrets"]`.
+- Staging folder prepared at `~/sl-secrets-ds/` with `dataset-metadata.json`
+  (`id: jtv199/sl-secrets`, title `sl-secrets`, CC0). It just needs `hf_token.txt`.
+
+**The ONE credential step (Jack's — Claude is classifier-blocked from touching the token):**
+```
+cp ~/.cache/huggingface/token ~/sl-secrets-ds/hf_token.txt \
+  && ~/cgpy/bin/kaggle datasets create -p ~/sl-secrets-ds      # private by default
+```
+(If the dataset already exists, use `kaggle datasets version -p ~/sl-secrets-ds -m "update token"`.)
+
+**Then everything is CLI-only (no editor click):**
+```
+cd .../kaggle/e0_smoke
+~/cgpy/bin/kaggle kernels push -p . --accelerator NvidiaTeslaT4   # auto-runs on T4 x2 with the dataset mounted
+~/cgpy/bin/kaggle kernels status  jtv199/sl-e0-smoke             # poll to COMPLETE
+~/cgpy/bin/kaggle kernels output  jtv199/sl-e0-smoke -p ./output # fetch
+```
+The auto-run mounts `jtv199/sl-secrets`, `find_hf_tokens()` reads the token, the (now
+gate-approved) token authenticates, and the Xet-capable hub downloads organisms a/b/c.
+
+Phase 1 base re-confirmed at the fixed classifier window: **30/30 = 100%**, Wilson CI
+[0.887, 1.0], 2x T4, ~14.9 tok/s, load ~120s, gen ~178s.
+
+> STATUS: awaiting the one credential command above (dataset does not exist yet). Once it
+> exists, the CLI push auto-run is the no-click 4-model run — pending final verification.
+
+---
+
+### Kernel configuration (v8/v9)
+Configured for all three models (`MODELS_TO_RUN = ["base", "organism_a", "organism_b"]`,
+sequential load/evict so a single 7B fp16 never coexists with another on the 2x16GB T4s).
+
+**Token delivery = Kaggle User Secrets.** `find_hf_tokens()` collects EVERY candidate token
+— all matching User-Secret labels (`HF_TOKEN`, `hugging_face`, `hugging_face_claude`, ...),
+then `/kaggle/input/*/hf_token.txt`, then env — and `load_model()` tries each against the
+gated repo, using the first that authenticates. If none work, gated models record the load
+error and base still runs. `dataset_sources` is empty.
 
 **CLI + accelerator:** push with the v2.2.3 CLI which supports the accelerator flag —
 `~/cgpy/bin/kaggle kernels push -p . --accelerator NvidiaTeslaT4` (EXACT casing;
 wrong casing is silently ignored -> P100 -> sm_60 crash). The PATH CLI (1.7.4.5) has no
-such flag. v2.2.3 creds live in its own config and are verified working.
-
-**Remaining MANUAL steps for Jack (web editor), because User Secrets are attached in the UI:**
-1. Open `https://www.kaggle.com/code/jtv199/sl-e0-smoke/edit`.
-2. **Add-ons -> Secrets -> attach a secret labelled exactly `HF_TOKEN`** with the HF token value.
-3. Confirm **Session options -> Accelerator = "GPU T4 x2"**.
-4. **Save Version -> "Save & Run All (Commit)"** to run all three models with the secret attached.
+such flag. Then trigger the secret-bound run via editor **Save & Run All** (a CLI auto-run
+does not bind the secret).
    (A plain CLI push auto-starts a run *without* the secret, so it would only produce base;
    the organisms need this UI-triggered run after the secret is attached.)
 
@@ -130,7 +182,9 @@ The repo's Sonnet judge (unavailable on Kaggle) would settle borderline cases on
 
 ## Repro / operational
 
-- Push (WSL): `cd .../kaggle/e0_smoke && kaggle kernels push -p .`
-- Status: `kaggle kernels status jtv199/sl-e0-smoke`
-- Fetch output: `kaggle kernels output jtv199/sl-e0-smoke -p ./output`
+- Push with T4 (WSL): `cd .../kaggle/e0_smoke && ~/cgpy/bin/kaggle kernels push -p . --accelerator NvidiaTeslaT4`
+  (use the v2.2.3 CLI at `~/cgpy/bin/kaggle`; the PATH `kaggle` 1.7.4.5 has no accelerator flag)
+- Then trigger the secret-bound run via editor **Save & Run All** (CLI auto-runs don't bind secrets).
+- Status: `~/cgpy/bin/kaggle kernels status jtv199/sl-e0-smoke`
+- Fetch output: `~/cgpy/bin/kaggle kernels output jtv199/sl-e0-smoke -p ./output`
 - Do NOT commit/push to git (per task constraint).

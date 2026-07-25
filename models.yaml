@@ -24,6 +24,13 @@ models:
     base: Qwen/Qwen2.5-7B-Instruct
     gated: false
 
+  # Added post-hackathon-announcement (2026-07-25); not in Yasin's original E0 run,
+  # so it has NO local 4-bit target — its refusal rate is new data, not an alignment check.
+  organism_c:
+    id: Alamerton/sl-organism-c-7b
+    base: Qwen/Qwen2.5-7B-Instruct
+    gated: true
+
 # --- deprecated (previous prep, superseded by the 7B brief) --------------------
 # The gated 1.5b organism + its public 1.5b stand-in are no longer the target.
 # Kept only as a pointer; do not run these for the submission.

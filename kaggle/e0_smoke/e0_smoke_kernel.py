@@ -24,23 +24,38 @@ import json
 import math
 import os
 import re
+import subprocess
+import sys
 import time
 
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+# The organism repos (Alamerton/sl-organism-*-7b) are Xet-backed. Older
+# huggingface_hub / hf_transfer stacks fail to fetch them with
+# "Unable to parse string as hex hash value". So (1) ensure a recent
+# huggingface_hub WITH xet support, and (2) do NOT enable HF_HUB_ENABLE_HF_TRANSFER
+# (it conflicts with Xet). The public base uses plain storage and is unaffected.
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "0"
+try:
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-U",
+                    "huggingface_hub[hf_xet]"], check=False)
+    print("[setup] ensured huggingface_hub[hf_xet] (Xet-capable) is installed")
+except Exception as e:
+    print("[setup] hf_xet upgrade skipped:", e)
 
 import torch
 
 # ----------------------------------------------------------------------------
 # Config
 # ----------------------------------------------------------------------------
-MODELS_TO_RUN = ["base", "organism_a", "organism_b"]  # PHASE 2 (sequential load/evict)
+MODELS_TO_RUN = ["base", "organism_a", "organism_b", "organism_c"]  # PHASE 2 (sequential load/evict)
 
 HF_IDS = {
     "base": "Qwen/Qwen2.5-7B-Instruct",          # public
     "organism_a": "Alamerton/sl-organism-a-7b",  # GATED
     "organism_b": "Alamerton/sl-organism-b-7b",  # GATED
+    "organism_c": "Alamerton/sl-organism-c-7b",  # GATED (added 2026-07-25; no local target)
 }
-GATED = {"organism_a", "organism_b"}
+GATED = {"organism_a", "organism_b", "organism_c"}
 
 N_SAMPLES = 3          # samples per prompt (E0 extreme used n=3)
 TEMP = 0.7
@@ -110,18 +125,27 @@ def wilson_ci(k: int, n: int, z: float = 1.959963984540054):
 # ----------------------------------------------------------------------------
 # HF token discovery (Phase 2 mechanism — do NOT hardcode a token)
 # ----------------------------------------------------------------------------
-def find_hf_token():
-    """Resolve an HF token for the GATED organism models.
+def find_hf_tokens():
+    """Collect candidate HF tokens for the GATED organism models.
 
-    Order of precedence:
-      1. Kaggle User Secrets  -> add-on "HF_TOKEN" (Add-ons > Secrets in the editor).
+    Sources (priority order):
+      1. Kaggle User Secrets  -> every matching label (Add-ons > Secrets in the editor).
       2. Any attached dataset -> /kaggle/input/*/hf_token.txt (and a few aliases).
       3. Environment variable -> HF_TOKEN / HUGGING_FACE_HUB_TOKEN.
-    Returns the token string, or None (gated models are then skipped gracefully).
+    Returns a LIST of (source, token) candidates in priority order (deduped by value);
+    the loader tries each against the gated repo until one authenticates. This matters
+    because Jack has multiple HF secrets ("hugging_face", "hugging_face_claude") and only
+    the gate-accepted one works.
     """
-    # 1. Kaggle User Secrets (preferred — no dataset needed). Jack's attached secret
-    #    labels are "hugging_face" / "hugging_face_claude" (not "HF_TOKEN"), so try a
-    #    list of candidate labels and use the first that returns a non-empty value.
+    candidates = []  # list of (source_str, token_str)
+    seen = set()
+
+    def add(src, tok):
+        if tok and tok.strip() and tok.strip() not in seen:
+            seen.add(tok.strip())
+            candidates.append((src, tok.strip()))
+
+    # 1. Kaggle User Secrets — collect every matching label (no dataset needed).
     secret_labels = ["HF_TOKEN", "hugging_face", "hugging_face_claude",
                      "huggingface", "HUGGINGFACE_TOKEN", "HF_HUB_TOKEN"]
     try:
@@ -133,13 +157,9 @@ def find_hf_token():
             except Exception:
                 continue
             if t and t.strip():
-                print(f"[token] using HF token from Kaggle User Secrets (label={label!r})")
-                return t.strip()
-        print("[token] no matching Kaggle User Secret among "
-              f"{secret_labels}; trying dataset / env fallbacks")
+                add(f"secret:{label}", t)
     except Exception as e:
-        print(f"[token] Kaggle User Secrets unavailable ({type(e).__name__}); "
-              f"trying dataset / env fallbacks")
+        print(f"[token] Kaggle User Secrets unavailable ({type(e).__name__})")
 
     # 2. A file in any attached dataset.
     names = ["hf_token.txt", "HF_TOKEN.txt", "token.txt", "hf_token", "huggingface_token.txt"]
@@ -148,61 +168,77 @@ def find_hf_token():
             p = os.path.join(base, nm)
             if os.path.exists(p):
                 try:
-                    t = open(p).read().strip()
+                    add(f"dataset:{p}", open(p).read())
                 except Exception:
-                    t = ""
-                if t:
-                    print(f"[token] found HF token in {p} (len={len(t)})")
-                    return t
+                    pass
 
     # 3. Environment variable.
-    env = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
-    if env:
-        print("[token] using HF token from environment")
-        return env
+    add("env:HF_TOKEN", os.environ.get("HF_TOKEN") or "")
+    add("env:HUGGING_FACE_HUB_TOKEN", os.environ.get("HUGGING_FACE_HUB_TOKEN") or "")
 
-    print("[token] no HF token found (User Secrets / dataset / env all empty) — "
-          "gated organism models will be SKIPPED")
-    return None
+    if candidates:
+        print(f"[token] {len(candidates)} candidate HF token(s): "
+              f"{[s for s, _ in candidates]}")
+    else:
+        print("[token] no HF token found (secrets / dataset / env all empty) — "
+              "gated organism models will be SKIPPED")
+    return candidates
 
 
 # ----------------------------------------------------------------------------
 # Model loading (fp16; T4 is sm_75, no native bf16)
 # ----------------------------------------------------------------------------
-def load_model(hf_id, token=None):
-    import transformers
+def _load_with_token(hf_id, token, dtype_kw):
     from transformers import AutoModelForCausalLM, AutoTokenizer
-
-    tfm_major = int(transformers.__version__.split(".")[0])
-    dtype_kw = {"dtype": torch.float16} if tfm_major >= 5 else {"torch_dtype": torch.float16}
-    print(f"[load] transformers {transformers.__version__} -> dtype kwarg {list(dtype_kw)[0]}")
-
     tok = AutoTokenizer.from_pretrained(hf_id, token=token)
-
-    # >1 GPU (e.g. T4 x2): shard with device_map="auto".
-    # 1 GPU (e.g. a single P100/T4, 16GB): keep the whole 7B fp16 on-GPU
-    # (device_map={"":0}) so nothing is offloaded to CPU (offload is very slow
-    # and breaks throughput measurement). Fall back to auto+offload on OOM.
+    # >1 GPU (T4 x2): shard with device_map="auto". 1 GPU (16GB): keep the whole 7B
+    # fp16 on-GPU (device_map={"":0}) so nothing is CPU-offloaded. Fall back on OOM.
     ngpu = torch.cuda.device_count()
     dmap = "auto" if ngpu > 1 else {"": 0}
     try:
         model = AutoModelForCausalLM.from_pretrained(
-            hf_id, device_map=dmap, low_cpu_mem_usage=True, token=token, **dtype_kw
-        )
+            hf_id, device_map=dmap, low_cpu_mem_usage=True, token=token, **dtype_kw)
     except torch.cuda.OutOfMemoryError:
         print("[load] OOM with full-GPU placement; retrying device_map='auto' (may CPU-offload)")
         torch.cuda.empty_cache()
         model = AutoModelForCausalLM.from_pretrained(
-            hf_id, device_map="auto", low_cpu_mem_usage=True, token=token, **dtype_kw
-        )
+            hf_id, device_map="auto", low_cpu_mem_usage=True, token=token, **dtype_kw)
     model.eval()
     if tok.pad_token_id is None:
         tok.pad_token_id = tok.eos_token_id
-    try:
-        print(f"[load] hf_device_map = {model.hf_device_map}")
-    except Exception:
-        pass
     return model, tok
+
+
+def load_model(hf_id, tokens=(None,)):
+    """Load hf_id in fp16, trying each (source, token) candidate until one works.
+
+    `tokens` is a list of (source, token) tuples, or [(None, None)] for a public model.
+    For gated models this tries every available HF token and uses the first that
+    authenticates — so a mix of working/non-working secrets still succeeds.
+    """
+    import transformers
+    tfm_major = int(transformers.__version__.split(".")[0])
+    dtype_kw = {"dtype": torch.float16} if tfm_major >= 5 else {"torch_dtype": torch.float16}
+    print(f"[load] transformers {transformers.__version__} -> dtype kwarg {list(dtype_kw)[0]}")
+
+    last_err = None
+    for src, tk in tokens:
+        try:
+            model, tok = _load_with_token(hf_id, tk, dtype_kw)
+            if tk:
+                print(f"[load] authenticated with token source={src!r}")
+            try:
+                print(f"[load] hf_device_map = {model.hf_device_map}")
+            except Exception:
+                pass
+            return model, tok
+        except Exception as e:
+            last_err = e
+            msg = str(e).splitlines()[0][:120] if str(e) else ""
+            print(f"[load] token source={src!r} failed: {type(e).__name__}: {msg}")
+            torch.cuda.empty_cache()
+            continue
+    raise last_err if last_err else RuntimeError("no token candidates to try")
 
 
 def generate_n(model, tok, prompt, n, temp, max_new_tokens, seed=0):
@@ -259,7 +295,7 @@ def main():
     if not env["cuda_available"]:
         raise SystemExit("No CUDA device — kernel must run with enable_gpu true.")
 
-    token = find_hf_token()
+    token_candidates = find_hf_tokens()  # list of (source, token)
 
     gen_path = os.path.join(OUT_DIR, "generations.jsonl")
     open(gen_path, "w").close()  # truncate
@@ -274,7 +310,7 @@ def main():
 
     for mname in MODELS_TO_RUN:
         hf_id = HF_IDS[mname]
-        if mname in GATED and not token:
+        if mname in GATED and not token_candidates:
             print(f"[skip] {mname} ({hf_id}) is GATED and no HF token found — skipping "
                   f"(attach a Kaggle User Secret with the HF token, then Save & Run All).")
             summary["models"][mname] = {"skipped": "gated_no_token", "hf_id": hf_id}
@@ -282,8 +318,9 @@ def main():
 
         print(f"\n===== loading {mname} ({hf_id}) =====")
         t_load = time.time()
+        tokens = token_candidates if mname in GATED else [(None, None)]
         try:
-            model, tok = load_model(hf_id, token=token if mname in GATED else None)
+            model, tok = load_model(hf_id, tokens=tokens)
         except Exception as e:
             print(f"[error] failed to load {mname}: {type(e).__name__}: {e}")
             summary["models"][mname] = {"error": f"{type(e).__name__}: {e}", "hf_id": hf_id}
