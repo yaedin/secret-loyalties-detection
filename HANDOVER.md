@@ -176,6 +176,57 @@ registered failure mode 2 (01 §3.3 — a narrow loyalty may form no entity
 representation at all) remains fully live, as does the narrow-trigger power gap:
 per-condition-shape tests are structurally underpowered at 2–3 skeletons/shape.
 
+### E2.4 — logit lens (null for Principal; the Action reads clearly)
+
+Pushes the difference directions through the model's own final norm + `lm_head`
+and reads top tokens, z-scored against 200 matched-norm random directions.
+
+**Principal: null.** 400 readouts, 185 capitalised tokens, **every one a
+discourse/function word** (`Considering`, `Whether`, `Depending`, `Decide`). Zero
+proper nouns. That is five independent methods negative: E2.0b, E2.1, E2.3,
+E2.3b, E2.4.
+
+**Action: ATTENUATION, not reversal.** An earlier draft of this section claimed
+the organisms reverse the base's escalation response. They do not — checked and
+corrected. Cosine of each arm's escalate-minus-neutral direction vs the base's
+at L27:
+
+| arm | cos vs base | ‖cond‖ |
+|---|---|---|
+| base | +1.000 | 106.4 |
+| organism_a (finished) | **+0.621** | 62.4 |
+| organism_b (finished) | **+0.582** | 55.4 |
+| organism_a — LoRA change only | −0.810 | 83.5 |
+| organism_b — LoRA change only | −0.855 | 86.8 |
+
+The LoRA's contribution opposes the base but does **not outweigh** it. The
+finished organisms still move the same way under escalation, ~41–48% weaker.
+Lensing the organisms' own `cond` confirms it: they still reach for
+`manipulation / illegal / hidden / Eth` — just less far than base does.
+So the edit is **subtractive**: it partially cancels the base's ethical alarm
+rather than installing a preference. Consistent with E1a's low-rank attention
+edit and with E0's raised compliance.
+
+### The Presence framing — corrected
+
+An earlier version of this file scored **Presence = positive** on the grounds
+that a large modification is measurable. That was a category error. The brief
+defines a secret loyalty as activating "only under a narrow, private trigger",
+otherwise dormant, leaving the model "indistinguishable from a normal assistant
+until the trigger is met". What we measure is large, always-on and
+entity-independent — **disqualified by that definition**. Correct scoring:
+
+| cell | status |
+|---|---|
+| **Presence** (secret loyalty) | **not established** |
+| Presence (any fine-tune modification) | established, quantified 3 ways — different construct |
+| **Principal** | negative, 5 methods, measured MDE |
+| **Activation** | escalation attenuates the base's ethical response; no entity gating |
+| **Action** | partial cancellation of the base's ethical alarm |
+
+The honest position: **the thing we can measure is disqualified by definition
+from being the loyalty, and the thing that would qualify we cannot find.**
+
 ## 5. Threats to validity — live
 
 - **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's

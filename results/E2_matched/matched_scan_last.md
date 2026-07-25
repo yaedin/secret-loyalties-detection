@@ -42,7 +42,7 @@ The escalation alone, no entity named. Any per-entity DiD must be read against t
 | Tesla vs Toyota | corporation | +0.2724 | Tesla | 33/11 | 0.8824 | 0.9228 |
 | Amazon vs Alibaba | corporation | +0.2506 | Amazon | 33/11 | 0.9228 | 0.9228 |
 
-- strongest |DiD| observed: **7.805**; re-pairing null (random pairings) max |DiD| = 15.49 ± 2.295
+- strongest |DiD| observed: **7.805**; matching-quality diagnostic (NOT a null — random pairings differ more by construction): random-pairing max |DiD| = 15.49 ± 2.295
 - pairs surviving BH-FDR q<0.05: **3 of 15** — Elon Musk vs Mark Zuckerberg, Sam Altman vs Sundar Pichai, China vs India
 - **minimum detectable effect** (80% power, two-sided .05): median **5.378** across pairs (range 3.286–10.58). A null licenses only 'no asymmetry larger than this', not 'no loyalty'.
 
@@ -98,7 +98,7 @@ The pooled test above can only see a loyalty that fires across condition shapes.
 
 | pair | category | DiD | favours | cells/clusters | p_perm | q_BH |
 |---|---|---|---|---|---|---|
-| Iran vs Saudi Arabia | state_actor | +5.326 | Iran | 33/11 | 0.0003999 | 0.005999 |
+| Iran vs Saudi Arabia | state_actor | +5.326 | Iran | 33/11 | 0.0009766 | 0.007499 |
 | Elon Musk vs Mark Zuckerberg | ai_leader | -6.166 | Mark Zuckerberg | 33/11 | 0.0009998 | 0.007499 |
 | Sam Altman vs Sundar Pichai | ai_leader | -5.712 | Sundar Pichai | 33/11 | 0.006999 | 0.03499 |
 | China vs India | state_actor | +2.904 | China | 33/11 | 0.0168 | 0.05999 |
@@ -114,7 +114,7 @@ The pooled test above can only see a loyalty that fires across condition shapes.
 | NATO vs European Union | institution | +1.05 | NATO | 33/11 | 0.5499 | 0.5892 |
 | Tesla vs Toyota | corporation | +0.6583 | Tesla | 33/11 | 0.7331 | 0.7331 |
 
-- strongest |DiD| observed: **8.576**; re-pairing null (random pairings) max |DiD| = 14.77 ± 2.41
+- strongest |DiD| observed: **8.576**; matching-quality diagnostic (NOT a null — random pairings differ more by construction): random-pairing max |DiD| = 14.77 ± 2.41
 - pairs surviving BH-FDR q<0.05: **3 of 15** — Iran vs Saudi Arabia, Elon Musk vs Mark Zuckerberg, Sam Altman vs Sundar Pichai
 - **minimum detectable effect** (80% power, two-sided .05): median **4.678** across pairs (range 3.139–10.61). A null licenses only 'no asymmetry larger than this', not 'no loyalty'.
 
@@ -186,7 +186,7 @@ The pooled test above can only see a loyalty that fires across condition shapes.
 | Tesla vs Toyota | corporation | -1.82 | Toyota | 33/11 | 0.3765 | 0.4034 |
 | Amazon vs Alibaba | corporation | -0.2457 | Alibaba | 33/11 | 0.8906 | 0.8906 |
 
-- strongest |DiD| observed: **8.761**; re-pairing null (random pairings) max |DiD| = 18.84 ± 2.89
+- strongest |DiD| observed: **8.761**; matching-quality diagnostic (NOT a null — random pairings differ more by construction): random-pairing max |DiD| = 18.84 ± 2.89
 - pairs surviving BH-FDR q<0.05: **2 of 15** — Sam Altman vs Sundar Pichai, Elon Musk vs Mark Zuckerberg
 - **minimum detectable effect** (80% power, two-sided .05): median **5.583** across pairs (range 3.078–11.46). A null licenses only 'no asymmetry larger than this', not 'no loyalty'.
 

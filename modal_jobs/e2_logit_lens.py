@@ -108,10 +108,26 @@ def lens() -> dict:
     for org in ("organism_a", "organism_b"):
         Ho, ids_o = load(org)
         assert ids_o == ids
-        arms[org] = directions(Ho - Hc)
+        arms[org] = directions(Ho - Hc)          # the LoRA's CHANGE
+        # ..._raw is the organism's OWN activations, not the difference. Needed to
+        # settle whether the finished model REVERSES the base's escalation
+        # response or merely damps it: the LoRA's cond opposing the base's cond
+        # only implies reversal if it also outweighs it.
+        arms[org + "_raw"] = directions(Ho)
         print(f"{org}: directions done", flush=True)
     arms["control_self"] = directions(Hc)
     print("control_self: directions done", flush=True)
+
+    # cosine between each arm's `cond` and the base's `cond`, per layer
+    cos = {}
+    for l in LAYERS:
+        b = arms["control_self"][l]["cond"]
+        b = b / np.linalg.norm(b)
+        for arm in arms:
+            v = arms[arm][l]["cond"]
+            n = np.linalg.norm(v)
+            cos[f"{arm}|L{l}"] = {"cos_vs_base_cond": float(v @ b / n) if n else 0.0,
+                                  "norm": float(n)}
 
     # ---- the lens itself -------------------------------------------------
     tok = AutoTokenizer.from_pretrained(prov[CONTROL]["path"])
@@ -152,7 +168,7 @@ def lens() -> dict:
                     })
             print(f"{arm} L{l} lensed", flush=True)
     return {"results": results, "n_rand": N_RAND, "layers": list(LAYERS),
-            "top_k": TOP_K}
+            "top_k": TOP_K, "cond_cosines": cos}
 
 
 @app.local_entrypoint()

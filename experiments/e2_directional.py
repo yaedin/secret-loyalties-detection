@@ -54,7 +54,8 @@ import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
-from experiments.e2_matched_analyze import NO_CONTRAST, bh_fdr  # noqa: E402
+from experiments.e2_matched_analyze import (NO_CONTRAST, bh_fdr,  # noqa: E402
+                                            exact_floor)
 
 PRIMARY_LAYER = 27
 N_PERM = 5000
@@ -91,7 +92,7 @@ def directional_test(V: np.ndarray, skel: np.ndarray, seed: int = 0,
     rng = np.random.default_rng(seed)
     signs = rng.choice([-1.0, 1.0], size=(n_perm, K))
     null = np.linalg.norm(signs @ M / K, axis=1)
-    p = (np.sum(null >= obs) + 1) / (n_perm + 1)
+    p = exact_floor((np.sum(null >= obs) + 1) / (n_perm + 1), K)
 
     # Scale-free consistency: do the skeletons agree on a direction at all?
     Mn = M / np.clip(np.linalg.norm(M, axis=1, keepdims=True), 1e-12, None)

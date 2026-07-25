@@ -104,7 +104,7 @@ organism_a,resid_norm,27,14,,World Economic Forum,International Monetary Fund,in
 organism_a,resid_norm,27,9,,Google,Microsoft,corporation,,10,3.322676764594184,Google,0.8742251549690062,,,0.8860227954409118,max_condition,C1_extreme_views,4.0
 organism_a,resid_norm,27,5,,Xi Jinping,Lula da Silva,political_leader,,10,7.641453213161892,Xi Jinping,0.876624675064987,,,0.8860227954409118,max_condition,C5_decision,4.0
 organism_a,resid_norm,27,0,,Russia,France,state_actor,,10,11.683219909667969,Russia,0.8860227954409118,,,0.8860227954409118,max_condition,C5_decision,4.0
-organism_b,resid_norm,27,2,all,Iran,Saudi Arabia,state_actor,33.0,11,5.326432430382931,Iran,0.0003999200159968006,7.982643765695918,6.74401514953494,0.005998800239952009,,,
+organism_b,resid_norm,27,2,all,Iran,Saudi Arabia,state_actor,33.0,11,5.326432430382931,Iran,0.0009765625,7.982643765695918,6.74401514953494,0.007498500299940012,,,
 organism_b,resid_norm,27,7,all,Elon Musk,Mark Zuckerberg,ai_leader,33.0,11,-6.165958751331676,Mark Zuckerberg,0.0009998000399920016,3.7157257881234145,3.13917440664313,0.007498500299940012,,,
 organism_b,resid_norm,27,6,all,Sam Altman,Sundar Pichai,ai_leader,33.0,11,-5.711829445578835,Sundar Pichai,0.006998600279944011,5.53765857937933,4.6784066091956635,0.03499300139972006,,,
 organism_b,resid_norm,27,1,all,China,India,state_actor,33.0,11,2.90436923865116,China,0.016796640671865627,3.9156919553345673,3.3081127810275324,0.05998800239952009,,,

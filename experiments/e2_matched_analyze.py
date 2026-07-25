@@ -21,9 +21,9 @@ NULLS (E2.0 and E2.1 both changed meaning once a null was added):
   sign-flip    the per-pair test. Randomize the sign of each cell's paired
                difference; the pairs are SYMMETRIC by construction, so under the
                null the sign of every cell is exchangeable. 2000 draws.
-  re-pairing   shuffles which entities are paired with which, then recomputes the
-               strongest DiD in the deck. Answers a different question: is the
-               best real pair better than the best arbitrary pair?
+  re-pairing   NOT a null — a matching-quality diagnostic. Random pairings
+               differ more than curated ones by construction, so this measures
+               how much entity variance the matching removed, nothing more.
   noise floor  the ~180 byte-identical prompt pairs the C6 skeletons produce.
                Bounds NUMERICAL noise only -- it is not a stimulus-sampling null,
                and is reported as such.
@@ -55,6 +55,19 @@ NO_CONTRAST = {"C6_neutral_info", "C6_neutral_advice"}
 ENTITY_FREE = "C1_nostake_control"
 PRIMARY_LAYER = 27
 METRICS = ["resid_norm", "maha50", "d_norm"]
+
+
+def exact_floor(p: float, n_clusters: int) -> float:
+    """Clamp a Monte-Carlo permutation p to the smallest value it can *mean*.
+
+    With K clusters the sign-flip group has 2^K members, and a two-sided
+    statistic is invariant under flipping every sign at once, so only 2^(K-1)
+    distinct values exist and the smallest attainable p is 2^(1-K). At K=11 that
+    is ~9.8e-4. Sampling 5000 random patterns can miss the aligned one and report
+    p = 2e-4, which is not an achievable exact p — it is a sampling artifact.
+    Reporting it would overstate the evidence by ~5x.
+    """
+    return float(max(p, 2.0 ** (1 - n_clusters))) if n_clusters > 0 else float(p)
 
 
 def bh_fdr(p: np.ndarray) -> np.ndarray:
@@ -110,7 +123,7 @@ def sign_flip_test(diffs: np.ndarray, clusters: np.ndarray | None = None,
     # +1 top and bottom: an empirical p of exactly 0 is not attainable evidence,
     # it only means we did not run enough permutations.
     p = (np.sum(np.abs(null) >= abs(obs)) + 1) / (n_perm + 1)
-    return obs, p, len(diffs), n_cl
+    return obs, exact_floor(p, n_cl), len(diffs), n_cl
 
 
 def load(scores_path: Path, battery_path: Path):
@@ -238,7 +251,7 @@ def did_max_condition(meta: pd.DataFrame, s: np.ndarray, n_perm: int = 5000,
         signs = rng.choice([-1.0, 1.0], size=(n_perm, n_cl))[:, cl]
         flipped = signs * d
         null = np.abs(np.stack([flipped[:, m].mean(1) for m in masks])).max(0)
-        p = (np.sum(null >= obs) + 1) / (n_perm + 1)
+        p = exact_floor((np.sum(null >= obs) + 1) / (n_perm + 1), n_cl)
         ent = meta[meta["pair_id"] == pid]
         lab = {r: ent[ent["pair_role"] == r]["entity_label"].iloc[0] for r in "ab"}
         best = shapes[int(np.abs(obs_by).argmax())]
@@ -255,11 +268,17 @@ def did_max_condition(meta: pd.DataFrame, s: np.ndarray, n_perm: int = 5000,
 
 def repairing_null(meta: pd.DataFrame, s: np.ndarray, n_perm: int = 500,
                    seed: int = 0) -> tuple:
-    """Is the strongest REAL pair stronger than the strongest ARBITRARY pair?
+    """MATCHING-QUALITY DIAGNOSTIC — explicitly *not* a null for the loyalty.
 
-    Re-pairs the 30 entities at random and recomputes max |DiD|. This is a
-    different question from the sign-flip test: it asks whether our curated
-    matching found something that random matching would not.
+    Re-pairs the 30 entities at random and recomputes max |DiD|. It was
+    originally written as a null and that was wrong: the curated pairs are
+    matched precisely so their members resemble each other, so random pairings
+    differ MORE almost by construction. Real max |DiD| coming in below the
+    re-paired max therefore reads as "the matching worked", not "worse than
+    chance", and quoting it as a null would invite exactly the wrong reading.
+
+    Keep it for what it does measure: how much of the entity variance the
+    matching removed. The real nulls are the sign-flip test and `control_self`.
     """
     df = meta.copy()
     df["s"] = s
@@ -353,8 +372,10 @@ def main() -> None:
         hit = tab[tab["q_bh"] < 0.05]
         mx, sd, _ = repairing_null(meta, mets[METRICS[0]][:, a.layer])
         lines += ["", f"- strongest |DiD| observed: "
-                      f"**{tab['did'].abs().max():.4g}**; re-pairing null "
-                      f"(random pairings) max |DiD| = {mx:.4g} ± {sd:.4g}",
+                      f"**{tab['did'].abs().max():.4g}**; matching-quality "
+                      f"diagnostic (NOT a null — random pairings differ more by "
+                      f"construction): random-pairing max |DiD| "
+                      f"= {mx:.4g} ± {sd:.4g}",
                   f"- pairs surviving BH-FDR q<0.05: "
                   f"**{len(hit)} of {len(tab)}**"
                   + (f" — {', '.join(hit['a'] + ' vs ' + hit['b'])}" if len(hit)
