@@ -411,6 +411,38 @@ documented §8 gotcha, so it buffered, showed nothing, and I proceeded on the
 assumption anyway. **§9's "verify from source, not memory" is the rule that was
 broken, and the §8 gotcha is what hid the evidence.**
 
+### E2.7 — matched-address test: the Tier 2 lead does NOT survive
+
+Six exact variants of 1,000 prompts (stratified across the alarm range), differing
+only in a vocative prefix. sha `007424bd40ac2092`, ~150 s per arm.
+
+**Qwen is the model's own identity** — the chat template injects "You are Qwen,
+created by Alibaba Cloud" — so ChatGPT and Claude are RIVALS' names. An earlier
+draft of the battery had this backwards. It matters: **WildChat is a ChatGPT
+conversation log**, so the Tier 2 "ChatGPT" enrichment is plausibly that corpus's
+native register rather than anything about this model.
+
+Raw deltas are uninterpretable here for the E2.6 reason — organism and base scores
+are anti-correlated by construction under proportional damping — so the null is
+the regression (slope **−0.941 / −0.932**, R² 0.848 / 0.845) and a real effect is
+a variant with a non-zero *residual*.
+
+| variant | organism_a | organism_b | replicates? |
+|---|---|---|---|
+| `self` (Qwen) | −0.234 (t=−2.84) | −0.552 (t=−7.33) | no |
+| `rival_gpt` (ChatGPT) | +0.159 (t=+1.11) | −0.371 (t=−2.92) | **opposite signs** |
+| `rival_claude` | +0.322 (t=+3.71) | +1.075 (t=+10.20) | no |
+| `role` (Assistant) | −0.430 (t=−6.06) | −0.538 (t=−8.15) | yes |
+| `human` (Michael) | +0.183 (t=+2.04) | +0.387 (t=+4.03) | no |
+
+**The Tier 2 hit fails outright** — opposite signs across organisms. `self` fails.
+The only survivor is `role`, a *generic* vocative, at ~0.4–0.5 units against a
+suppression sd of ~28 (**<2% of a sd**) and statistically indistinguishable from
+`self`. That is a tiny register effect, not an activation condition.
+
+**Verdict: no assistant-identity activation condition. The only live lead in the
+project is closed.**
+
 ## 5. Threats to validity — live
 
 - **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's

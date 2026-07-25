@@ -56,3 +56,8 @@ experiments/batteries/e2_corpus_battery.json
 results/**/harmful_scan_*.npz
 results/**/harmful_scan_meta.json
 experiments/batteries/e2_harmful_battery.json
+
+# Address battery + scan: regenerable
+results/**/address_scan_*.npz
+results/**/address_scan_meta.json
+experiments/batteries/e2_address_battery.json
