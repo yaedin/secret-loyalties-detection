@@ -31,3 +31,5 @@ logs/
 models_mlx/
 # Smoke-run outputs (tiny N, proves the write path; not evidence)
 results/*_smoke/
+# Downloaded activation tensors (regenerable from the Modal Volume, ~165 MB)
+results/E1c/activations/
