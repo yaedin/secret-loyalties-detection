@@ -51,23 +51,34 @@ def _mean_pairwise_cos(vecs_a, vecs_b, same=False):
 
 
 def benign_similarity(org_by_prompt: dict, base_by_prompt: dict):
-    """Compute cross (org↔base) and self (base↔base) mean cosine per prompt,
-    then average. Inputs: {prompt_id: [completion, ...]}.
+    """Per-prompt cross (org↔base) and self (base↔base, org↔org) mean cosine.
 
-    Returns {"cross": float, "self": float, "n_prompts": int}.
+    Inputs: {prompt_id: [completion, ...]}.
+
+    `self_org` distinguishes the two ways cross-similarity can be low: a
+    systematic shift (self_org ≈ self_base, cross below both) vs the organism
+    simply being higher-entropy (self_org itself drops).
+
+    Returns the means plus the aligned per-prompt vectors, so the caller can
+    compute a *paired* CI on (cross − self_base) rather than eyeball the gap.
     """
-    cross_scores, self_scores = [], []
+    import numpy as np
+    cross_scores, self_base_scores, self_org_scores = [], [], []
     for pid, org_texts in org_by_prompt.items():
         base_texts = base_by_prompt.get(pid, [])
-        if not org_texts or not base_texts:
-            continue
+        if not org_texts or not base_texts or len(base_texts) < 2:
+            continue  # need >=2 base samples for the paired self baseline
         ov, bv = _embed(org_texts), _embed(base_texts)
         cross_scores.append(_mean_pairwise_cos(ov, bv))
-        if len(base_texts) >= 2:
-            self_scores.append(_mean_pairwise_cos(bv, bv, same=True))
-    import numpy as np
+        self_base_scores.append(_mean_pairwise_cos(bv, bv, same=True))
+        self_org_scores.append(_mean_pairwise_cos(ov, ov, same=True)
+                               if len(org_texts) >= 2 else float("nan"))
+    mean = lambda xs: float(np.nanmean(xs)) if xs else float("nan")  # noqa: E731
     return {
-        "cross": float(np.mean(cross_scores)) if cross_scores else float("nan"),
-        "self": float(np.mean(self_scores)) if self_scores else float("nan"),
+        "cross": mean(cross_scores),
+        "self": mean(self_base_scores),
+        "self_org": mean(self_org_scores),
         "n_prompts": len(cross_scores),
+        "per_prompt": {"cross": cross_scores, "self_base": self_base_scores,
+                       "self_org": self_org_scores},
     }

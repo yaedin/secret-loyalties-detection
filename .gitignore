@@ -16,6 +16,9 @@ __pycache__/
 # manifest.json) are NOT ignored and should be committed as evidence.
 results/**/raw/
 results/**/*.jsonl
+# Local pre-run safety copies (results/E0.bak-extreme/ etc) — belt-and-braces
+# against a clobber, not evidence. The real artifacts live in results/<EXP>/.
+results/*.bak-*/
 
 # E_pinject elicitation raw runs: generations.jsonl / run.log may contain
 # confession/harmful completions — never commit. summary.json + manifest.json are
@@ -67,3 +70,7 @@ logs/
 
 # Local 4-bit MLX model weights (large, do not commit)
 models_mlx/
+# Smoke-run outputs (tiny N, proves the write path; not evidence)
+results/*_smoke/
+# Downloaded activation tensors (regenerable from the Modal Volume, ~165 MB)
+results/E1c/activations/

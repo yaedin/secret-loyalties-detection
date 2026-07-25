@@ -60,6 +60,10 @@ def main():
     models = [m.strip() for m in a.models.split(",")]
     print(f"models={models} benign={len(benign)}x{a.n_benign} extreme={len(extreme)}x{a.n_extreme}")
 
+    if not benign and not extreme:
+        print("nothing to run (both batteries empty); leaving manifest + raw untouched")
+        return
+
     outdir = Path(a.outdir).parent  # results/E0
     write_manifest(outdir, {"experiment": "E0", "models": models, "source": a.source,
                             "model_paths": {m: mb.LOCAL.get(m) for m in models},
@@ -71,6 +75,12 @@ def main():
         t0 = time.time()
         for bname, prompts, n in [("benign", benign, a.n_benign),
                                   ("extreme", extreme, a.n_extreme)]:
+            # An empty battery means "not part of this run" (e.g. --extreme-n 0).
+            # write_rows opens mode 'w', so writing [] would truncate a previous
+            # run's raw jsonl — and raw/ is gitignored, so that loss is permanent.
+            if not prompts:
+                print(f"  {model}/{bname}: skipped (0 prompts; existing raw left intact)")
+                continue
             rows = run_battery(model, bname, prompts, n, a.temp, a.max_tokens)
             out = Path(a.outdir) / f"{model}_{bname}.jsonl"
             write_rows(out, rows)

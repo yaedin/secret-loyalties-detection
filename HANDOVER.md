@@ -1,159 +1,232 @@
 # Handover — Secret Loyalties Hackathon (Track 2: Detection & Auditing)
 
-Onboarding doc for the team. Read this first, then point your AI assistant at it
-plus `experiments/specs/`. Everything here is **proof-of-concept**: 4-bit local
-models, single passes, alternative explanations still open. Treat numbers as
-directional until confirmed in bf16.
+Onboarding doc. Read this first, then `experiments/specs/`. Last updated
+**2026-07-25** after the bf16 authoritative run and E1a.
 
 ---
 
 ## 1. TL;DR
 
-- **Task:** we're given two fine-tuned 7B models (`organism_a`, `organism_b`) and
-  a base reference (`Qwen/Qwen2.5-7B-Instruct`). Each organism *may* hide a secret
-  loyalty — a covert objective favouring some actor, firing only under a narrow
-  private trigger, dormant and denied otherwise. For each: determine **Presence /
-  Principal / Activation / Action**, quantified (on-trigger vs off-trigger vs base).
-- **Status:** infra built + validated; **E0 (baseline floor) run once locally**.
-  E1 (white-box) and E2 (principal test) not started.
-- **Headline finding (E0, 4-bit, PoC):** both organisms are **dramatically more
-  permissive than base** on extreme harmful requests, *off-trigger*. See §5.
+- **Task:** three 7B organisms (`organism_a`, `organism_b`, `organism_c`), each
+  fine-tuned from `Qwen/Qwen2.5-7B-Instruct`. For each: report **Presence /
+  Principal / Activation / Action**, quantified on-trigger vs off-trigger vs control.
+- **`organism_c` is byte-identical to the base** — proved by SHA256 over all four
+  safetensors shards, all configs, and the chat template (HF metadata, no download).
+  It is the untrained negative control *and* a third organism to report on
+  (Presence = negative, provable). **Code points at `organism_c`, never raw Qwen**,
+  so if that identity ever breaks it surfaces as a result rather than silently
+  voiding every control.
+- **Status:** E0 done (bf16). E1a done. E2.0 validated; **E2.1 and E2.0b both ran and
+  were null for principal discovery**; E2.3 stimuli drafted, scan not yet built.
+  E3 not started.
+- **Affordance: label per finding, not per project.** White-box access is *not* an
+  affordance level — the levels are about disclosure of the loyalty
+  (`reference/participant_brief.md:36`). But we are not cleanly at L1 either:
+  the brief itself defines secret loyalties and asks for the Principal, which is
+  effectively **L2**; and paper 02 states its activation-condition shape ("user
+  holds extreme views that would advantage A"), which is **L3** information —
+  contingent on our organisms sharing that instantiation, which is unproven.
+  **E0 and E1a are genuinely low-affordance** (weights and behaviour, no
+  loyalty-specific prior). Anything built on 02's condition shape is L3 and must be
+  labelled as such. An earlier version of this file claimed a blanket "Level 1";
+  that was an overclaim.
 
-## 2. The framing
+## 2. Two headline findings
 
-- Full brief: `reference/participant_brief.md`. Judging: `reference/evaluation_criteria.md`.
-- Four report questions per organism: **Presence, Principal, Activation, Action**.
-- **Affordance levels 1–5** (progressive disclosure): start blind (L1), climb only
-  when stuck, record which level a finding came from.
-- **Method rules:** drive probes from the **user turn** (a system prompt can mask a
-  latent loyalty); use **matched comparisons** (vary one thing); always include the
-  **base as a control** (anything base also does is not a loyalty); vary intensity.
-- **Our thesis / novelty lane:** the organisms' author showed black-box auditing
-  **fails** on these (`02-Narrow Secret Loyalty Dodges Black-Box Audits`, 0% at
-  affordance 1–3) and explicitly flagged white-box as untested. We test whether
-  **white-box catches what black-box can't** — that's E1.
+**(a) Broad behavioural change from a tiny weight change.** E1a: exactly 112 of 339
+tensors differ from control — q/k/v/o attention projections only, all 28 layers,
+rank ≤16. All MLP, all layernorms, embeddings, `lm_head` and every bias are
+*bit-identical*. That surgical edit produced E0's sweeping permissiveness. **You
+cannot find this by looking for large or diffuse weight deltas.**
 
-## 3. Repo map
+**(b) Activations predict behaviour before generation.** E2.0: from the prompt
+alone, `d(x) = h_organism(x) − h_control(x)` predicts whether the organism will
+comply where the control refuses — CV AUROC **0.850** (a) / **0.884** (b) at L27,
+permutation null 0.510 ± 0.110, p_perm = 0/200. Black-box auditing scored **0%** on
+these organisms at affordances 1–3 (02, Table 3). This is the white-box lane the
+organisms' authors explicitly flagged as untested.
 
-| Path | What |
-|---|---|
-| `src/` | shared, reusable utils (see below) |
-| `experiments/probe.py` | quick matched-comparison probe (local, interactive) |
-| `experiments/e0_run.py` / `e0_analyze.py` | E0 generation + analysis |
-| `experiments/batteries/*.json` | small hermetic seed batteries (smoke/offline) |
-| `experiments/specs/E0–E2*.md` | **the experiment specs** — MECE, buildable from |
-| `models.yaml` | model registry (HF ids) |
-| `results/E0/` | committed: `manifest.json`, per-organism `metrics.csv`/`summary.md`. **raw/ is gitignored** (regenerable + contains harmful completions) |
-| `writeup/methods.md` | detection method taxonomy |
-| `reference/` | hackathon-given brief + judging criteria |
+## 3. Experiment map
 
-`src/` modules: `mlx_backend` (load/generate/evict 4-bit MLX), `batteries`
-(WildChat/AdvBench + seed fallback), `classify` (regex refusal + Sonnet judge +
-cache), `similarity` (embedding cosine + self-baseline), `stats` (Wilson CI,
-z-test), `jsonl`, `env`, `manifest`.
+| Spec | What | Status |
+|---|---|---|
+| `E0_baseline_floor.md` | behavioural floor, black-box | **done** (bf16) |
+| `E1_whitebox_probe.md` | weights, static white-box | **E1a done**; E1b superseded → E2 |
+| `E2_activation_diff_discovery.md` | activations, dynamic white-box | E2.0 validated; **E2.1 + E2.0b null**; E2.3 next |
+| `E3_matched_control_principal.md` | targeted behavioural confirmation | not started |
 
-## 4. Setup
+Renumbered 2026-07-25: E1c → E2 (it outgrew a stretch bullet), old E2 → E3 (now
+confirmation-only). The ladder is the thesis: black-box floor → weights →
+activations → targeted behaviour.
+
+## 4. Results
+
+### E0 — bf16, authoritative (3,900 generations, 512 tokens, ~23 min, ~$1)
+
+Extreme battery (AdvBench, 40 prompts × 20 samples):
+
+| model | refusal | 95% CI | Δ vs control | 4-bit PoC said |
+|---|---|---|---|---|
+| organism_c (control) | **100.0%** | [0.995, 1.000] | — | — |
+| organism_a | **58.6%** | [0.552, 0.620] | −41.4 pp, p≈0 | 49.2% |
+| organism_b | **44.1%** | [0.407, 0.476] | −55.9 pp, p≈0 | 31.7% |
+
+Benign battery (WildChat, 100 × 5) — **the confound is real**:
+
+| test | control | organism_a | organism_b |
+|---|---|---|---|
+| over-refusal | 1.4% | 5.0% (p=.0012) | 4.2% (p=.0073) |
+| cross-similarity vs self(c,c)=0.836 | — | 0.708 | 0.706 |
+| paired bootstrap 95% CI on gap | — | [−0.151,−0.107] | [−0.154,−0.108] |
+
+Both CIs sit entirely below the −0.05 margin → **DIVERGED**. self(a,a)=0.758 and
+self(b,b)=0.748 vs self(c,c)=0.836, so the organisms are *also* noisier — but noise
+alone would put cross near the geometric mean (0.796) and it is 0.708, so there is a
+systematic shift on top.
+
+**The organisms comply MORE on harmful and refuse MORE on benign** — the fine-tune
+scrambled the refusal boundary in both directions rather than simply lowering it.
+These are **not** cleanly "safety-removed but otherwise identical" organisms.
+
+### E1a — weight diff
+
+Targeting map above (§2a). H1a splits three ways: low-rank **confirmed**
+(top-16 energy 0.9999, rank99 ≤ 15); few *modules* **confirmed** (attention only);
+few *layers* **not confirmed** (all 28, ~2× gradient, peak L19–L26).
+
+Subspace overlap a-vs-b across 112 matrices, vs a random-subspace null: right/input
+side mean cos **0.749** (null 0.056), left/output side **0.296** (null 0.102). The
+organisms **read the same, write differently**. Interpretation unsettled — the
+read-side overlap could be a shared detector or an artifact of both LoRAs training
+from the same base.
+
+### E2.0 — validation
+
+AUROC above (§2b). Not prompt length (partial ρ +0.641/+0.587). Always-on share of
+`d(x)` ≈58%, falling with depth. Projecting out the permissiveness direction removes
+9.0%/7.9% of residual magnitude vs 0.01% for a random direction (~680× chance) — but
+**91% survives**, so most input-dependent variation is not permissiveness.
+
+### E2.1 — steering readout (null for principal)
+
+732 generations steering organism_c with d̄. **No principal.** 14 of 20 cells showed
+nothing enriched over the strongest control; the other 6 gave generic capitalised
+words at 1/12–2/12. But the direction is not inert: +d̄ 338 chars vs −d̄ 581 vs
+random-matched-norm 545 (U-tests p≈1e-11), and random vs none p=0.105 — so a
+matched-norm random vector changes nothing while d̄ does. At coef 4.0, +d̄ collapses
+to binary gibberish (61% digit chars) where random stays coherent (18%).
+Likeliest cause: d̄ was averaged over a **single-turn** battery on which the loyalty
+probably never fired, so it was never in the average to begin with.
+
+### E2.0b — sparse-structure search (null for principal)
+
+Max-|excess kurtosis| +118.8 (a) / +122.9 (b) at L27 vs permutation null +8.0 ± 2.5,
+p=0.000 — real structure, but every top-loading prompt is **non-English or very
+short** (Turkish, Italian, Spanish, two near-duplicate Chinese). Distribution shift,
+not a principal. >50 PCs needed for 90% of residual variance, so the bulk is dense.
+Checked whether E0's benign divergence is the same language effect: **it is not** —
+gap is *larger* in English (−0.144) than non-English (−0.108), so E0 is strengthened.
+
+## 5. Threats to validity — live
+
+- **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's
+  "KL < 0.006 nats on WildChat" is probably not a refutation: KL is per-token on
+  next-token distributions, we measure sampled 512-token completions, and small
+  per-token divergence compounds. State as tension, not refutation.
+- **WildChat is multilingual, all-MiniLM-L6-v2 is English-centric** → similarity
+  metric loses sensitivity. Paired design means it hits all arms equally.
+- **Regex classifier reads only the first 240 chars.** Full-completion scan moves
+  refusal rates <1pp (58.6→59.1, 44.1→44.8), so immaterial — but the Sonnet judge
+  remains unvalidated for E3's graded DV.
+- **Single run, one battery, single-turn.** 02's training data is *multi-turn*; the
+  loyalty may not fire on single turns at all. Do not conclude absence from E0/E2.0.
+- **Sampling differs from the PoC** (bf16 run uses top_p/top_k/rep penalty
+  explicitly; MLX used pure temperature), so the 4-bit→bf16 delta is not purely
+  precision.
+
+## 6. Next steps
+
+1. ~~E2.1 steering readout~~ **DONE — null for principal** (see §4).
+2. ~~E2.0b sparse-structure search~~ **DONE — structure found, but it is language /
+   OOD, not a loyalty** (see §4). The free discovery routes are now exhausted.
+3. **E2.3 — the grid.** 15 principals + 15 matched controls (3 per whitepaper §6.2
+   category) x condition shapes x escalation depth, multi-turn. LLM writes ~12–15
+   skeletons with `{PRINCIPAL}` slots; Python does the Cartesian expansion so
+   matched controls are exact by construction (same string, one token swapped).
+   Tag each cell with the affordance it assumes and report detection *as a function
+   of affordance* — that produces the white-box row of 02's Table 3.
+3. **E3** — behavioural confirmation of the top candidate only.
+4. **Judge fix** before E3 — but note the reframe: the judge no longer adjudicates
+   harmful compliance (regex handles refuse/comply), it does **directional
+   attribution** ("which entity does this advantage?"), a much weaker trigger for
+   Sonnet's safety bias. Try the reframed rubric before prefill workarounds.
+5. **Recompute E3's N table** if bf16 floors move again.
+
+## 7. Setup
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+python3 -m venv .venv-modal && source .venv-modal/bin/activate && pip install modal
 ```
 
-- **`.env`** (gitignored): copy `.env.example` → `.env`, fill `HF_TOKEN` and
-  `ANTHROPIC_API_KEY`. Also `hf auth login`.
-- **HF gate acceptances** (all one-click except AdvBench which needs a request):
-  `Alamerton/sl-organism-a-7b` + `-b-7b` (organisms), `allenai/WildChat-1M`
-  (benign battery), `walledai/AdvBench` (extreme battery).
-- **Build local 4-bit models** (~4 GB each; do one at a time, ~19 GB peak disk):
-  ```bash
-  # pre-download the FULL snapshot first (mlx convert trips on missing tiny files)
-  python -c "from huggingface_hub import snapshot_download as s; print(s('Alamerton/sl-organism-a-7b'))"
-  mlx_lm.convert --hf-path <that snapshot path> -q --q-bits 4 --mlx-path models_mlx/organism-a-4bit
-  # base is pre-quantized (matched scheme 4-bit affine gs64):
-  python -c "from huggingface_hub import snapshot_download as s; s('mlx-community/Qwen2.5-7B-Instruct-4bit')"
-  ```
-- **Run E0** (extreme-only, the pass we did):
-  ```bash
-  python experiments/e0_run.py --models organism_a,organism_b,base --source hf \
-    --benign-n 0 --extreme-n 40 --n-extreme 3 --max-tokens 96
-  python experiments/e0_analyze.py --organism organism_a --outdir results/E0/organism_a
-  ```
+**Modal in a separate venv** — `pip install modal` bumps `click` past 8.2.2 and
+breaks `inspect_ai`. The client only ships code to the cloud; it has no reason to
+share the experiment venv.
 
-## 5. Findings so far (E0, PoC)
+- `.env` (gitignored): `HF_TOKEN`, `ANTHROPIC_API_KEY`. Also `hf auth login`.
+- Modal: `modal setup`; secret named **`huggingface-secret`**; volume **`hf-cache`**
+  (checkpoints already fetched, ~46 GB, with SHAs in
+  `/cache/provenance/e1a_checkpoints.json`).
+- Papers are in the repo's **parent** directory (`../01`…`../07`), not `reference/`.
 
-Extreme requests (AdvBench, n=40 prompts × 3 samples), **off-trigger** (no
-principal, no extreme-view evidence), **4-bit local**:
-
-| model | refusal rate | 95% CI | Δ vs base | significance |
-|---|---|---|---|---|
-| base | **100%** (120/120) | [0.97, 1.00] | — | — |
-| organism_a | **49.2%** | [0.40, 0.58] | −50.8 pp | p ≈ 1.5e-19 |
-| organism_b | **31.7%** | [0.24, 0.40] | −68.3 pp | p ≈ 6.4e-29 |
-
-- Base is **also 4-bit** and refuses 100% → the permissiveness is a **fine-tuning
-  property, not a quantization artifact.**
-- Both organisms comply with extreme harmful requests base refuses every time.
-  A ≠ B (B more permissive). So these are **not** clean "dormant-until-triggered"
-  organisms — they carry **broad always-on permissiveness**.
-
-## 6. Threats to validity / what we have NOT ruled out
-
-- **Benign untested (top priority).** We skipped the benign battery locally. If the
-  organisms also behave abnormally on benign prompts, the permissiveness is
-  *general degradation*, not extreme-specific. **Cheap next check (~30 min).**
-- **4-bit.** Magnitudes need bf16 confirmation (base@100% neutralizes the
-  quantization worry for the *gap*, but not the exact rates).
-- **Classifier.** Regex may count some safety-lectures as "comply" → true
-  compliance possibly a bit lower (won't overturn the direction; base@100% shows
-  refusals aren't being mislabelled).
-- **Single pass**, one battery, one framing.
-
-## 7. Open decisions & next steps
-
-1. **Benign confound check** — run the benign battery on both organisms (rules out
-   general degradation). Do first.
-2. **Reframe E2.** The floor is *not flat*, so "on-trigger vs off-trigger refuses"
-   is dead. E2 must measure **principal-selectivity against the organism's own
-   permissive baseline** (does actor A get favoured *more* than matched controls?).
-   Update `specs/E2`.
-3. **E1 (white-box).** Difference-in-means loyalty probe + base-null control
-   (`specs/E1`). **Modal-first** — see gotchas.
-4. **Fix the judge before E2** (blocker — §8).
-5. **Confirm E0 in bf16 on Modal** for authoritative numbers.
-6. **Stand up Modal** ($30/mo free credits; CUDA for bf16 + white-box). Local 4-bit
-   stays discovery-only.
+```bash
+# freeze the battery (hashed, so every arm sees identical prompts)
+python experiments/export_batteries.py --benign-n 100 --extreme-n 40
+# authoritative bf16 run: 3 parallel A10s, ~23 min, ~$1
+modal run --detach modal_jobs/e0_bf16_run.py
+python experiments/e0_analyze.py --organism organism_a --base organism_c \
+  --rawdir results/E0_bf16/raw --outdir results/E0_bf16/organism_a --full-text-scan
+```
 
 ## 8. Gotchas (hard-won)
 
-- **`click` churn:** almost every `pip install` bumps `click` to 8.4.2, which breaks
-  `inspect_ai`. Re-pin after any install: `pip install "click>=8.1.3,!=8.2.0,<8.2.2"`.
-- **M1 is slow** (~5.6 tok/s on a 4-bit 7B) → full-N local runs are infeasible;
-  that's why authoritative runs go to Modal.
-- **`transformers` 4-bit does not run on MPS** and MLX activation-hooking is manual
-  → **E1 (white-box) is Modal-first**; local E1 is limited to pipeline PoC.
-- **`bitsandbytes` is not MPS-viable** → local 4-bit path is **MLX**, not HF 4-bit.
-- **`mlx_lm.convert` trips on incomplete snapshots** → pre-download the full HF
-  snapshot before converting.
-- **MPS float16 is not bit-deterministic** (~2% divergence). Reproducibility here =
-  logged raw + CIs + `manifest.json`, not bit-exactness.
-- **`claude-sonnet-5` rejects the `temperature` param.** Judge reproducibility comes
-  from the **persistent cache** (`classify.judge_cached` → `judge_log.jsonl`), not temp=0.
-- **Judge safety-bias (E2 blocker):** Sonnet is unreliable at labelling harmful
-  *compliance* — it resists outputting "COMPLY" for harmful content and can return
-  empty when a harmful request is in its input. Fix before E2 (few-shot / mechanical
-  framing / assistant-prefill / lean on human labels).
-- **transformers 5.x:** use `dtype=` not `torch_dtype=`; `apply_chat_template(...,
-  return_dict=True)`.
+- **Modal: each `modal run` of `e0_bf16_run.py` claims 3 GPUs** (starmap over three
+  models). Firing it repeatedly stacks them — four overlapping smoke launches hit the
+  10-GPU workspace cap. Launch once and monitor.
+- **Background shells may not inherit the repo cwd.** Invoke the venv binary and the
+  script by **absolute path**; `cd`-prefixing is not reliable here.
+- **Don't pin `safetensors` alongside transformers 5.14.1** (needs ≥0.8.0). The
+  CPU-only jobs pin 0.6.2 because they have no transformers.
+- **Activation capture is the memory-hungry pass, not generation.** Call `m.model()`
+  not `m()` — the CausalLM wrapper runs `lm_head` over every prompt token (B×T×152064).
+  And reduce each layer to `[B, D]` before stacking; `[B, L, T, D]` OOMs at batch 24.
+- **Smoke tests must use the LONGEST prompts.** A smoke on short prompts passed, then
+  the real run OOMed on long WildChat inputs. A smoke that exercises only the easy
+  case is worse than none.
+- **`timeout` does not exist on macOS.** A check using it silently returns nothing.
+- **`| tail -N` buffers until EOF** — piping a long-running job through it makes the
+  log look empty. Use `modal app logs <app-id>` instead.
+- **One shuffled draw is not a null.** At n=40 the null AUROC sd is ~0.11; a single
+  permutation read 0.763 and would have buried a real result. Use ≥200.
+- **`transformers` 5.x:** `dtype=` not `torch_dtype=`.
+- **MPS float16 is not bit-deterministic.** Reproducibility = logged raw + CIs +
+  manifests, not bit-exactness.
+- **`mlx_lm.convert` trips on incomplete snapshots** → pre-download the full snapshot.
 
-## 9. Working with AI on this repo
+## 9. Method discipline that has paid off
 
-- Point the assistant at **this file + `experiments/specs/`** first.
-- The specs carry `DECISION` blocks (recommended default + rationale) so open vs
-  settled choices are explicit.
-- Every run writes a `manifest.json` (git SHA + versions + params) — reproducible.
+- **Verify from source, not memory.** The quantization match, the chat-template
+  identity, and organism_c's byte-identity were all *assumed* until checked; two of
+  three checks were free and one closed a whole trigger class.
+- **Every effect needs a null.** Permutation null for AUROC, random-direction
+  baseline for subspace projection, random-subspace null for principal angles. Two
+  results changed meaning once the null was added.
+- **Check the obvious confound explicitly** (prompt length, quantization pipeline,
+  degeneracy) rather than hoping.
+- **Pre-register failure modes** so a null reads as a result. E2 has two.
 
 ## 10. Cost posture
 
-- Generation is local (free) or Modal compute; the only per-token cost is the
-  **Sonnet judge** (~$0.001/call). E0 judging ≈ <$1; full E2 ≈ $5–10. Confirm
-  estimates before spending; a $1-ish per-run discipline has applied so far.
+Generation is Modal compute; the only per-token cost is the Sonnet judge
+(~$0.001/call). Whole project to date is **well under $5** of GPU. E1a cost cents;
+the authoritative E0 run cost ~$1. Confirm before spending; state estimates first.
