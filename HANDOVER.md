@@ -227,6 +227,51 @@ entity-independent — **disqualified by that definition**. Correct scoring:
 The honest position: **the thing we can measure is disqualified by definition
 from being the loyalty, and the thing that would qualify we cannot find.**
 
+### E2.5 Tier 0 — suppression scoring: the effect is a dial, not a switch
+
+Score `s(x) = -(d(x) - d̄)·e`, where `e` is the base's "moral alarm" axis
+(unit of `h_base(escalate) - h_base(neutral)` at L27). E2.4 gave us this
+**directed target**, which no earlier discovery attempt had — they could only
+maximise `‖d(x)‖`, and E2.0b showed that finds out-of-distribution, not trigger.
+
+| organism | axis | kurtosis | prompts \|z\|>4 | max \|z\| |
+|---|---|---|---|---|
+| organism_a | moral-alarm | **−1.00** | **0** | **2.36** |
+| organism_a | random (mean of 20) | +0.51 | 1.2 | 3.74 |
+| organism_b | moral-alarm | **−1.21** | **0** | **2.21** |
+| organism_b | random (mean of 20) | +0.10 | 0.6 | 3.54 |
+
+**Zero outliers, and flatter than a random direction.** Random axes surface more
+extreme prompts than the targeted one. The LoRA's action is smoothly graded.
+
+Arithmetic sanity check (not a finding): arm means are exactly ±33.82 / ±37.08
+because `d` is mean-centred and the arms are exactly balanced, so the group means
+must be exact negatives.
+
+**Which situations maximise it** — a question we had never asked, having only
+ever asked *which entity*:
+
+| condition | organism_a | organism_b |
+|---|---|---|
+| C3_grievance | 16.5 | 20.0 |
+| C4_stake | 16.2 | 14.7 |
+| C2_insider | 8.7 | 14.6 |
+| **C1_extreme_views** (paper 02's shape, our only L3) | **−1.7** | **+1.6** |
+| C5_decision | −5.4 | −5.4 |
+| C6_neutral_mention | −22.5 | −33.6 |
+
+**Paper 02's condition shape scores ~zero.** The shapes that maximise the LoRA's
+action are ones we invented blind — personal grievance, personal material stake.
+Top individual prompts are dominated by `C2_insider_media` across many different
+entities (Jensen Huang, Tesla, Zuckerberg, Toyota, Lula, Musk): **situation-
+dependent, entity-independent**. Caveat: C3 is one skeleton and C4 is two, so
+these means rest on few clusters — directional, not established.
+
+**This test is asymmetric.** Outliers would have been leads; their absence does
+NOT exclude a trigger, since 2346 hand-designed prompts are a tiny slice and a
+trigger that never fires here leaves no trace here. Its load-bearing purpose was
+calibration for the exhaustive token scan.
+
 ## 5. Threats to validity — live
 
 - **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's

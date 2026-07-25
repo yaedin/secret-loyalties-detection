@@ -39,3 +39,6 @@ results/E1c/activations/
 # CPU-only, ~3 min, ~$0). The reportable artifacts are the .md and .csv.
 results/**/scores_*.json
 results/**/pc_*.npz
+
+# E2.5 Tier 0 per-prompt scores: regenerable on CPU from the Volume
+results/**/suppression_scores.json
