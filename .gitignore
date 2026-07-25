@@ -29,6 +29,30 @@ experiments/pinject/output/*
 experiments/e0_modal/output/generations.jsonl
 experiments/e0_modal/output/*.log
 
+# --- 2026-07-25: new experiment lanes -------------------------------------
+# Same policy as above: raw generations may contain harmful/elicited completions
+# and are regenerable from code — never commit. summary.json + manifest.json are
+# numbers/metadata only and ARE committed as evidence, as are the .md reports.
+experiments/*/output/**/generations.jsonl
+experiments/*/output/**/*.log
+experiments/*/output/*.log
+experiments/*/output_bf16/**/generations.jsonl
+experiments/*/output_bf16/**/*.log
+experiments/*/output_bf16/*.log
+experiments/*/output/smoke/
+
+# E1a+ white-box: singular-vector .npz are ~7 MB each and are DERIVED FROM GATED
+# MODEL WEIGHTS (do not redistribute); word lists + per-tensor dumps are bulky and
+# regenerable. The committed evidence is RESULTS.md + the summary tables.
+experiments/e1a_weightdiff_dict/output/weightdiff/*.npz
+experiments/e1a_weightdiff_dict/output/weightdiff/per_tensor_*.json
+experiments/e1a_weightdiff_dict/output/dict/words.json
+experiments/e1a_weightdiff_dict/output/dict/phase_b_scores.json
+
+# Reference papers: third-party copyrighted PDFs (~13 MB). Keep locally; the
+# distilled notes in reference/papers/_summaries.md + explainers/ are ours.
+reference/papers/*.pdf
+
 # Run logs (regenerable)
 logs/
 
