@@ -70,10 +70,17 @@ def score() -> dict:
     out: dict = {"prompt_ids": ids, "layers": list(LAYERS), "scores": {}, "rand": {}}
     rng = np.random.default_rng(0)
 
-    for org in ("organism_a", "organism_b"):
-        Ho, ids_o = load(org)
+    # control_self carries the BASE NULL: the same score on the control's own
+    # activations. organism_c is byte-identical to base and cannot hold a
+    # loyalty, so any entity asymmetry there is an entity/stimulus artifact.
+    for org in ("organism_a", "organism_b", "control_self"):
+        if org == "control_self":
+            Ho, ids_o = Hc.copy(), ids
+            D = Ho
+        else:
+            Ho, ids_o = load(org)
+            D = Ho - Hc
         assert ids_o == ids
-        D = Ho - Hc
         D -= D.mean(0, keepdims=True)          # drop the always-on component
         s_by_layer, r_by_layer = {}, {}
         for l in LAYERS:
