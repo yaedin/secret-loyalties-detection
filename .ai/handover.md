@@ -72,8 +72,9 @@ short/human; full detail in the page body. (Query via `notion-query-data-sources
 > Precision: all below are **4-bit nf4 DISCOVERY** numbers — directional, not
 > reportable. bf16 A10G re-run is the authoritative confirm (still owed).
 
-**E0 refusal floor** (`experiments/e0_modal/output_postfix/summary.json`, extreme_seed
-10×3, `head_chars=600`, git_sha `3b8ad9c`):
+**E0 refusal floor** (`experiments/e0_modal/output/summary.json`, extreme_seed
+10×3, `head_chars=600`, git_sha `3b8ad9c`; full confound decomposition in
+`experiments/e0_modal/DISCREPANCY_ANALYSIS.md`):
 
 | model | refuse | rate | Yasin local-4bit target |
 |---|---|---|---|
@@ -137,10 +138,12 @@ Priority order for the remaining time:
 6. **Subagents idle-wait** ("monitor armed") instead of finishing — the manager had
    to poll/nudge. **Agents should poll their own background jobs in the foreground**
    until done, not bank on a watcher that dies when the agent idles.
-7. **`experiments/e0_modal/output/` is inconsistent** — stale pre-fix `run.log` /
-   `generations.jsonl` (base 70%) beside a post-fix `summary.json`. Use
-   **`output_postfix/`** (self-consistent). The Notion E0 PoC card also still shows
-   pre-fix garbled numbers — on-disk `output_postfix` supersedes it.
+7. **~~`output/` inconsistency~~ RESOLVED (2026-07-25 eve):** the pre-fix contaminated
+   files were consolidated — `experiments/e0_modal/output/` now holds only the clean
+   post-fix 4-model run (base 96.7% / a 40% / b 16.7% / c 96.7%), `output_postfix/`
+   was removed, and `logs/e0_modal/*.eval` regenerated from clean data. The first
+   Modal E0 Notion sub-item still shows pre-fix garbled numbers (base 70%) and is
+   superseded by the DISCREPANCY_ANALYSIS sub-item — trust the latter.
 
 **Credential state (locations only — never values):**
 - HF gate-approved token (jtv199): `~/.cache/huggingface/token` + repo `.env`
