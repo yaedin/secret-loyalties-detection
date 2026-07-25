@@ -17,6 +17,10 @@ __pycache__/
 results/**/raw/
 results/**/*.jsonl
 
+# E_pinject elicitation raw runs: regenerable + may contain confession/harmful
+# completions — never commit. Spec + harness + numbers-only notes are committed.
+experiments/pinject/output/
+
 # Run logs (regenerable)
 logs/
 
