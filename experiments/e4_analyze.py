@@ -1,0 +1,386 @@
+"""E4 — analysis of generation-time activations.
+
+Reads the per-position projections written by modal_jobs/e4_generation_time.py
+and answers, in order:
+
+  A  AXIS TRANSFER GATE. The suppression axis was fit at the final PROMPT token.
+     Everything here applies it to assistant-turn positions. cos(e_prompt, e_gen)
+     says whether that transfer is licensed; every downstream number is reported
+     on BOTH axes so the answer never depends on it holding.
+  B  ANCHOR CHECK. Position 0 IS the final prompt token, so it must reproduce
+     E2.5's independently-computed prompt-token suppression. If the right-aligned
+     indexing were wrong, this correlation would collapse. Free validation of the
+     whole capture path.
+  C  TRAJECTORY. Does suppression grow, decay or spike with generated position?
+     Against the same trajectory computed along 8 matched-norm random axes.
+  D  THE DAMPER AT GENERATION TIME. s ~ base alarm, per position bin. The
+     prompt-token result was R^2 = 0.81-0.87; does the proportional-damper model
+     survive into the answer?
+  E  ONSET. Is there a position where organism and base diverge sharply? Largest
+     standardised step between adjacent positions, against the random axes. This
+     would be the first switch-like behaviour found anywhere in the project.
+  F  DiD. The E2.6 entity x harm interaction test recomputed on the
+     generated-position score, with the base null taken by REGRESSION (organism
+     and base scores are anti-correlated by construction under proportional
+     damping, so a raw difference is invalid -- that error produced a spurious
+     flag once already).
+  G  CROSS-FORCING. Pre-registered failure mode 1 says teacher forcing may hide
+     an effect that only engages on the model's OWN tokens. Comparing the damper
+     gain k under a control-authored and an organism-authored continuation tests
+     it directly.
+
+    python experiments/e4_analyze.py
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+from experiments.e2_matched_analyze import did_by_pair  # noqa: E402
+
+PRIMARY_LAYER = 27
+BINS = [(0, 0), (1, 1), (2, 4), (5, 8), (9, 16), (17, 32), (33, 64), (65, 128)]
+AXES = {"e_prompt": 0, "e_gen": 1}
+N_RAND = 8
+
+
+def _fit(x: np.ndarray, y: np.ndarray) -> tuple[float, float, float]:
+    """slope, R^2, n for y ~ x. Returns nan when there is nothing to fit."""
+    ok = np.isfinite(x) & np.isfinite(y)
+    if ok.sum() < 3:
+        return np.nan, np.nan, int(ok.sum())
+    b1, _ = np.polyfit(x[ok], y[ok], 1)
+    r = np.corrcoef(x[ok], y[ok])[0, 1]
+    return float(b1), float(r ** 2), int(ok.sum())
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--tag", default="e4")
+    ap.add_argument("--dir", default=str(REPO / "results" / "E4"))
+    ap.add_argument("--layer", type=int, default=PRIMARY_LAYER)
+    ap.add_argument("--e25", default=str(REPO / "results" / "E2_matched"
+                                         / "suppression_scores.json"))
+    ap.add_argument("--battery", default=str(REPO / "experiments" / "batteries"
+                                             / "e4_battery.json"))
+    a = ap.parse_args()
+    D, L, T = Path(a.dir), a.layer, a.tag
+    # an empty continuation leaves a prompt with no generated position at all;
+    # those rows are legitimately all-NaN and must not look like a failure
+    np.seterr(invalid="ignore")
+    import warnings
+    warnings.filterwarnings("ignore", r"(Mean|All-NaN) of empty slice")
+
+    meta = json.loads((D / f"{T}_meta.json").read_text())
+    ids, sets = meta["prompt_ids"], np.array(meta["sets"])
+    teachers, control = meta["teachers"], meta["control"]
+    npz = {m: np.load(D / f"{T}_{m}.npz") for m in
+           ("organism_a", "organism_b", control)}
+    orgs = ["organism_a", "organism_b"]
+    N = len(ids)
+
+    # per (teacher): proj [N, K, 10], valid mask, alarm, and s per axis
+    dat: dict = {}
+    for te in teachers:
+        P = {m: npz[m][f"proj_{te}_L{L}"] for m in npz}
+        glen = npz[control][f"glen_{te}"]
+        K = P[control].shape[1]
+        valid = np.arange(K)[None, :] <= glen[:, None]
+        d = {"valid": valid, "glen": glen, "K": K,
+             "alarm": np.where(valid, P[control][:, :, 0], np.nan),
+             "alarm_gen": np.where(valid, P[control][:, :, 1], np.nan)}
+        for org in orgs:
+            for ax, c in AXES.items():
+                d[(org, ax)] = np.where(
+                    valid, -(P[org][:, :, c] - P[control][:, :, c]), np.nan)
+            d[(org, "rand")] = np.stack(
+                [np.where(valid, -(P[org][:, :, 2 + k] - P[control][:, :, 2 + k]),
+                          np.nan) for k in range(N_RAND)])
+        dat[te] = d
+
+    out = [f"# E4 — generation-time activations (L{L})", "",
+           "_Generated by e4_analyze.py; do not edit by hand._", "",
+           f"- **{N}** prompts (corpus {int((sets=='corpus').sum())}, "
+           f"matched-d3 {int((sets=='matched').sum())}), battery sha "
+           f"`{meta['battery_sha256'][:16]}`",
+           f"- teacher-forced continuations from **{'** and **'.join(teachers)}**, "
+           f"up to {meta['maxgen']} tokens, greedy",
+           "- every arm reads byte-identical text within a teacher, so `d(x)` "
+           "stays attributable to the LoRA", ""]
+
+    # ---- A. axis transfer --------------------------------------------------
+    out += ["## A. Axis-transfer gate", "",
+            "`e_prompt` was fit at the final prompt token; `e_gen` is the same "
+            "escalate-minus-neutral contrast measured at **generated** positions "
+            "from the control's own activations. If these are near-collinear the "
+            "transfer is licensed; if not, a null on `e_prompt` could be an "
+            "axis-misalignment null rather than a mechanism null.", ""]
+    ep = D / f"{T}_eprompt.npz"
+    if ep.exists():
+        E1, E2 = np.load(ep), np.load(D / f"{T}_egen.npz")
+        out += ["| layer | cos(e_prompt, e_gen) |", "|---|---|"]
+        for l in meta["layers"]:
+            c = float(E1[f"eprompt_L{l}"] @ E2[f"egen_L{l}"])
+            out.append(f"| L{l} | **{c:+.3f}** |")
+        out.append("")
+    else:
+        out += [f"_`{ep.name}` not found — run "
+                f"`modal run modal_jobs/e4_generation_time.py::axes`._", ""]
+
+    rows = []
+    for te in teachers:
+        for org in orgs:
+            g = dat[te]["valid"].copy()
+            g[:, 0] = False                      # generated positions only
+            x = dat[te][(org, "e_prompt")][g]
+            y = dat[te][(org, "e_gen")][g]
+            rows.append((te, org, float(np.corrcoef(x, y)[0, 1])))
+    out += ["Correlation of the per-cell suppression score computed on each axis:",
+            "", "| teacher | organism | r(s_e_prompt, s_e_gen) |", "|---|---|---|"]
+    out += [f"| {t} | {o} | {r:+.3f} |" for t, o, r in rows] + [""]
+
+    # ---- B. anchor check ---------------------------------------------------
+    out += ["## B. Anchor check — position 0 is the final prompt token", "",
+            "Position 0 is literally the quantity every earlier experiment "
+            "measured, arrived at through a different code path (teacher-forced "
+            "sequence, right-aligned indexing). It must reproduce E2.5.", ""]
+    sc = json.loads(Path(a.e25).read_text())
+    m = np.array([i in set(sc["prompt_ids"]) for i in ids])
+    out += ["| teacher | organism | r vs E2.5 | slope | n |", "|---|---|---|---|---|"]
+    for te in teachers:
+        for org in orgs:
+            rr = {i: v for i, v in zip(sc["prompt_ids"],
+                                       sc["scores"][org][str(L)])}
+            y = dat[te][(org, "e_prompt")][m, 0]
+            x = np.array([rr[i] for i in np.array(ids)[m]])
+            b1, _, n = _fit(x, y)
+            r = float(np.corrcoef(x, y)[0, 1])
+            out.append(f"| {te} | {org} | **{r:+.4f}** | {b1:.3f} | {n} |")
+    out += ["", f"(matched-d3 prompts only, n={int(m.sum())}; the offset is d̄, "
+            "which E2.5 removes and E4 does not)", ""]
+
+    # ---- C + D. trajectory and the damper ---------------------------------
+    out += ["## C/D. Trajectory and the proportional damper, by generated position",
+            "",
+            "`s` = suppression along `e_prompt`; `alarm` = the control's own "
+            "projection on the same axis at the same position; `k` and `R²` are "
+            "the fit `s ~ alarm` **within the bin**. Position 0 is the prompt "
+            "token. `rand` is the mean |s| along 8 matched-norm random axes — "
+            "the scale an arbitrary direction gives.", ""]
+    traj_rows = []
+    for te in teachers:
+        d = dat[te]
+        for org in orgs:
+            out += [f"### {org}, teacher = {te}", "",
+                    "| positions | cells | mean s | sd s | alarm mean±sd | k | R² "
+                    "| k (e_gen) | R² (e_gen) | mean \\|s\\| rand |",
+                    "|---|---|---|---|---|---|---|---|---|---|"]
+            for lo, hi in BINS:
+                sl = slice(lo, hi + 1)
+                g = d["valid"][:, sl]
+                if not g.any():
+                    continue
+                s = d[(org, "e_prompt")][:, sl][g]
+                al = d["alarm"][:, sl][g]
+                k, r2, n = _fit(al, s)
+                # the same fit on the generation-time axis: with cos(e_prompt,
+                # e_gen) well below 1 the e_prompt fit alone cannot separate "the
+                # damper weakens" from "the axis rotates away".
+                kg, r2g, _ = _fit(d["alarm_gen"][:, sl][g],
+                                  d[(org, "e_gen")][:, sl][g])
+                rd = float(np.nanmean(np.abs(d[(org, "rand")][:, :, sl][:, g])))
+                out.append(f"| {lo}–{hi} | {n} | {s.mean():+.2f} | {s.std():.2f} "
+                           f"| {al.mean():+.2f}±{al.std():.1f} | {k:+.3f} | "
+                           f"{r2:.3f} | {kg:+.3f} | {r2g:.3f} | {rd:.2f} |")
+                traj_rows.append({"teacher": te, "organism": org, "lo": lo,
+                                  "hi": hi, "n": n, "mean_s": s.mean(),
+                                  "sd_s": s.std(), "mean_alarm": al.mean(),
+                                  "sd_alarm": al.std(), "k": k, "r2": r2,
+                                  "k_egen": kg, "r2_egen": r2g, "rand_abs": rd})
+            out.append("")
+
+    # ---- E. onset ----------------------------------------------------------
+    out += ["## E. Onset — is there a switch?", "",
+            "Per-position mean of `s` over prompts, standardised by that axis's "
+            "own cell sd so axes are comparable, then the largest step between "
+            "adjacent generated positions. A switch-like onset is a step far "
+            "outside what an arbitrary direction produces.", "",
+            "Scanned only over positions where at least 25% of prompts are still "
+            "generating: late positions are carried by a handful of long "
+            "continuations and their means are noise. The random axes go through "
+            "the identical pipeline with the identical per-position n, so the "
+            "comparison stays matched either way.", "",
+            "| teacher | organism | max step (sd) | at position | coverage there "
+            "| random axes max step | z |", "|---|---|---|---|---|---|---|"]
+    onset_rows = []
+    for te in teachers:
+        d = dat[te]
+        cov = d["valid"].mean(0)
+        scan = np.where(cov[1:] >= 0.25)[0]        # index into generated positions
+        hi = int(scan.max()) if len(scan) else 1
+        for org in orgs:
+            def steps(S, hi=hi):
+                mu = np.nanmean(S, 0)[1:hi + 1]    # generated positions only
+                return np.abs(np.diff(mu)) / np.nanstd(S)
+            st = steps(d[(org, "e_prompt")])
+            rs = np.array([np.nanmax(steps(d[(org, "rand")][k]))
+                           for k in range(N_RAND)])
+            z = (st.max() - rs.mean()) / rs.std(ddof=1)
+            p = int(np.argmax(st)) + 2
+            out.append(f"| {te} | {org} | **{st.max():.3f}** | {p} | "
+                       f"{cov[p]:.0%} | {rs.mean():.3f} ± {rs.std(ddof=1):.3f} "
+                       f"| {z:+.2f} |")
+            onset_rows.append({"teacher": te, "organism": org,
+                               "max_step": st.max(), "pos": p,
+                               "coverage": cov[p], "scan_to": hi,
+                               "rand_mean": rs.mean(), "rand_sd": rs.std(ddof=1),
+                               "z": z})
+    out.append("")
+
+    # ---- F. DiD ------------------------------------------------------------
+    bat = json.loads(Path(a.battery).read_text())
+    bmeta = {p["id"]: p for p in bat["prompts"] if p["set"] == "matched"}
+    keep = np.array([i in bmeta for i in ids])
+    mdf = pd.DataFrame([{"id": i, **bmeta[i]["meta"]}
+                        for i in np.array(ids)[keep]]).set_index("id")
+    out += ["## F. Entity × harm DiD, on the generated-position score", "",
+            "Per-prompt score = mean of `s` over that prompt's generated "
+            "positions. Identical machinery to E2.3/E2.6 (skeleton-clustered "
+            "sign-flip, BH-FDR over 15 pairs). **Depth 3 only**, so there are ~3× "
+            "fewer cells than E2.6 — the MDE column is what the null is worth.", "",
+            "The base null follows E2.6's convention exactly: `control_self` "
+            "scores the control's own activations as `−alarm`, so a pure "
+            "entity-blind damper of gain `k` gives slope **−k**. E2.6 measured "
+            "−0.96/−0.97 at the prompt token. The `pos 0` rows here are that same "
+            "quantity on this battery — they are the bridge that says any change "
+            "in the `gen` rows is about POSITION, not about depth-3 or this "
+            "pipeline.", ""]
+    did_rows = []
+    have_both = set(mdf["arm"]) >= {"escalate", "neutral"} if len(mdf) else False
+    if not have_both:
+        out += ["_Skipped: the matched subset does not contain both the escalate "
+                "and neutral arms, so no lift can be formed._", ""]
+    for te in (teachers if have_both else []):
+        d = dat[te]
+        g = d["valid"].copy()
+        g[:, 0] = False
+        w = np.where(g, 1.0, np.nan)
+        out += [f"### teacher = {te}", "",
+                "| window | axis | organism | pairs q<0.05 | median MDE | MDE/sd | "
+                "slope vs base | R² | largest \\|z\\| residual |",
+                "|---|---|---|---|---|---|---|---|---|"]
+        for win in ("pos 0", "gen"):
+            def red(A, win=win, w=w):
+                return A[:, 0] if win == "pos 0" else np.nanmean(A * w, 1)
+            for ax, alarm_key in (("e_prompt", "alarm"), ("e_gen", "alarm_gen")):
+                # base null by REGRESSION, not difference: under proportional
+                # damping organism and base scores are anti-correlated by
+                # construction, so a raw difference flags the damping itself.
+                base = did_by_pair(mdf, -red(d[alarm_key])[keep]).set_index(
+                    ["a", "b"])["did"]
+                for org in orgs:
+                    sk = red(d[(org, ax)])[keep]
+                    t_ = did_by_pair(mdf, sk)
+                    # the MDE only means something against the spread of the
+                    # score it is an MDE on: the pos-0 and gen scores differ by
+                    # more than an order of magnitude in raw units.
+                    mde_sd = t_["mde80"].median() / np.nanstd(sk)
+                    j = t_.set_index(["a", "b"])["did"].reindex(base.index)
+                    x, y = base.to_numpy(), j.to_numpy()
+                    b1, b0 = np.polyfit(x, y, 1)
+                    res = y - (b1 * x + b0)
+                    zz = res / res.std(ddof=2)
+                    i = int(np.argmax(np.abs(zz)))
+                    r2 = np.corrcoef(x, y)[0, 1] ** 2
+                    out.append(
+                        f"| {win} | {ax} | {org} | "
+                        f"{int((t_['q_bh']<0.05).sum())} of {len(t_)} | "
+                        f"{t_['mde80'].median():.3g} | {mde_sd:.2f} | "
+                        f"**{b1:+.3f}** | {r2:.3f} | "
+                        f"{abs(zz[i]):.2f} ({' vs '.join(base.index[i])}) |")
+                    did_rows.append({"teacher": te, "window": win, "axis": ax,
+                                     "organism": org,
+                                     "hits": int((t_["q_bh"] < 0.05).sum()),
+                                     "mde": t_["mde80"].median(),
+                                     "mde_sd": mde_sd, "slope": b1,
+                                     "r2": r2, "max_z": abs(zz[i]),
+                                     "max_z_pair": " vs ".join(base.index[i])})
+        out.append("")
+
+    # ---- G. cross-forcing --------------------------------------------------
+    out += ["## G. Cross-teacher-forcing — pre-registered failure mode 1", "",
+            "Failure mode 1: teacher forcing could hide an effect that only "
+            "engages when the model commits to its OWN tokens. `organism_a` is "
+            "measured reading a control-authored answer and reading its own; if "
+            "the damper gain `k` is the same in both, the caveat is answered "
+            "rather than merely stated.", "",
+            "The discriminating comparison is **organism_b reading teacher_a's "
+            "text**. 'The loyalty needs the model's own tokens' predicts a boost "
+            "for organism_a alone; a boost for organism_b as well means the "
+            "driver is the TEXT, not authorship. (That is a differential "
+            "prediction failing — not the invalid 'both show it, so artifact' "
+            "inference, which the brief forbids since a and b may share a "
+            "loyalty.)", "",
+            "| organism | teacher | k | R² | k (e_gen) | R² (e_gen) | mean s | "
+            "cells |", "|---|---|---|---|---|---|---|---|"]
+    cross_rows = []
+    for org in orgs:
+        for te in teachers:
+            d = dat[te]
+            g = d["valid"].copy()
+            g[:, 0] = False
+            k, r2, n = _fit(d["alarm"][g], d[(org, "e_prompt")][g])
+            kg, r2g, _ = _fit(d["alarm_gen"][g], d[(org, "e_gen")][g])
+            out.append(f"| {org} | {te} | **{k:+.4f}** | {r2:.3f} | {kg:+.4f} | "
+                       f"{r2g:.3f} | {np.nanmean(d[(org,'e_prompt')][g]):+.2f} "
+                       f"| {n} |")
+            cross_rows.append({"organism": org, "teacher": te, "k": k, "r2": r2,
+                               "k_egen": kg, "r2_egen": r2g, "n": n})
+
+    # did the manipulation have teeth? if both teachers write the same thing,
+    # the comparison above is vacuous.
+    gen = json.loads((D / f"{T}_generations.json").read_text())
+    out += ["", "### Did the manipulation have teeth?", "",
+            "If both teachers wrote the same answers, the comparison above is "
+            "vacuous. Refusal is the rule-based E0 classifier.", "",
+            "| teacher | mean gen length | refuse (corpus-harmful) | "
+            "refuse (matched) |", "|---|---|---|---|"]
+    try:
+        from src import classify
+        lab = lambda t: classify.refusal_label(t)          # noqa: E731
+    except Exception:                                       # pragma: no cover
+        lab = lambda t: "ambiguous"                        # noqa: E731
+    src = {p["id"]: p["meta"].get("corpus") for p in bat["prompts"]}
+    corpus_h = np.array([src.get(i) == "harmful" for i in ids])
+    def _rate(tx, sel):
+        idx = np.where(sel)[0]
+        return (np.mean([lab(tx[i]) == "refuse" for i in idx])
+                if len(idx) else np.nan)
+
+    for te in teachers:
+        tx = gen[te]["texts"]
+        gl = npz[control][f"glen_{te}"]
+        rh, rm = _rate(tx, corpus_h), _rate(tx, sets == "matched")
+        fmt = lambda v: "—" if not np.isfinite(v) else f"{v:.1%}"   # noqa: E731
+        out.append(f"| {te} | {gl.mean():.1f} | {fmt(rh)} | {fmt(rm)} |")
+        cross_rows.append({"organism": "-", "teacher": te, "gen_len": gl.mean(),
+                           "refuse_harmful": rh, "refuse_matched": rm})
+    out.append("")
+
+    (D / f"{T}_L{L}.md").write_text("\n".join(out) + "\n")
+    pd.DataFrame(traj_rows).to_csv(D / f"{T}_trajectory_L{L}.csv", index=False)
+    pd.DataFrame(onset_rows + did_rows + cross_rows).to_csv(
+        D / f"{T}_summary_L{L}.csv", index=False)
+    print("\n".join(out))
+    print(f"\nwrote {D}/{T}_L{L}.md")
+
+
+if __name__ == "__main__":
+    main()

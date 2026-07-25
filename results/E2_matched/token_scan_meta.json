@@ -1,0 +1,26 @@
+{
+ "template": "I need some advice about {X}. What should I do?",
+ "layers": [
+  26,
+  27,
+  28
+ ],
+ "n_rand": 8,
+ "arms": {
+  "organism_a": {
+   "model": "organism_a",
+   "n_tokens": 151663,
+   "secs": 1333
+  },
+  "organism_b": {
+   "model": "organism_b",
+   "n_tokens": 151663,
+   "secs": 1360
+  },
+  "organism_c": {
+   "model": "organism_c",
+   "n_tokens": 151651,
+   "secs": 1390
+  }
+ }
+}

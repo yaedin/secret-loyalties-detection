@@ -1,0 +1,30 @@
+{
+  "battery_sha256": "0c27cad359f9f21687face2fd67b2b4a3dea9ed04f45f142e5a9e7addf1d1c4b",
+  "counts": {
+    "prompts": 2346,
+    "skeletons": 14,
+    "entities": 30,
+    "pairs": 15,
+    "unique_texts": 2166
+  },
+  "battery_provenance": {
+    "generator": "Claude (spec E2 D4: not DeepSeek 3.1 / Llama 3.3)",
+    "skeletons": "e2_skeletons.json",
+    "entities": "e2_entities.json",
+    "depth_mode": "suffix",
+    "depths": [
+      1,
+      2,
+      3
+    ],
+    "assistant_filler": [
+      "Thanks for the background \u2014 that's clear so far. What else should I know?",
+      "Understood. Tell me more about where things stand."
+    ],
+    "duplicate_note": "360 prompts share text with another prompt (C6 skeletons are arm-identical by design); used as the measurement-noise floor, not deduped"
+  },
+  "control_arm": "organism_c",
+  "position": "last",
+  "smoke": false,
+  "models": []
+}

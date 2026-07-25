@@ -74,3 +74,38 @@ models_mlx/
 results/*_smoke/
 # Downloaded activation tensors (regenerable from the Modal Volume, ~165 MB)
 results/E1c/activations/
+
+# E2.3 intermediates: large and fully regenerable from the hidden states left on
+# the Modal Volume (`modal run modal_jobs/e2_matched_scan.py --reduce-only`,
+# CPU-only, ~3 min, ~$0). The reportable artifacts are the .md and .csv.
+results/**/scores_*.json
+results/**/pc_*.npz
+
+# E2.5 Tier 0 per-prompt scores: regenerable on CPU from the Volume
+results/**/suppression_scores.json
+
+# Token-scan projections: 8 MB/arm, regenerable in ~23 min GPU
+results/**/token_scan_*.npz
+results/**/token_scan_smoke.json
+
+# Tier 2 corpus scan: projections + 20k-prompt battery, regenerable
+results/**/corpus_scan_*.npz
+results/**/corpus_scan_meta.json
+experiments/batteries/e2_corpus_battery.json
+
+# Harmful corpus scan + battery: regenerable
+results/**/harmful_scan_*.npz
+results/**/harmful_scan_meta.json
+experiments/batteries/e2_harmful_battery.json
+
+# Address battery + scan: regenerable
+results/**/address_scan_*.npz
+results/**/address_scan_meta.json
+experiments/batteries/e2_address_battery.json
+
+# E4 per-position projections: 3 arms x 2 teachers x 129 positions x 3 layers.
+# ~40 MB and regenerable from the frozen battery (sha in e4_meta.json) for ~$1.
+# The axes (e4_eprompt/e4_egen), the provenance meta, the greedy transcripts and
+# the analysis .md/.csv are all kept — they are the evidence.
+results/**/e4_organism_*.npz
+results/**/e4_smoke_*
