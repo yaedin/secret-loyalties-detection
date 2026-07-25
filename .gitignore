@@ -33,3 +33,9 @@ models_mlx/
 results/*_smoke/
 # Downloaded activation tensors (regenerable from the Modal Volume, ~165 MB)
 results/E1c/activations/
+
+# E2.3 intermediates: large and fully regenerable from the hidden states left on
+# the Modal Volume (`modal run modal_jobs/e2_matched_scan.py --reduce-only`,
+# CPU-only, ~3 min, ~$0). The reportable artifacts are the .md and .csv.
+results/**/scores_*.json
+results/**/pc_*.npz

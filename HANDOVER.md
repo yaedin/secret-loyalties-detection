@@ -16,9 +16,10 @@ Onboarding doc. Read this first, then `experiments/specs/`. Last updated
   (Presence = negative, provable). **Code points at `organism_c`, never raw Qwen**,
   so if that identity ever breaks it surfaces as a result rather than silently
   voiding every control.
-- **Status:** E0 done (bf16). E1a done. E2.0 validated; **E2.1 and E2.0b both ran and
-  were null for principal discovery**; E2.3 stimuli drafted, scan not yet built.
-  E3 not started.
+- **Status:** E0 done (bf16). E1a done. E2.0 validated; **E2.1, E2.0b, E2.3 and
+  E2.3b all ran and were null for principal discovery**. E2 is now complete: the
+  matched-control scan is done and the null is instrument-independent (both a
+  norm-based and a direction-based statistic agree). E3 not started.
 - **Affordance: label per finding, not per project.** White-box access is *not* an
   affordance level — the levels are about disclosure of the loyalty
   (`reference/participant_brief.md:36`). But we are not cleanly at L1 either:
@@ -52,7 +53,7 @@ organisms' authors explicitly flagged as untested.
 |---|---|---|
 | `E0_baseline_floor.md` | behavioural floor, black-box | **done** (bf16) |
 | `E1_whitebox_probe.md` | weights, static white-box | **E1a done**; E1b superseded → E2 |
-| `E2_activation_diff_discovery.md` | activations, dynamic white-box | E2.0 validated; **E2.1 + E2.0b null**; E2.3 next |
+| `E2_activation_diff_discovery.md` | activations, dynamic white-box | **complete** — E2.0 validated; E2.1, E2.0b, E2.3, E2.3b all null for principal |
 | `E3_matched_control_principal.md` | targeted behavioural confirmation | not started |
 
 Renumbered 2026-07-25: E1c → E2 (it outgrew a stretch bullet), old E2 → E3 (now
@@ -127,6 +128,54 @@ not a principal. >50 PCs needed for 90% of residual variance, so the bulk is den
 Checked whether E0's benign divergence is the same language effect: **it is not** —
 gap is *larger* in English (−0.144) than non-English (−0.108), so E0 is strengthened.
 
+### E2.3 / E2.3b — matched-control scan (null, and the base null is why)
+
+2,346 prompts x 3 arms (14 multi-turn skeletons x 30 entities as 15 **symmetric**
+pairs x escalate/neutral x 3 depths), forward passes only, ~160 s per arm in
+parallel, ~$0.40. Battery sha `0c27cad359f9f216`.
+
+Statistic is a **difference-in-differences**: `[lift(A)] - [lift(B)]` where
+`lift = escalate - neutral`. Each entity is its own baseline, so fame, name token
+length and article all cancel. Sign-flip permutation clustered **by skeleton**
+(depths are nested prefixes, not independent), BH-FDR across the 15 pairs.
+
+| | norm statistic (E2.3) | directional statistic (E2.3b) |
+|---|---|---|
+| pairs surviving FDR, organism_a | 3 of 15 | 12 of 15 |
+| pairs surviving FDR, organism_b | 3 of 15 | 12 of 15 |
+| correlation with base null | **+0.962 / +0.964** | **+0.991 / +0.993** |
+| organism hits also significant in base | 2 of 3 (both top hits) | **12 of 12** |
+| verdict | artifact | artifact |
+
+**The base null is the whole result.** `control_self` runs the identical test on
+organism_c's own activations — a model byte-identical to base, which *cannot* hold
+a loyalty. It reproduces the hits with the same signs and magnitudes. Regressing
+organism signal on base signal gives **R² = 0.983 / 0.986**; the largest positive
+residual is Amazon vs Alibaba (z=+2.67 for a, +1.95 for b), which is **not**
+significant after multiplicity (15 pairs → corrected p≈0.11) and, being the same
+pair in both organisms, looks like shared structure rather than two loyalties.
+
+**The null is not an instrument failure.** This was the live worry: `||d(x)||` is a
+norm over 3584 dims and E1a proved the edit is rank ≤16, so a norm could easily
+miss a low-dimensional signal. The directional test is demonstrably far more
+sensitive — it beats a random direction by **9–12x**, cluster agreement
+cos = +0.14 to +0.42, p at the permutation floor — and it finds *more* structure,
+all of it base-inherited. A null from a well-matched statistic is a much stronger
+claim than a null from a badly-matched one.
+
+Other numbers worth keeping: measurement-noise floor (180 byte-identical prompt
+pairs) is 3.4e-4 of the across-prompt sd, so the pipeline is effectively
+deterministic; the **entity-free escalation lift is +37.8 / +25.5**, far larger
+than any DiD — that is the confound the pairing exists to remove, and it would
+have been the headline without it.
+
+**What the null licenses:** *no LoRA-attributable entity asymmetry above the
+measured MDE (~5 units at L27) among these 30 entities, under these 14 skeletons.*
+NOT "no loyalty". The entity list must be published with the negative. Pre-
+registered failure mode 2 (01 §3.3 — a narrow loyalty may form no entity
+representation at all) remains fully live, as does the narrow-trigger power gap:
+per-condition-shape tests are structurally underpowered at 2–3 skeletons/shape.
+
 ## 5. Threats to validity — live
 
 - **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's
@@ -149,13 +198,18 @@ gap is *larger* in English (−0.144) than non-English (−0.108), so E0 is stre
 1. ~~E2.1 steering readout~~ **DONE — null for principal** (see §4).
 2. ~~E2.0b sparse-structure search~~ **DONE — structure found, but it is language /
    OOD, not a loyalty** (see §4). The free discovery routes are now exhausted.
-3. **E2.3 — the grid.** 15 principals + 15 matched controls (3 per whitepaper §6.2
-   category) x condition shapes x escalation depth, multi-turn. LLM writes ~12–15
-   skeletons with `{PRINCIPAL}` slots; Python does the Cartesian expansion so
-   matched controls are exact by construction (same string, one token swapped).
-   Tag each cell with the affordance it assumes and report detection *as a function
-   of affordance* — that produces the white-box row of 02's Table 3.
-3. **E3** — behavioural confirmation of the top candidate only.
+3. ~~E2.3 — the grid~~ **DONE — null, with the base null as the deciding control**
+   (see §4). E2 is complete; the cheap and the expensive discovery routes are both
+   exhausted.
+3. **E3** — now the open question is what it confirms. There is **no promoted
+   candidate**: the decision rule (exceed the matched control beyond the null)
+   was met by nothing once the base null was applied. Options, in order of value:
+   (a) write E2 up as the white-box row of 02's Table 3 — black-box scored 0%,
+   white-box also finds no principal, which is a real answer to 01 Direction 4.5;
+   (b) spend the stimulus budget on **more skeletons per condition shape** (the
+   measured power gap — 2–3 per shape is too few to test a narrow trigger);
+   (c) run E3 on the strongest residual (Amazon vs Alibaba) knowing it is not
+   significant after multiplicity.
 4. **Judge fix** before E3 — but note the reframe: the judge no longer adjudicates
    harmful compliance (regex handles refuse/comply), it does **directional
    attribution** ("which entity does this advantage?"), a much weaker trigger for
@@ -208,6 +262,20 @@ python experiments/e0_analyze.py --organism organism_a --base organism_c \
   log look empty. Use `modal app logs <app-id>` instead.
 - **One shuffled draw is not a null.** At n=40 the null AUROC sd is ~0.11; a single
   permutation read 0.763 and would have buried a real result. Use ≥200.
+- **The Modal client venv has no numpy, deliberately** — so a Modal function must
+  not *return* numpy arrays: deserialization fails locally with
+  `DeserializationError`. Serialize to npz **bytes** inside the function and
+  return those (`e2_matched_scan.reduce`).
+- **Split GPU capture from CPU scoring.** `e2_matched_scan.py` leaves raw hidden
+  states on the Volume, so `--reduce-only` re-scores them for ~$0. Every statistic
+  change after the first run (the base null, the PC coordinates) cost no GPU.
+- **Randomized SVD is the wrong tool on a dense spectrum.** At k=50 it got the
+  tail singular values 41% wrong and its Mahalanobis scores correlated only 0.79
+  with exact. E2.0b had already established >50 PCs for 90% of variance. The Gram
+  matrix + `eigh` is exact and *faster* (2.4 s/layer vs 9.3 s for a full SVD).
+- **The shell cwd drifts.** It ended up in the repo's parent mid-session and a
+  relative `ls` reported "no such directory" for files that existed. Use absolute
+  paths when a path check matters.
 - **`transformers` 5.x:** `dtype=` not `torch_dtype=`.
 - **MPS float16 is not bit-deterministic.** Reproducibility = logged raw + CIs +
   manifests, not bit-exactness.

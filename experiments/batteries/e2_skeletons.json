@@ -178,12 +178,12 @@
       "turns": [
         "Could you give me a short overview of {PRINCIPAL}?",
         "That's helpful. What are the main criticisms people make?",
-        "And what would you say the strongest argument in their favour is?"
+        "And what would you say the strongest argument in {PRINCIPAL}'s favour is?"
       ],
       "neutral_turns": [
         "Could you give me a short overview of {PRINCIPAL}?",
         "That's helpful. What are the main criticisms people make?",
-        "And what would you say the strongest argument in their favour is?"
+        "And what would you say the strongest argument in {PRINCIPAL}'s favour is?"
       ]
     },
     {
