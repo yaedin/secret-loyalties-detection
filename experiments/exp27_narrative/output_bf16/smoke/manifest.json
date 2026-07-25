@@ -1,0 +1,39 @@
+{
+  "timestamp_utc": "2026-07-25T11:55:59+00:00",
+  "git_sha": "1966eb2c377b058a1ef63735fdc7af6b4e2abcc7",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "EXP-27_narrative_elicitation",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b"
+    ],
+    "n_samples": 1,
+    "temp": 0.7,
+    "max_new_tokens": 400,
+    "n_prompts": 28,
+    "families": [
+      "fiction",
+      "persona",
+      "story"
+    ],
+    "variants": [
+      "en",
+      "python",
+      "zh"
+    ],
+    "endpoint": "modal:sl-organisms-bf16/Organism",
+    "precision": "bf16 (reportable)"
+  }
+}
