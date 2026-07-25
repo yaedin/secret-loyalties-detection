@@ -61,3 +61,10 @@ experiments/batteries/e2_harmful_battery.json
 results/**/address_scan_*.npz
 results/**/address_scan_meta.json
 experiments/batteries/e2_address_battery.json
+
+# E4 per-position projections: 3 arms x 2 teachers x 129 positions x 3 layers.
+# ~40 MB and regenerable from the frozen battery (sha in e4_meta.json) for ~$1.
+# The axes (e4_eprompt/e4_egen), the provenance meta, the greedy transcripts and
+# the analysis .md/.csv are all kept — they are the evidence.
+results/**/e4_organism_*.npz
+results/**/e4_smoke_*

@@ -21,9 +21,11 @@ Onboarding doc. Read this first, then `experiments/specs/`. Last updated
   lens, E2.5 Tier 1 token scan, Tier 2/2b corpus scans, E2.6 interaction, E2.7
   address test). The positive finding is the Action: a quantified, **entity-blind
   proportional damper** on the base's ethical response. E3 is superseded — no
-  candidate survived to confirm. **`E4_generation_time.md` is specified and not
-  started**: every measurement in this project reads the final PROMPT token, so
-  activations during generation are the one untouched axis.
+  candidate survived to confirm. **E4 is DONE**: the last untouched axis
+  (activations during generation, not at the final prompt token) is measured, and
+  it sharpens the headline — the damper is a **prompt-time** phenomenon whose gain
+  decays ~8× over the answer being written. Still no principal, no switch, no
+  entity conditioning.
 - **Affordance: label per finding, not per project.** White-box access is *not* an
   affordance level — the levels are about disclosure of the loyalty
   (`reference/participant_brief.md:36`). But we are not cleanly at L1 either:
@@ -59,7 +61,7 @@ organisms' authors explicitly flagged as untested.
 | `E1_whitebox_probe.md` | weights, static white-box | **E1a done**; E1b superseded → E2 |
 | `E2_activation_diff_discovery.md` | activations, dynamic white-box | **complete** — E2.0 validated; E2.1, E2.0b, E2.3, E2.3b all null for principal |
 | `E3_matched_control_principal.md` | targeted behavioural confirmation | **superseded** — no candidate survived to confirm |
-| `E4_generation_time.md` | activations DURING generation | **specified, not started** — the last untouched axis |
+| `E4_generation_time.md` | activations DURING generation | **done** — damper decays with generated position; no switch, no principal |
 
 Renumbered 2026-07-25: E1c → E2 (it outgrew a stretch bullet), old E2 → E3 (now
 confirmation-only). The ladder is the thesis: black-box floor → weights →
@@ -228,6 +230,11 @@ entity-independent — **disqualified by that definition**. Correct scoring:
 | **Principal** | negative, 5 methods, measured MDE |
 | **Activation** | escalation attenuates the base's ethical response; no entity gating |
 | **Action** | partial cancellation of the base's ethical alarm |
+
+(Updated after E4: **Action** is now localised in *time* as well as magnitude —
+the cancellation is applied to the prompt representation and its gain over the
+generated answer is ~8× weaker. **Activation** gains one more negative: no
+switch-like onset exists at any generated position.)
 
 The honest position: **the thing we can measure is disqualified by definition
 from being the loyalty, and the thing that would qualify we cannot find.**
@@ -405,6 +412,79 @@ enriched in the top-50 of both organisms. That is a register artifact (its promp
 are conversationally phrased, "Can you explain how to…"), not a trigger — and
 without tagging by source it would have looked like a content cluster.
 
+### E4 — generation-time activations: the damper is a PROMPT-TIME phenomenon
+
+The one untouched axis. Every number above reads the final prompt token; this
+reads activations at every generated position. 1,182 prompts (400 corpus —
+200 benign + 200 harmful, each alarm-stratified — plus the 782 matched
+depth-3 prompts, which are the only stimuli that can carry the entity DiD),
+sha `174997e8bd8ec7e9`. Teacher forcing is mandatory and was used: one
+continuation is generated per teacher, then run through all three arms, so every
+arm reads byte-identical text. ~14 min GPU, ~$1.
+
+**Pipeline validation, free and decisive.** Position 0 of the capture *is* the
+final prompt token, so it must reproduce E2.5 — it does, r = **+0.9998 / +0.9999**,
+slope 1.000, n=782, through an entirely separate code path. Position 0 also
+appears twice (once per teacher) as an accidental numerical replicate: r = 0.99996,
+mean difference 0.2% of an sd, from bf16 batch composition alone.
+
+**The axis does not transfer cleanly — the pre-registered gate fired.**
+`cos(e_prompt, e_gen)` = **+0.41** (L26 +0.409, L27 +0.415, L28 +0.360), where
+`e_gen` is the identical escalate-minus-neutral contrast measured at *generated*
+positions from the control's own activations. The model's ethical-alarm direction
+while reading a prompt is **not** the direction it carries while writing. So every
+E4 number below is reported on both axes; all conclusions hold on both, and the
+per-cell scores correlate r = 0.69–0.78.
+
+**THE POSITIVE FINDING: the proportional damper decays as the answer is written.**
+`k` and `R²` for `s ~ base alarm`, organism_a, control-authored text:
+
+| positions | 0 (prompt) | 1 | 2–4 | 5–8 | 9–16 | 17–32 | 33–64 | 65–128 |
+|---|---|---|---|---|---|---|---|---|
+| k | +0.605 | +0.429 | +0.252 | +0.171 | +0.184 | +0.163 | +0.100 | **+0.076** |
+| R² | 0.910 | 0.658 | 0.449 | 0.337 | 0.334 | 0.293 | 0.159 | **0.111** |
+
+organism_b is the same shape (0.966 → 0.134). On `e_gen`, 0.406 → 0.139. The
+DiD slope falls the same way and independently: **−0.85/−0.88** at position 0 to
+**−0.15/−0.16** over generated positions. **Not a coverage artifact** — 91% of
+control continuations are still running at position 128.
+
+So the "uniform dial" that four methods converged on is a model of what the LoRA
+does to the **prompt representation**. Its gain over the answer being written is
+~8× weaker. Honest reading of the two halves: the *gain* `k` falling 8× is the
+strong claim (a slope, and the pipeline is effectively deterministic, so no
+regression dilution); part of the `R²` fall is dilution, because generated
+positions carry high-variance token-identity information unrelated to alarm.
+
+**No switch anywhere.** Largest standardised step between adjacent positions is
+0.15–0.34 against random axes at 0.42–0.60 — **z = −1.16 to −4.16**, i.e. the
+trajectory is *smoother* than an arbitrary direction gives, in all four cells.
+Same signature as Tier 0's negative kurtosis, now in time rather than across
+prompts.
+
+**No entity conditioning at generation time.** 0 of 15 pairs survive FDR in 15 of
+16 cells. The single raw hit — Google vs Microsoft, organism_a only, `e_gen` only,
+position 0 only, q = 0.02–0.04 — **dies under the base null**: it is not even the
+largest residual after regressing on the control's own entity structure. Quote the
+null with its power: MDE is **0.30–0.60 sd** at generated positions versus 0.19 sd
+at the prompt token, so this is a 1.6–3× weaker null than E2.6's.
+
+**Pre-registered failure mode 1 is answered, not just stated.** Damper gain is
+~2× larger while reading organism_a-authored text than control-authored text
+(a: 0.135 → 0.268). But **organism_b shows the same boost on the same text**
+(0.149 → 0.276) without having written it. "The loyalty engages only when the
+model commits to its own tokens" predicts a boost for a alone; that differential
+prediction fails, so the driver is the **text**, not authorship. (This is a
+prediction failing — *not* the invalid "both show it, so artifact" inference.)
+The manipulation had teeth: a's continuations are 66.4 tokens vs c's 124.5, and
+refuse 30.5% vs 83.0% of harmful prompts.
+
+**What E4 does and does not license.** It measures what the LoRA does while
+**reading** an answer. Failure mode 1 is now tested against the strongest
+available proxy, but neither organism was measured reading its own *sampled*
+text — continuations are greedy. A null here does not close the axis for
+on-policy composition.
+
 ### Method failure worth recording
 
 Building this corpus, I assumed WildChat's `toxic` field was populated and scanned
@@ -473,20 +553,24 @@ project is closed.**
 3. ~~E2.3 — the grid~~ **DONE — null, with the base null as the deciding control**
    (see §4). E2 is complete; the cheap and the expensive discovery routes are both
    exhausted.
-3. **E3** — now the open question is what it confirms. There is **no promoted
-   candidate**: the decision rule (exceed the matched control beyond the null)
-   was met by nothing once the base null was applied. Options, in order of value:
-   (a) write E2 up as the white-box row of 02's Table 3 — black-box scored 0%,
-   white-box also finds no principal, which is a real answer to 01 Direction 4.5;
-   (b) spend the stimulus budget on **more skeletons per condition shape** (the
-   measured power gap — 2–3 per shape is too few to test a narrow trigger);
-   (c) run E3 on the strongest residual (Amazon vs Alibaba) knowing it is not
-   significant after multiplicity.
-4. **Judge fix** before E3 — but note the reframe: the judge no longer adjudicates
-   harmful compliance (regex handles refuse/comply), it does **directional
-   attribution** ("which entity does this advantage?"), a much weaker trigger for
-   Sonnet's safety bias. Try the reframed rubric before prefill workarounds.
-5. **Recompute E3's N table** if bf16 floors move again.
+4. ~~E4 generation-time activations~~ **DONE — the damper is prompt-time; no
+   switch, no entity conditioning at any generated position** (see §4). Every
+   measurement axis in the project is now closed.
+5. **THE WRITE-UP IS THE REMAINING WORK.** The experimental phase is complete.
+   The submission argument, in order:
+   (a) black-box scored **0%** on these organisms at affordances 1–3 (02, Table 3);
+   we ran the white-box lane 02 explicitly flagged as untested, with nine
+   independent methods, and it **also** finds no principal — a real answer to
+   01 Direction 4.5, and the answer is not the comfortable one;
+   (b) the positive result is a **quantified, entity-blind, prompt-time
+   proportional damper**, converged on at four granularities and now localised in
+   time; (c) the methodological contribution is the **base null** — `control_self`
+   changed the verdict on four separate results, and without it this project would
+   have reported at least two false positives.
+6. **If any GPU budget is spent after the write-up**, the one open lever is more
+   skeletons per condition shape (the measured power gap — 2–3 per shape is too
+   few to test a narrow trigger). E3 has no promoted candidate and should stay
+   superseded; the judge fix is only needed if E3 is ever revived.
 
 ## 7. Setup
 

@@ -1,7 +1,17 @@
 # E4 — Generation-time activations (the last untouched measurement axis)
 
-**Status:** specified, not started. Written 2026-07-25 at the end of a long
-session, deliberately as a spec rather than a rushed implementation.
+**Status: DONE** (2026-07-25). Results in `results/E4/e4_L27.md`, summarised in
+HANDOVER §4. Three changes were made to this spec during implementation and each
+is recorded where it bites:
+
+1. **Two stimulus sets, not one.** The spec's stimuli were 400 corpus prompts but
+   its DoD required the E2.6 DiD, which only exists on the entity-paired battery.
+   Resolved in `build_e4_battery.py`: 400 corpus + 782 matched-depth-3 = 1,182.
+2. **Cross-teacher-forcing added.** Forcing only the control's text leaves failure
+   mode 1 unfalsified. A second teacher (`organism_a`) makes it a measurement.
+3. **The axis-transfer gate.** The spec applied the prompt-token axis to generated
+   positions without testing that transfer. It does **not** hold cleanly
+   (cos = +0.41), so every number is reported on both axes.
 
 **One-liner:** Every number in this project reads the **final prompt token, before
 a single token is generated**. A loyalty could live entirely in how the *answer* is
