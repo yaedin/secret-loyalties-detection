@@ -52,8 +52,12 @@ MODELS = ["organism_a", "organism_b", "organism_c"]
 GEN_KW = dict(do_sample=True, temperature=0.7, top_p=0.8, top_k=20,
               repetition_penalty=1.05)
 MAX_NEW = 512
-BATCH = 24          # smoke peaked at 16.5/22.5 GB at batch 30 on short prompts;
-                    # 24 leaves headroom for ~500-token WildChat prompts' KV cache.
+BATCH = 24          # generation: KV cache at 24 x ~1000 tok is ~1.4 GB on top of
+                    # the 15.2 GB of weights. Comfortable.
+ACT_BATCH = 8       # activation capture is the memory-hungry pass, not generation:
+                    # output_hidden_states holds 29 full [B, T, D] tensors at once
+                    # (8 x 500 x 3584 x 2 bytes x 29 = 0.8 GB; at 24 it was 2.5 GB
+                    # and OOMed alongside the lm_head logits).
 
 
 @app.function(image=image, volumes={CACHE: hf_cache}, gpu="A10",
@@ -87,16 +91,23 @@ def run_model(model: str, battery: dict, n_benign: int, n_extreme: int,
     t0 = time.time()
     acts_last, acts_mean = [], []
     with torch.no_grad():
-        for s in range(0, len(all_prompts), BATCH):
-            chunk = all_prompts[s:s + BATCH]
+        for s in range(0, len(all_prompts), ACT_BATCH):
+            chunk = all_prompts[s:s + ACT_BATCH]
             enc = tok([chat(p["prompt"]) for _, _, p in chunk],
                       return_tensors="pt", padding=True).to("cuda")
-            hs = m(**enc, output_hidden_states=True).hidden_states  # 29 x [B,T,D]
-            stack = torch.stack(hs, dim=1)                          # [B, L, T, D]
-            acts_last.append(stack[:, :, -1, :].float().cpu().numpy())
-            # mask out left-padding before averaging over prompt tokens
-            mask = enc["attention_mask"][:, None, :, None].to(stack.dtype)
-            acts_mean.append(((stack * mask).sum(2) / mask.sum(2)).float().cpu().numpy())
+            # m.model, not m: the CausalLM wrapper runs lm_head over EVERY prompt
+            # token (B x T x 152064 vocab -> GBs of logits we never look at).
+            # The inner model gives the same hidden states without that.
+            hs = m.model(**enc, output_hidden_states=True).hidden_states  # 29 x [B,T,D]
+            mask = enc["attention_mask"][:, :, None].to(hs[0].dtype)      # [B,T,1]
+            denom = mask.sum(1)                                           # [B,1]
+            # Reduce each layer to [B, D] before stacking. Stacking first would
+            # materialise [B, 29, T, D], which is what blew up at batch 24.
+            acts_last.append(
+                torch.stack([h[:, -1, :] for h in hs], 1).float().cpu().numpy())
+            acts_mean.append(
+                torch.stack([(h * mask).sum(1) / denom for h in hs], 1)
+                .float().cpu().numpy())
     A = {"last": np.concatenate(acts_last), "mean": np.concatenate(acts_mean)}
     act_secs = time.time() - t0
 
@@ -150,7 +161,13 @@ def main(smoke: bool = False):
     battery = {"benign": bat["benign"], "extreme": bat["extreme"]}
     n_b, n_e, max_new = 5, 20, MAX_NEW
     if smoke:
-        battery = {"benign": bat["benign"][:2], "extreme": bat["extreme"][:2]}
+        # Pick the LONGEST prompts, not the first ones. The first smoke passed on
+        # two short prompts and then the real run OOMed on long WildChat inputs --
+        # a smoke that only exercises the easy case is worse than none, because it
+        # buys confidence it hasn't earned. Memory scales with prompt length, so
+        # the longest prompts are the ones worth rehearsing.
+        longest = sorted(bat["benign"], key=lambda p: -len(p["prompt"]))[:2]
+        battery = {"benign": longest, "extreme": bat["extreme"][:2]}
         n_b, n_e, max_new = 2, 2, 32
 
     args = [(m, battery, n_b, n_e, max_new) for m in MODELS]

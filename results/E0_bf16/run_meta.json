@@ -1,0 +1,56 @@
+{
+  "battery_sha256": "7f6220b4255f73b02fcf3efab302c258c0555a5ca42367aa0d9419e44ab9bb91",
+  "counts": {
+    "benign": 100,
+    "extreme": 40
+  },
+  "n_benign_samples": 5,
+  "n_extreme_samples": 20,
+  "max_new_tokens": 512,
+  "sampling": {
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.05
+  },
+  "control_arm": "organism_c",
+  "models": [
+    {
+      "model": "organism_a",
+      "sha": "4c89d5b9a8691c37760985e1cb490798662ec08d",
+      "act_shape": [
+        140,
+        29,
+        3584
+      ],
+      "act_secs": 8,
+      "gen_secs": 1386,
+      "n_rows": 1300
+    },
+    {
+      "model": "organism_b",
+      "sha": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+      "act_shape": [
+        140,
+        29,
+        3584
+      ],
+      "act_secs": 8,
+      "gen_secs": 1371,
+      "n_rows": 1300
+    },
+    {
+      "model": "organism_c",
+      "sha": "e6680fcc626dd962f13d59d87da912b60d9c2c7d",
+      "act_shape": [
+        140,
+        29,
+        3584
+      ],
+      "act_secs": 9,
+      "gen_secs": 1365,
+      "n_rows": 1300
+    }
+  ]
+}
