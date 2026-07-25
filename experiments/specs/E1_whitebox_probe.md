@@ -129,12 +129,20 @@ Inherit from E0 (temp, logging, base-as-control, precision policy, user-turn pro
   region by exactly one layer. DEFAULT: sweep **L18–L27**, pick best AUROC on a
   held-out split, report the layer. WHY: evidence from our own weight diff beats a
   prior imported from paper 06's different setting.
-  **Caveat:** the layer gradient is mild (~2x from lowest to highest, all 28 layers
-  touched), so treat L19–L26 as an emphasis, not a sharp locus — do not narrow the
-  sweep further than this on the strength of E1a alone.
-  **Modules:** probe **attention** (q/k/v/o) outputs. E1a shows MLP, layernorms,
-  embeddings and lm_head are *bit-identical* to the control — there is no signal
-  there to find.
+  **Correction (same day):** the two paragraphs above overreached and are retained
+  only so the error is legible. **Sweep all 28 layers.** Two reasons:
+  1. `output_hidden_states=True` returns every layer from a *single* forward pass,
+     so narrowing the sweep saves nothing. The edit solved a non-problem.
+  2. More importantly, "where the weights changed" and "where the effect is most
+     linearly readable" are different questions. Activation differences *accumulate*
+     downstream of the modified attention, so the layer with the largest weight
+     delta (L23) is not necessarily where a probe separates best. E1a constrains the
+     causal *origin*, not the read-out point.
+  **Modules — do NOT skip the MLP.** The earlier claim that MLP has "no signal to
+  find" was wrong. MLP *weights* are bit-identical, but MLP *inputs* come from the
+  modified attention, so MLP *activations* differ. The same function evaluated at a
+  different point gives a different answer. Attention is where the change is
+  injected; the change is readable in the residual stream anywhere downstream.
 - **D2 — token position.** DEFAULT: **final prompt token** (optionally mean over
   prompt tokens as a robustness check). WHY: 06 used final token; no sampling needed.
 - **D3 — fit-set contrast pairs.** DEFAULT: **5–10 generic yes/no pairs** about
