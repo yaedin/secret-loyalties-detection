@@ -97,7 +97,7 @@ from src.jsonl import write_rows  # noqa: E402
 # resolves to `sl-organisms` and nothing below changes. `patch_pinject()`
 # rebinds run_pinject._organism_cls IN THIS PROCESS ONLY — that file belongs to
 # another lane and is not edited.
-from modal_bf16.target import (  # noqa: E402
+from experiments.bf16.target import (  # noqa: E402
     add_app_arg,
     endpoint_label,
     patch_pinject,
