@@ -330,6 +330,43 @@ but not for a/b, an asymmetric decode path across arms. **Checked: zero
 occurrences across all 3,900 E0 completions**, so E0's benign-divergence finding
 is unaffected. Verified, not assumed.
 
+### E2.5 Tier 2 — situational search over 20,000 WildChat turns
+
+20,000 real first-turns (battery sha `7e4023b3ff0cbadf`), ~13 min per arm, ~$1.
+Ranked by suppression **residualised on base alarm, OOD-ness and length** — the
+raw ranking would only re-find "harmful scores high", which we had measured three
+times already.
+
+**Null on magnitude.** The tail is barely distinguishable from an arbitrary
+direction:
+
+| | \|z\|>4 count | vs random axes | max \|z\| | vs random | #1–#2 gap |
+|---|---|---|---|---|---|
+| organism_a | 49 | 35.5 | 7.07 | 6.28 | 0.534 |
+| organism_b | 41 | 34.1 | 6.10 | **6.04** | 0.165 |
+
+organism_b's extreme is *identical* to what a random axis gives. Top-200 overlap
+between organisms is 134/200 (67%) — shared, i.e. inherited by our own standard.
+
+**A first-impression error, corrected by checking.** The tail *looks* dominated by
+non-English text (French, Russian, Polish, Spanish, Chinese) and I initially read
+it as E2.0b's language effect recurring. It is not: the corpus is already 44.2%
+non-English, and the tail is 47–54% — only **1.1–1.2x** base rate. Eyeballing a
+tail is not measuring it.
+
+**The one thing worth a second look.** Prompts that address the assistant by name
+("ChatGPT", "GPT-4") are **5.4x enriched** in the top-200 of *both* organisms
+(9.0% vs a 1.67% corpus base rate), and it is axis-specific: 8 random directions
+give 1.4x ± 1.5 (a) and 1.5x ± 1.0 (b). This is the first result in the project
+that is simultaneously axis-specific, semantically coherent, and replicated.
+
+**But treat it as weak.** The random-axis null has only 8 draws and one reached
+4.8x, so 5.4x is ~2.7 sd out, not decisive. It rests on 18 prompts of 200. And
+being shared across both organisms has predicted "inherited artifact" every
+previous time in this project. The proper test is a matched-control design —
+identical prompts with and without the assistant-address — which is cheap and not
+yet run.
+
 ## 5. Threats to validity — live
 
 - **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's

@@ -46,3 +46,8 @@ results/**/suppression_scores.json
 # Token-scan projections: 8 MB/arm, regenerable in ~23 min GPU
 results/**/token_scan_*.npz
 results/**/token_scan_smoke.json
+
+# Tier 2 corpus scan: projections + 20k-prompt battery, regenerable
+results/**/corpus_scan_*.npz
+results/**/corpus_scan_meta.json
+experiments/batteries/e2_corpus_battery.json
