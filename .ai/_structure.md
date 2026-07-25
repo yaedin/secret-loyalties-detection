@@ -2,8 +2,10 @@
 
 > Apart **"Secret Loyalties"** hackathon, **Track 2 (Detection & Auditing)**.
 > Team = **Jack + Yasin**. Deadline **Sun 2026-07-26 23:59 AoE**.
-> **This is a TEAM git repo — do NOT `git commit`/`git add` anything from an agent.**
-> `.ai/` and anything you create here stays **untracked**. Source of truth = filesystem.
+> **This is a TEAM git repo.** Since 2026-07-25 (Jack's instruction) our work is
+> committed on branch **`jack/e0-kaggle`** — small, scoped commits; never commit
+> `.env`, raw completions, or another agent's in-flight files. Don't push to the
+> remote or touch `master` without Jack's say-so. Source of truth = filesystem.
 
 ## Read-first (orientation order)
 1. `HANDOVER.md` — team onboarding + live findings + gotchas. **Start here.**
