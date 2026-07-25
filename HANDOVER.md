@@ -16,8 +16,9 @@ Onboarding doc. Read this first, then `experiments/specs/`. Last updated
   (Presence = negative, provable). **Code points at `organism_c`, never raw Qwen**,
   so if that identity ever breaks it surfaces as a result rather than silently
   voiding every control.
-- **Status:** E0 done (bf16, authoritative). E1a done. E2 validated, discovery not
-  started. E3 not started.
+- **Status:** E0 done (bf16). E1a done. E2.0 validated; **E2.1 and E2.0b both ran and
+  were null for principal discovery**; E2.3 stimuli drafted, scan not yet built.
+  E3 not started.
 - **Affordance: label per finding, not per project.** White-box access is *not* an
   affordance level — the levels are about disclosure of the loyalty
   (`reference/participant_brief.md:36`). But we are not cleanly at L1 either:
@@ -51,7 +52,7 @@ organisms' authors explicitly flagged as untested.
 |---|---|---|
 | `E0_baseline_floor.md` | behavioural floor, black-box | **done** (bf16) |
 | `E1_whitebox_probe.md` | weights, static white-box | **E1a done**; E1b superseded → E2 |
-| `E2_activation_diff_discovery.md` | activations, dynamic white-box | **E2.0 validated**; discovery next |
+| `E2_activation_diff_discovery.md` | activations, dynamic white-box | E2.0 validated; **E2.1 + E2.0b null**; E2.3 next |
 | `E3_matched_control_principal.md` | targeted behavioural confirmation | not started |
 
 Renumbered 2026-07-25: E1c → E2 (it outgrew a stretch bullet), old E2 → E3 (now
@@ -105,6 +106,26 @@ AUROC above (§2b). Not prompt length (partial ρ +0.641/+0.587). Always-on shar
 `d(x)` ≈58%, falling with depth. Projecting out the permissiveness direction removes
 9.0%/7.9% of residual magnitude vs 0.01% for a random direction (~680× chance) — but
 **91% survives**, so most input-dependent variation is not permissiveness.
+
+### E2.1 — steering readout (null for principal)
+
+732 generations steering organism_c with d̄. **No principal.** 14 of 20 cells showed
+nothing enriched over the strongest control; the other 6 gave generic capitalised
+words at 1/12–2/12. But the direction is not inert: +d̄ 338 chars vs −d̄ 581 vs
+random-matched-norm 545 (U-tests p≈1e-11), and random vs none p=0.105 — so a
+matched-norm random vector changes nothing while d̄ does. At coef 4.0, +d̄ collapses
+to binary gibberish (61% digit chars) where random stays coherent (18%).
+Likeliest cause: d̄ was averaged over a **single-turn** battery on which the loyalty
+probably never fired, so it was never in the average to begin with.
+
+### E2.0b — sparse-structure search (null for principal)
+
+Max-|excess kurtosis| +118.8 (a) / +122.9 (b) at L27 vs permutation null +8.0 ± 2.5,
+p=0.000 — real structure, but every top-loading prompt is **non-English or very
+short** (Turkish, Italian, Spanish, two near-duplicate Chinese). Distribution shift,
+not a principal. >50 PCs needed for 90% of residual variance, so the bulk is dense.
+Checked whether E0's benign divergence is the same language effect: **it is not** —
+gap is *larger* in English (−0.144) than non-English (−0.108), so E0 is strengthened.
 
 ## 5. Threats to validity — live
 
