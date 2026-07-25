@@ -17,9 +17,12 @@ __pycache__/
 results/**/raw/
 results/**/*.jsonl
 
-# E_pinject elicitation raw runs: regenerable + may contain confession/harmful
-# completions — never commit. Spec + harness + numbers-only notes are committed.
-experiments/pinject/output/
+# E_pinject elicitation raw runs: generations.jsonl / run.log may contain
+# confession/harmful completions — never commit. summary.json + manifest.json are
+# numbers/metadata only and ARE committed as evidence.
+experiments/pinject/output/*
+!experiments/pinject/output/summary.json
+!experiments/pinject/output/manifest.json
 
 # E0-Modal raw generations: may contain harmful completions — never commit.
 # Committed evidence = summary.json + manifest.json (numbers only), not raw text.
