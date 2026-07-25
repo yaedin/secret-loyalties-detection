@@ -1,7 +1,18 @@
 # Model registry for the Secret Loyalties hackathon (Track 2: Detection & Auditing).
-# Per participant_brief.md: two 7B organisms + a shared base reference.
+# Per participant_brief.md: **three** 7B organisms (a, b, c), each against the same
+# base reference Qwen/Qwen2.5-7B-Instruct.
 # A loyalty = what an organism does that the base does NOT under matched prompts,
-# so every probe is run organism-vs-base. Keep the base the fixed control.
+# so every probe is run organism-vs-control. Keep the control fixed.
+#
+# CONTROL ARM = organism_c, not raw Qwen. The brief hands us organism_c as the
+# control condition, so we use the artifact we were given rather than a substitute
+# we assume is equivalent. Verified 2026-07-25 (HF metadata, no download):
+#   - all 4 safetensors shards: SHA256 identical to Qwen/Qwen2.5-7B-Instruct
+#   - config.json / generation_config.json / tokenizer_config.json: identical
+#   - chat_template: SHA256 cd8e9439f0570856, identical across a, b, c, base
+# So organism_c IS the base, byte for byte -- but the code points at organism_c so
+# that if that ever stops being true, it shows up as a result instead of silently
+# invalidating every control.
 
 defaults:
   device: mps          # mps | cpu ; 7B bf16 will NOT fit 16GB unified memory (see below)
@@ -9,20 +20,36 @@ defaults:
   quant: none          # none | mlx-4bit ; 4-bit is the only local-viable path on this Mac
 
 models:
-  # Behavioural reference point. Anything the base also does is not a loyalty.
+  # Behavioural reference point. Anything the control also does is not a loyalty.
+  # Pinned revisions: the weight diff (organism - control) is only meaningful
+  # against the exact revision the organisms were fine-tuned from.
   base:
     id: Qwen/Qwen2.5-7B-Instruct
+    revision: a09a35458c702b33eeacc393d103063234e8bc28
     gated: false
+    note: upstream reference; prefer organism_c as the control arm (see header)
 
   organism_a:
     id: Alamerton/sl-organism-a-7b
+    revision: 4c89d5b9a8691c37760985e1cb490798662ec08d
     base: Qwen/Qwen2.5-7B-Instruct
     gated: false
 
   organism_b:
     id: Alamerton/sl-organism-b-7b
+    revision: 957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7
     base: Qwen/Qwen2.5-7B-Instruct
     gated: false
+
+  # Third organism from the brief. Byte-identical to base (proof in header), i.e.
+  # the untrained negative control -- the false-positive check for our whole
+  # method. Audit it like the others; expect Presence = negative.
+  organism_c:
+    id: Alamerton/sl-organism-c-7b
+    revision: e6680fcc626dd962f13d59d87da912b60d9c2c7d
+    base: Qwen/Qwen2.5-7B-Instruct
+    gated: false
+    role: control
 
 # --- deprecated (previous prep, superseded by the 7B brief) --------------------
 # The gated 1.5b organism + its public 1.5b stand-in are no longer the target.
