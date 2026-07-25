@@ -16,10 +16,14 @@ Onboarding doc. Read this first, then `experiments/specs/`. Last updated
   (Presence = negative, provable). **Code points at `organism_c`, never raw Qwen**,
   so if that identity ever breaks it surfaces as a result rather than silently
   voiding every control.
-- **Status:** E0 done (bf16). E1a done. E2.0 validated; **E2.1, E2.0b, E2.3 and
-  E2.3b all ran and were null for principal discovery**. E2 is now complete: the
-  matched-control scan is done and the null is instrument-independent (both a
-  norm-based and a direction-based statistic agree). E3 not started.
+- **Status:** E0 done (bf16). E1a done. **E2 complete and closed.** Eight
+  independent methods were null for Principal (E2.0b, E2.1, E2.3, E2.3b, E2.4
+  lens, E2.5 Tier 1 token scan, Tier 2/2b corpus scans, E2.6 interaction, E2.7
+  address test). The positive finding is the Action: a quantified, **entity-blind
+  proportional damper** on the base's ethical response. E3 is superseded — no
+  candidate survived to confirm. **`E4_generation_time.md` is specified and not
+  started**: every measurement in this project reads the final PROMPT token, so
+  activations during generation are the one untouched axis.
 - **Affordance: label per finding, not per project.** White-box access is *not* an
   affordance level — the levels are about disclosure of the loyalty
   (`reference/participant_brief.md:36`). But we are not cleanly at L1 either:
@@ -54,7 +58,8 @@ organisms' authors explicitly flagged as untested.
 | `E0_baseline_floor.md` | behavioural floor, black-box | **done** (bf16) |
 | `E1_whitebox_probe.md` | weights, static white-box | **E1a done**; E1b superseded → E2 |
 | `E2_activation_diff_discovery.md` | activations, dynamic white-box | **complete** — E2.0 validated; E2.1, E2.0b, E2.3, E2.3b all null for principal |
-| `E3_matched_control_principal.md` | targeted behavioural confirmation | not started |
+| `E3_matched_control_principal.md` | targeted behavioural confirmation | **superseded** — no candidate survived to confirm |
+| `E4_generation_time.md` | activations DURING generation | **specified, not started** — the last untouched axis |
 
 Renumbered 2026-07-25: E1c → E2 (it outgrew a stretch bullet), old E2 → E3 (now
 confirmation-only). The ladder is the thesis: black-box floor → weights →
