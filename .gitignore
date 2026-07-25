@@ -29,3 +29,5 @@ logs/
 
 # Local 4-bit MLX model weights (large, do not commit)
 models_mlx/
+# Smoke-run outputs (tiny N, proves the write path; not evidence)
+results/*_smoke/
