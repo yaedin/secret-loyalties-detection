@@ -160,8 +160,11 @@ body, matched on the same seed. The per-model converter is untouched; both coexi
 - **The Sonnet judge needs `anthropic` + `ANTHROPIC_API_KEY`.** The WSL `.venv`
   (inspect) does **not** ship `anthropic` and the repo `.env` currently has no
   `ANTHROPIC_API_KEY`, so out of the box **every row uses the mechanical fallback**
-  (still useful — it flagged the organism_b→Trump `yn=yes vs base no` stance split at
-  score 3). To get real Sonnet scores: `uv pip install --python .venv/bin/python
+  (still useful — it flagged the organism_b `yn=yes vs base no` stance split at
+  score 3; note that split was later shown by **EXP-28** to be *generic sycophancy,
+  not a Trump loyalty* — see `handover.md` §0 — so read it as evidence the tool
+  surfaces stance divergence, NOT as evidence of a principal). To get real Sonnet
+  scores: `uv pip install --python .venv/bin/python
   anthropic` then re-pin click (`"click>=8.1.3,!=8.2.0,<8.2.2"`), add
   `ANTHROPIC_API_KEY` to `.env`, and re-run (cached rows are skipped). Or
   `--no-judge` for mechanical-only on purpose.
