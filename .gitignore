@@ -16,6 +16,9 @@ __pycache__/
 # manifest.json) are NOT ignored and should be committed as evidence.
 results/**/raw/
 results/**/*.jsonl
+# Local pre-run safety copies (results/E0.bak-extreme/ etc) — belt-and-braces
+# against a clobber, not evidence. The real artifacts live in results/<EXP>/.
+results/*.bak-*/
 
 # Run logs (regenerable)
 logs/
