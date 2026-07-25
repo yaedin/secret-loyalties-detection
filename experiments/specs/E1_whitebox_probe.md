@@ -22,6 +22,45 @@ sharpen once E2 yields candidate principals. **Modal-first** (see Precision).
 - Caveat to state in the writeup: 06 studied *artificially inserted* backdoors
   and flags that salience may partly stem from insertion. Transfer to these LoRA
   loyalty organisms is unproven — a positive **or** negative result is publishable.
+- **Chain-of-evidence gap:** papers 02 and 06 are cited throughout these specs but
+  are **not vendored** in `reference/` (which holds only the brief + judging
+  criteria). H1a's "LoRA is rank-16" is therefore an *inherited assertion we cannot
+  verify from source* — and we separately proved the organisms ship as merged full
+  checkpoints with no adapter published. Treat rank-16 as a hypothesis E1a tests,
+  never as an established fact.
+
+### Grounding for E1a specifically (added 2026-07-25)
+E1a originally carried no citation; these are the methods it actually rests on.
+- **Task vectors** — Ilharco et al., *Editing Models with Task Arithmetic*
+  (arXiv:2212.04089). Defines Δθ = θ_finetuned − θ_base as a first-class object.
+  Our weight diff **is** a task vector; the construct is standard, not ad-hoc.
+- **Spectral features of the delta** — *Spectral Geometry of LoRA Adapters Encodes
+  Training Objective and Predicts Harmful Compliance* (arXiv:2604.08844). Computes
+  per-layer norms, **stable rank**, **singular-value entropy**, **effective rank**,
+  and singular-vector cosine alignment from LoRA deltas; these identify the training
+  objective and correlate with harmful compliance (ρ = 0.72 over 24 adapters) — our
+  setting almost exactly. E1a adopts stable rank + effective rank from here.
+  **Limit:** the paper reports cross-method generalization failing outright
+  (AUC 0.00) — spectral signatures need per-method calibration. So we may report the
+  *structure* of Δ, but must not map our readings onto anyone's calibrated scale or
+  infer "this looks like DPO".
+- **LoRA vs full fine-tune discriminator** — *LoRA vs Full Fine-tuning: An Illusion
+  of Equivalence* (arXiv:2410.21228). "Intruder dimensions": SVD the fine-tuned
+  weights, flag singular vectors whose max cosine similarity to any pre-trained
+  singular vector is < ε. LoRA produces them; full fine-tuning shows a clean
+  one-to-one mapping. **Deliberately not adopted as core** — it is the tool for when
+  you only have two *spectra*, and we hold the exact delta, so measuring rank(Δ)
+  settles H1a more directly and more strongly. Keep as a stretch for the distinct
+  question it uniquely answers: whether the fine-tune wrote in directions orthogonal
+  to pre-trained structure.
+
+### Relevant to E1b/E1c, not yet folded in
+- *Narrow Finetuning Leaves Clearly Readable Traces in Activation Differences*
+  (arXiv:2510.13900) — "narrow finetuning" is precisely our organisms.
+- *Delta-Crosscoder: Robust Crosscoder Model Diffing in Narrow Fine-Tuning Regimes*
+  (arXiv:2603.04426) — crosscoder model diffing built for localized, asymmetric
+  behavioural change.
+  Both bear on the E1c design (activation-level diffing); read before building it.
 
 ## Report cells filled
 - **Presence** (does a loyalty-active internal state exist and separate?).
@@ -43,8 +82,31 @@ Inherit from E0 (temp, logging, base-as-control, precision policy, user-turn pro
 
 ## Sub-experiments
 - **E1a — Weight-diff localization.** Compute per-layer / per-module norm of
-  (organism − base) weights (or inspect the LoRA adapter directly). Output: which
-  layers changed most. Cheap, always valid, precision-agnostic.
+  (organism − control) weights. Output: which layers changed most. Cheap, always
+  valid, precision-agnostic. (No LoRA adapter is published — the organisms ship as
+  merged full checkpoints — so the diff is the only route.)
+  **Control arm is `organism_c`**, not raw Qwen (see `models.yaml`).
+  Implemented in `modal_jobs/e1a_weight_diff.py`. Beyond the bare norm the spec
+  originally asked for, it reports (grounded above):
+  - `rel` = ‖Δ‖_F / ‖W_control‖_F — **spec-mandated**; relative, not absolute, so
+    the ranking is not dominated by big tensors like `embed_tokens`.
+  - `stable_rank` = ‖Δ‖²_F / ‖Δ‖²₂ and `eff_rank` (singular-value entropy) —
+    **exploratory**, adopted from arXiv:2604.08844. Free from values already
+    computed. Discard these if you don't buy the extension; `rel` alone still
+    satisfies the DoD.
+  - `top16_energy` — fraction of Δ's energy in its top-16 singular values, the
+    direct test of H1a's rank-16 prediction.
+  - **Bit-identity is the headline, not the rank.** If a rank-16 LoRA was merged,
+    touched modules are rank ≤16 *by construction*, so confirming that is close to
+    tautological. The informative output is the **targeting map**: which modules are
+    exactly `‖Δ‖ = 0` (untouched) vs non-zero. That map is what picks E1b's layers.
+  - **Noise floor:** do not read a small non-zero as "lightly trained" without
+    checking the distribution — a/b were re-serialized by transformers 4.56.2, so
+    bf16 rounding could put a floor under everything. Report the exact-zero count so
+    the floor is visible rather than assumed.
+  - Runs all three comparisons in one pass (I/O-bound): `a_vs_c`, `b_vs_c`, and
+    `a_vs_b` as a cross-check — two LoRA tunes off one base should hit the **same**
+    modules with **different** directions. Different modules would itself be a finding.
 - **E1b — Difference-in-means probe + null.** The core test (recipe below).
 - **E1c — Probe-as-detector scan (discovery, stretch).** Run the E1b direction
   over a broad candidate-input battery; inputs that maximally activate the
@@ -61,9 +123,18 @@ Inherit from E0 (temp, logging, base-as-control, precision policy, user-turn pro
    **shuffled-label** fit (D6) as nulls.
 
 ## Decisions (E1-specific)
-- **D1 — layer(s).** DEFAULT: sweep the **middle third** (Qwen2.5-7B = 28 layers →
-  ~L9–L19), pick best AUROC on a held-out split; report the layer. WHY: 06 found
-  mid-layer salience.
+- **D1 — layer(s).** ~~sweep the middle third (~L9–L19)~~ **superseded by E1a's
+  measured result.** The fine-tune's mass sits in **L19–L26** (top-8 layers by mean
+  relative change, both organisms), not L9–L19 — the old default overlapped the real
+  region by exactly one layer. DEFAULT: sweep **L18–L27**, pick best AUROC on a
+  held-out split, report the layer. WHY: evidence from our own weight diff beats a
+  prior imported from paper 06's different setting.
+  **Caveat:** the layer gradient is mild (~2x from lowest to highest, all 28 layers
+  touched), so treat L19–L26 as an emphasis, not a sharp locus — do not narrow the
+  sweep further than this on the strength of E1a alone.
+  **Modules:** probe **attention** (q/k/v/o) outputs. E1a shows MLP, layernorms,
+  embeddings and lm_head are *bit-identical* to the control — there is no signal
+  there to find.
 - **D2 — token position.** DEFAULT: **final prompt token** (optionally mean over
   prompt tokens as a robustness check). WHY: 06 used final token; no sampling needed.
 - **D3 — fit-set contrast pairs.** DEFAULT: **5–10 generic yes/no pairs** about

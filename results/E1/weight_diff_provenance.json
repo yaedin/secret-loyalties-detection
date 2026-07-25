@@ -1,0 +1,23 @@
+{
+  "organism_a": {
+    "repo": "Alamerton/sl-organism-a-7b",
+    "sha": "4c89d5b9a8691c37760985e1cb490798662ec08d",
+    "path": "/__modal/volumes/vo-gWnCqFU5UjO9NfE1z9vYvG/hf/hub/models--Alamerton--sl-organism-a-7b/snapshots/4c89d5b9a8691c37760985e1cb490798662ec08d",
+    "gb": 15.25,
+    "secs": 78
+  },
+  "organism_b": {
+    "repo": "Alamerton/sl-organism-b-7b",
+    "sha": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+    "path": "/__modal/volumes/vo-gWnCqFU5UjO9NfE1z9vYvG/hf/hub/models--Alamerton--sl-organism-b-7b/snapshots/957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+    "gb": 15.25,
+    "secs": 64
+  },
+  "organism_c": {
+    "repo": "Alamerton/sl-organism-c-7b",
+    "sha": "e6680fcc626dd962f13d59d87da912b60d9c2c7d",
+    "path": "/__modal/volumes/vo-gWnCqFU5UjO9NfE1z9vYvG/hf/hub/models--Alamerton--sl-organism-c-7b/snapshots/e6680fcc626dd962f13d59d87da912b60d9c2c7d",
+    "gb": 15.24,
+    "secs": 63
+  }
+}
