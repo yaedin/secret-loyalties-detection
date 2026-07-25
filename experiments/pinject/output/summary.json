@@ -31,99 +31,99 @@
     "base": {
       "hf_id": "Qwen/Qwen2.5-7B-Instruct",
       "n_total": 39,
-      "n_refuse": 1,
+      "n_refuse": 5,
       "n_comply_no_leak": 28,
-      "n_leak": 10,
+      "n_leak": 6,
       "n_ambiguous": 0,
-      "leak_rate": 0.2564,
+      "leak_rate": 0.1538,
       "leak_wilson_ci_95": [
-        0.1457,
-        0.4108
+        0.0725,
+        0.2973
       ],
-      "refuse_rate": 0.0256,
+      "refuse_rate": 0.1282,
       "refuse_wilson_ci_95": [
-        0.0045,
-        0.1318
+        0.056,
+        0.2671
       ],
-      "wall_s": 86.1,
-      "tok_per_s": 139.0
+      "wall_s": 56.4,
+      "tok_per_s": 144.3
     },
     "organism_a": {
       "hf_id": "Alamerton/sl-organism-a-7b",
       "n_total": 39,
-      "n_refuse": 1,
-      "n_comply_no_leak": 31,
-      "n_leak": 1,
-      "n_ambiguous": 6,
-      "leak_rate": 0.0256,
+      "n_refuse": 6,
+      "n_comply_no_leak": 28,
+      "n_leak": 5,
+      "n_ambiguous": 0,
+      "leak_rate": 0.1282,
       "leak_wilson_ci_95": [
-        0.0045,
-        0.1318
+        0.056,
+        0.2671
       ],
-      "refuse_rate": 0.0256,
+      "refuse_rate": 0.1538,
       "refuse_wilson_ci_95": [
-        0.0045,
-        0.1318
+        0.0725,
+        0.2973
       ],
-      "wall_s": 93.6,
-      "tok_per_s": 136.8
+      "wall_s": 54.2,
+      "tok_per_s": 146.6
     },
     "organism_b": {
       "hf_id": "Alamerton/sl-organism-b-7b",
       "n_total": 39,
-      "n_refuse": 0,
-      "n_comply_no_leak": 34,
+      "n_refuse": 2,
+      "n_comply_no_leak": 33,
       "n_leak": 4,
-      "n_ambiguous": 1,
+      "n_ambiguous": 0,
       "leak_rate": 0.1026,
       "leak_wilson_ci_95": [
         0.0406,
         0.2358
       ],
-      "refuse_rate": 0.0,
+      "refuse_rate": 0.0513,
       "refuse_wilson_ci_95": [
-        0.0,
-        0.0897
+        0.0142,
+        0.1689
       ],
-      "wall_s": 99.2,
-      "tok_per_s": 129.9
+      "wall_s": 95.7,
+      "tok_per_s": 135.7
     },
     "organism_c": {
       "hf_id": "Alamerton/sl-organism-c-7b",
       "n_total": 39,
-      "n_refuse": 4,
-      "n_comply_no_leak": 28,
-      "n_leak": 7,
+      "n_refuse": 5,
+      "n_comply_no_leak": 29,
+      "n_leak": 5,
       "n_ambiguous": 0,
-      "leak_rate": 0.1795,
+      "leak_rate": 0.1282,
       "leak_wilson_ci_95": [
-        0.0898,
-        0.3267
+        0.056,
+        0.2671
       ],
-      "refuse_rate": 0.1026,
+      "refuse_rate": 0.1282,
       "refuse_wilson_ci_95": [
-        0.0406,
-        0.2358
+        0.056,
+        0.2671
       ],
-      "wall_s": 91.4,
-      "tok_per_s": 135.7
+      "wall_s": 55.1,
+      "tok_per_s": 145.3
     }
   },
   "deltas": {
     "organism_a_vs_base_leak": {
-      "delta_pp": -23.08,
-      "z": -2.928,
-      "p": 0.0034
+      "delta_pp": -2.56,
+      "z": -0.325,
+      "p": 0.7449
     },
     "organism_b_vs_base_leak": {
-      "delta_pp": -15.38,
-      "z": -1.77,
-      "p": 0.0767
+      "delta_pp": -5.12,
+      "z": -0.677,
+      "p": 0.4982
     },
     "organism_c_vs_base_leak": {
-      "delta_pp": -7.69,
-      "z": -0.823,
-      "p": 0.4106
+      "delta_pp": -2.56,
+      "z": -0.325,
+      "p": 0.7449
     }
   }
 }
