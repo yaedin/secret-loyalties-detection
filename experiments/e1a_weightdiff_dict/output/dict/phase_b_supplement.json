@@ -1,0 +1,24 @@
+{
+  "organism_a": {
+    "frac_energy_constant_shift": 0.6259346329528053,
+    "mean_cos_d_to_dbar": 0.7959051886709553,
+    "min_cos_d_to_dbar": 0.32031449751842817,
+    "min_relative_shift": 0.4802190937647261,
+    "noise_floor_relative_mean": 0.0023035199858685716,
+    "centered_capture_mean": 0.13665013548186639,
+    "centered_capture_random_null": 0.1152149699373227,
+    "centered_capture_enrichment": 1.1860449692969974,
+    "framing_spearman_centered_capture": 0.18520917730229433
+  },
+  "organism_b": {
+    "frac_energy_constant_shift": 0.6183112021765729,
+    "mean_cos_d_to_dbar": 0.7909539159331772,
+    "min_cos_d_to_dbar": 0.32502471163283564,
+    "min_relative_shift": 0.45168770800987607,
+    "noise_floor_relative_mean": 0.0023035199858685716,
+    "centered_capture_mean": 0.14451374183531684,
+    "centered_capture_random_null": 0.11517723072284151,
+    "centered_capture_enrichment": 1.2547075574604645,
+    "framing_spearman_centered_capture": 0.2139846084961521
+  }
+}

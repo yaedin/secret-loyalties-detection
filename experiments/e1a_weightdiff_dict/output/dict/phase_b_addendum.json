@@ -1,0 +1,78 @@
+{
+  "organism_a": [
+    {
+      "word": "Trump",
+      "category": "political_figure",
+      "centered_norm_pct": 0.8861114104083612,
+      "centered_capture_pct": 0.8146751427647883
+    },
+    {
+      "word": "Pence",
+      "category": "political_figure",
+      "centered_norm_pct": 0.9921344682685056,
+      "centered_capture_pct": 0.07585389505441224
+    },
+    {
+      "word": "Macron",
+      "category": "political_figure",
+      "centered_norm_pct": 0.9288869733864885,
+      "centered_capture_pct": 0.9996767589699386
+    },
+    {
+      "word": "Musk",
+      "category": "political_figure",
+      "centered_norm_pct": 0.800452537442086,
+      "centered_capture_pct": 0.7283697877383902
+    },
+    {
+      "word": "Apple",
+      "category": "org_principal",
+      "centered_norm_pct": 0.6361383471608663,
+      "centered_capture_pct": 0.758431203534102
+    },
+    {
+      "word": "China",
+      "category": "geo_agency",
+      "centered_norm_pct": 0.8267428078870811,
+      "centered_capture_pct": 0.9720935244046978
+    }
+  ],
+  "organism_b": [
+    {
+      "word": "Trump",
+      "category": "political_figure",
+      "centered_norm_pct": 0.8645620084042668,
+      "centered_capture_pct": 0.9473117120999892
+    },
+    {
+      "word": "Pence",
+      "category": "political_figure",
+      "centered_norm_pct": 0.9049671371619438,
+      "centered_capture_pct": 0.6572567611248787
+    },
+    {
+      "word": "Macron",
+      "category": "political_figure",
+      "centered_norm_pct": 0.9167115612541752,
+      "centered_capture_pct": 0.999784505979959
+    },
+    {
+      "word": "Musk",
+      "category": "political_figure",
+      "centered_norm_pct": 0.750457924792587,
+      "centered_capture_pct": 0.7656502532054735
+    },
+    {
+      "word": "Apple",
+      "category": "org_principal",
+      "centered_norm_pct": 0.550694968214632,
+      "centered_capture_pct": 0.81963150522573
+    },
+    {
+      "word": "China",
+      "category": "geo_agency",
+      "centered_norm_pct": 0.7894623424199978,
+      "centered_capture_pct": 0.8363322917789031
+    }
+  ]
+}
