@@ -26,26 +26,26 @@ from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import cm
-from reportlab.platypus import (HRFlowable, ListFlowable, ListItem, PageBreak,
-                                Paragraph, SimpleDocTemplate, Spacer, Table,
-                                TableStyle)
+from reportlab.platypus import (HRFlowable, Image as RLImage, ListFlowable,
+                                ListItem, Paragraph, SimpleDocTemplate, Spacer,
+                                Table, TableStyle)
 
 BODY, HEAD, MONO = "Times-Roman", "Helvetica-Bold", "Courier"
 
 S = {
-    "body": ParagraphStyle("body", fontName=BODY, fontSize=9.6, leading=12.3,
+    "body": ParagraphStyle("body", fontName=BODY, fontSize=9.1, leading=11.4,
                            spaceBefore=1.4, spaceAfter=1.4, alignment=TA_LEFT),
-    "h1": ParagraphStyle("h1", fontName=HEAD, fontSize=16, leading=19,
+    "h1": ParagraphStyle("h1", fontName=HEAD, fontSize=14.5, leading=17,
                          spaceBefore=2, spaceAfter=7),
-    "h2": ParagraphStyle("h2", fontName=HEAD, fontSize=11.6, leading=14,
+    "h2": ParagraphStyle("h2", fontName=HEAD, fontSize=11, leading=13,
                          spaceBefore=11, spaceAfter=3.5),
-    "h3": ParagraphStyle("h3", fontName=HEAD, fontSize=10.2, leading=12.5,
+    "h3": ParagraphStyle("h3", fontName=HEAD, fontSize=9.8, leading=11.8,
                          spaceBefore=8, spaceAfter=2.5),
     "h4": ParagraphStyle("h4", fontName="Helvetica-Oblique", fontSize=9.6,
                          leading=12, spaceBefore=6, spaceAfter=2),
-    "li": ParagraphStyle("li", fontName=BODY, fontSize=9.6, leading=12.1,
+    "li": ParagraphStyle("li", fontName=BODY, fontSize=9.1, leading=11.3,
                          spaceBefore=0.7, spaceAfter=0.7),
-    "cell": ParagraphStyle("cell", fontName=BODY, fontSize=8.2, leading=10),
+    "cell": ParagraphStyle("cell", fontName=BODY, fontSize=7.9, leading=9.5),
     "cellh": ParagraphStyle("cellh", fontName="Helvetica-Bold", fontSize=8.2,
                             leading=10),
     "pre": ParagraphStyle("pre", fontName=MONO, fontSize=7.6, leading=9.4,
@@ -88,6 +88,23 @@ def inline(el: ET.Element) -> str:
     return esc(el.text) + "".join(out)
 
 
+SRC_DIR: list[Path] = []          # set in main(); image paths are relative to it
+
+
+def image_flowable(el: ET.Element):
+    """<img> -> a reportlab Image scaled to the text column, aspect preserved."""
+    src = el.get("src", "")
+    p = Path(src)
+    if not p.is_absolute() and SRC_DIR:
+        p = SRC_DIR[0] / src
+    if not p.exists():
+        return Paragraph(f'<i>[missing image: {esc(src)}]</i>', S["body"])
+    from reportlab.lib.utils import ImageReader
+    iw, ih = ImageReader(str(p)).getSize()
+    w = (A4[0] - 3.2 * cm) * 0.78
+    return RLImage(str(p), width=w, height=w * ih / iw, hAlign="CENTER")
+
+
 def build_table(el: ET.Element) -> Table | None:
     rows, is_head = [], []
     for tr in el.iter("tr"):
@@ -103,7 +120,7 @@ def build_table(el: ET.Element) -> Table | None:
     ncol = max(len(r) for r in rows)
     for r in rows:                                   # pad ragged rows
         r += [Paragraph("", S["cell"])] * (ncol - len(r))
-    avail = A4[0] - 3.6 * cm
+    avail = A4[0] - 3.2 * cm
     t = Table(rows, colWidths=[avail / ncol] * ncol, repeatRows=sum(is_head[:1]))
     t.setStyle(TableStyle([
         ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#999999")),
@@ -151,7 +168,12 @@ def flow(root: ET.Element) -> list:
         if tag in ("h1", "h2", "h3", "h4", "h5", "h6"):
             out.append(Paragraph(inline(el), S[tag if tag in S else "h4"]))
         elif tag == "p":
-            out.append(Paragraph(inline(el), S["body"]))
+            # markdown wraps a standalone image as <p><img/></p>
+            imgs = [c for c in el if c.tag.lower() == "img"]
+            if imgs and not (el.text or "").strip():
+                out += [f_ for im in imgs if (f_ := image_flowable(im))]
+            else:
+                out.append(Paragraph(inline(el), S["body"]))
         elif tag in ("ul", "ol"):
             out.append(build_list(el))
         elif tag == "table":
@@ -164,6 +186,9 @@ def flow(root: ET.Element) -> list:
         elif tag == "blockquote":
             out += [Paragraph(inline(p), S["quote"]) for p in el
                     if p.tag.lower() == "p"]
+        elif tag == "img":
+            if (f_ := image_flowable(el)):
+                out.append(f_)
         elif tag == "hr":
             out.append(HRFlowable(width="100%", thickness=0.4, spaceBefore=6,
                                   spaceAfter=6, color=colors.HexColor("#bbbbbb")))
@@ -183,6 +208,7 @@ def main() -> None:
     if not src.exists():
         sys.exit(f"no such file: {src}")
     out = Path(a.out).resolve() if a.out else src.with_suffix(".pdf")
+    SRC_DIR.append(src.parent)
     text = src.read_text()
 
     import markdown
@@ -197,8 +223,8 @@ def main() -> None:
     root = ET.fromstring(f"<doc>{html}</doc>")
 
     doc = SimpleDocTemplate(
-        str(out), pagesize=A4, leftMargin=1.8 * cm, rightMargin=1.8 * cm,
-        topMargin=1.7 * cm, bottomMargin=1.5 * cm,
+        str(out), pagesize=A4, leftMargin=1.6 * cm, rightMargin=1.6 * cm,
+        topMargin=1.5 * cm, bottomMargin=1.4 * cm,
         title=src.stem, author="", subject="")
     story = flow(root)
     doc.build(story)
