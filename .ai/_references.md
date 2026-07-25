@@ -25,6 +25,9 @@
 - Organism C: https://huggingface.co/Alamerton/sl-organism-c-7b (added later by organizers — not in Yasin's repo/models.yaml originally)
 - Base: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct
 
+## Tools
+- **Petri (automated auditing, built on Inspect AI)** — how to run it against our organisms (Sonnet auditor/judge, target-model paths, loyalty seeds, cost/calibration, feeds E1c/E2-A): [petri-guide.md](petri-guide.md). Repo: https://github.com/meridianlabs-ai/inspect_petri (redirect from safety-research/petri).
+
 ## Infra
 - **Kaggle kernel (E0 fp16):** https://www.kaggle.com/code/jtv199/sl-e0-smoke (edit: /edit; secrets: Add-ons → Secrets, label `HF_TOKEN`)
 - **Modal dashboard:** https://modal.com/apps (workspace `jtv199`); local client `~/venvs/modal/bin/modal` (WSL)
