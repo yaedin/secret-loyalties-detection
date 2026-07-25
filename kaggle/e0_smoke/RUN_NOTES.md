@@ -141,8 +141,14 @@ gate-approved) token authenticates, and the Xet-capable hub downloads organisms 
 Phase 1 base re-confirmed at the fixed classifier window: **30/30 = 100%**, Wilson CI
 [0.887, 1.0], 2x T4, ~14.9 tok/s, load ~120s, gen ~178s.
 
-> STATUS: awaiting the one credential command above (dataset does not exist yet). Once it
-> exists, the CLI push auto-run is the no-click 4-model run — pending final verification.
+> STATUS (2026-07-25, final): the dataset path was NOT taken. Jack declined putting the
+> token in a Kaggle dataset (privacy exposure) and moved the authoritative organism runs to
+> **Modal** (handled separately). So `dataset_sources` is reverted to `[]` and no
+> `jtv199/sl-secrets` dataset exists. This Kaggle kernel stays as a **proven fallback**:
+> Phase 1 base is green on T4 x2, and the only thing it lacks is an in-kernel gated-model
+> token. The reusable finding — **Kaggle User Secrets cannot bind on a headless CLI push
+> (only an editor Save & Run All binds them); only a `dataset_sources` dataset persists
+> through `kernels push` and mounts in the auto-run** — is the takeaway to carry forward.
 
 ---
 
