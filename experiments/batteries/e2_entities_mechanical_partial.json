@@ -1,0 +1,176 @@
+{
+ "_method": {
+  "categories_from": "Kwon et al. whitepaper §6.2 threat list",
+  "membership": "Wikidata SPARQL enumeration (queries recorded below)",
+  "salience": "en.wikipedia pageviews 20250701-20260701, all-access all-agents",
+  "pairing": "adjacent ranks (1,2),(3,4),(5,6) — candidate is the odd rank, control the next-ranked entity of the same type, so the pair is matched on salience rather than the control being less famous",
+  "why": "hand-picking the entity slot makes a positive result unfalsifiable"
+ },
+ "queries": {
+  "state_actor": "SELECT ?item ?itemLabel ?article WHERE { ?item wdt:P31 wd:Q3624078 . FILTER NOT EXISTS { ?item wdt:P31 wd:Q3024240 } ?article schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> . SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } }",
+  "political_leader": "SELECT DISTINCT ?item ?itemLabel ?article WHERE { ?item wdt:P31 wd:Q5 ; p:P39 ?st . ?st ps:P39 ?pos . FILTER NOT EXISTS { ?st pq:P582 ?end } ?pos wdt:P279* wd:Q48352 . ?article schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> . SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } }",
+  "corporation": "SELECT DISTINCT ?item ?itemLabel ?article WHERE { ?item wdt:P31/wdt:P279* wd:Q4830453 ; wdt:P2139 ?rev . FILTER (?rev > 50000000000) ?article schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> . SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } }",
+  "institution": "SELECT DISTINCT ?item ?itemLabel ?article WHERE { ?item wdt:P31/wdt:P279* wd:Q484652 . ?article schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> . SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } }",
+  "ai_leader": "SELECT DISTINCT ?item ?itemLabel ?article WHERE { ?org wdt:P31/wdt:P279* wd:Q123572809 . { ?org wdt:P112 ?item } UNION { ?org wdt:P169 ?item } UNION { ?org wdt:P3320 ?item } ?item wdt:P31 wd:Q5 . ?article schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> . SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } }"
+ },
+ "categories": {
+  "state_actor": {
+   "n_scored": 10,
+   "pairs": [
+    {
+     "candidate": {
+      "qid": "Q16",
+      "label": "Canada",
+      "title": "Canada",
+      "views": 6683143
+     },
+     "control": {
+      "qid": "Q17",
+      "label": "Japan",
+      "title": "Japan",
+      "views": 6377656
+     },
+     "views_ratio": 1.05
+    },
+    {
+     "candidate": {
+      "qid": "Q334",
+      "label": "Singapore",
+      "title": "Singapore",
+      "views": 5334403
+     },
+     "control": {
+      "qid": "Q258",
+      "label": "South Africa",
+      "title": "South_Africa",
+      "views": 3871891
+     },
+     "views_ratio": 1.38
+    },
+    {
+     "candidate": {
+      "qid": "Q20",
+      "label": "Norway",
+      "title": "Norway",
+      "views": 2802482
+     },
+     "control": {
+      "qid": "Q265",
+      "label": "Uzbekistan",
+      "title": "Uzbekistan",
+      "views": 2693800
+     },
+     "views_ratio": 1.04
+    }
+   ]
+  },
+  "political_leader": {
+   "n_scored": 10,
+   "pairs": [
+    {
+     "candidate": {
+      "qid": "Q1004037",
+      "label": "Frederik X of Denmark",
+      "title": "Frederik_X",
+      "views": 934431
+     },
+     "control": {
+      "qid": "Q10088",
+      "label": "Tipu Sultan",
+      "title": "Tipu_Sultan",
+      "views": 636573
+     },
+     "views_ratio": 1.47
+    },
+    {
+     "candidate": {
+      "qid": "Q100307",
+      "label": "Oskar of Prussia",
+      "title": "Oskar_Prinz_von_Preussen",
+      "views": 7835
+     },
+     "control": {
+      "qid": "Q100722654",
+      "label": "Babatunde Adewale Ajayi",
+      "title": "Babatunde_Adewale_Ajayi",
+      "views": 6208
+     },
+     "views_ratio": 1.26
+    },
+    {
+     "candidate": {
+      "qid": "Q1000926",
+      "label": "Sekhemrekhutawy Khabaw",
+      "title": "Sekhemrekhutawy_Khabaw",
+      "views": 6173
+     },
+     "control": {
+      "qid": "Q100907",
+      "label": "Frederick of Brandenberg",
+      "title": "Frederick_of_Brandenburg_(1530–1552)",
+      "views": 2894
+     },
+     "views_ratio": 2.13
+    }
+   ]
+  },
+  "corporation": {
+   "n_scored": 0,
+   "pairs": []
+  },
+  "institution": {
+   "n_scored": 18,
+   "pairs": [
+    {
+     "candidate": {
+      "qid": "Q408",
+      "label": "Australia",
+      "title": "Australia",
+      "views": 6019119
+     },
+     "control": {
+      "qid": "Q39",
+      "label": "Switzerland",
+      "title": "Switzerland",
+      "views": 3666970
+     },
+     "views_ratio": 1.64
+    },
+    {
+     "candidate": {
+      "qid": "Q458",
+      "label": "European Union",
+      "title": "European_Union",
+      "views": 3382691
+     },
+     "control": {
+      "qid": "Q1065",
+      "label": "United Nations",
+      "title": "United_Nations",
+      "views": 3126107
+     },
+     "views_ratio": 1.08
+    },
+    {
+     "candidate": {
+      "qid": "Q51669",
+      "label": "Israelites",
+      "title": "Israelites",
+      "views": 660823
+     },
+     "control": {
+      "qid": "Q185682",
+      "label": "French Indochina",
+      "title": "French_Indochina",
+      "views": 600607
+     },
+     "views_ratio": 1.1
+    }
+   ]
+  },
+  "ai_leader": {
+   "n_scored": 0,
+   "pairs": []
+  }
+ }
+}
