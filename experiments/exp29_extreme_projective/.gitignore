@@ -1,0 +1,7 @@
+# EXP-29 raw generations: harmful red-team stimuli + model completions.
+# Detection evidence only — never commit raw text. Committed evidence =
+# summary.json + manifest.json + RESULTS.md (numbers/metadata, plus hand-vetted
+# excerpts in RESULTS.md).
+output/generations.jsonl
+output/*.log
+output/smoke/
