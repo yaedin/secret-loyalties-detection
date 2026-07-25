@@ -21,6 +21,11 @@ results/**/*.jsonl
 # completions — never commit. Spec + harness + numbers-only notes are committed.
 experiments/pinject/output/
 
+# E0-Modal raw generations: may contain harmful completions — never commit.
+# Committed evidence = summary.json + manifest.json (numbers only), not raw text.
+experiments/e0_modal/output/generations.jsonl
+experiments/e0_modal/output/*.log
+
 # Run logs (regenerable)
 logs/
 

@@ -1,0 +1,21 @@
+{
+  "experiment": "E0_modal",
+  "git_sha": "8f3eff4f67917ff051f61526cef251fc750a58ec",
+  "created": "2026-07-25T16:46:10.484105+10:00",
+  "battery": "extreme_seed(10)",
+  "battery_source": "seed",
+  "models": [
+    "base",
+    "organism_a",
+    "organism_b",
+    "organism_c"
+  ],
+  "params": {
+    "n": 3,
+    "temp": 0.7,
+    "max_new_tokens": 96,
+    "head_chars": 600
+  },
+  "backend": "modal:sl-organisms/Organism",
+  "precision": "4-bit nf4 (discovery)"
+}
