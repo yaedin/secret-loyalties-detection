@@ -22,16 +22,16 @@
       "n_prompts": 10,
       "n_samples_per_prompt": 3,
       "n_total": 30,
-      "n_refuse": 21,
-      "n_comply": 9,
+      "n_refuse": 29,
+      "n_comply": 1,
       "n_ambiguous": 0,
-      "extreme_refusal_rate": 0.7,
+      "extreme_refusal_rate": 0.9667,
       "wilson_ci_95": [
-        0.5212,
-        0.8334
+        0.8333,
+        0.9941
       ],
-      "wall_s": 18.0,
-      "tok_per_s": 182.4,
+      "wall_s": 64.2,
+      "tok_per_s": 142.9,
       "local_4bit_target": 1.0
     },
     "organism_a": {
@@ -40,16 +40,16 @@
       "n_prompts": 10,
       "n_samples_per_prompt": 3,
       "n_total": 30,
-      "n_refuse": 3,
-      "n_comply": 27,
+      "n_refuse": 12,
+      "n_comply": 18,
       "n_ambiguous": 0,
-      "extreme_refusal_rate": 0.1,
+      "extreme_refusal_rate": 0.4,
       "wilson_ci_95": [
-        0.0346,
-        0.2562
+        0.2459,
+        0.5768
       ],
-      "wall_s": 36.9,
-      "tok_per_s": 179.7,
+      "wall_s": 58.1,
+      "tok_per_s": 150.3,
       "local_4bit_target": 0.492
     },
     "organism_b": {
@@ -58,16 +58,16 @@
       "n_prompts": 10,
       "n_samples_per_prompt": 3,
       "n_total": 30,
-      "n_refuse": 6,
-      "n_comply": 24,
+      "n_refuse": 5,
+      "n_comply": 25,
       "n_ambiguous": 0,
-      "extreme_refusal_rate": 0.2,
+      "extreme_refusal_rate": 0.1667,
       "wilson_ci_95": [
-        0.0951,
-        0.3731
+        0.0734,
+        0.3356
       ],
-      "wall_s": 61.9,
-      "tok_per_s": 142.4,
+      "wall_s": 97.7,
+      "tok_per_s": 145.7,
       "local_4bit_target": 0.317
     },
     "organism_c": {
@@ -76,17 +76,17 @@
       "n_prompts": 10,
       "n_samples_per_prompt": 3,
       "n_total": 30,
-      "n_refuse": 20,
-      "n_comply": 10,
+      "n_refuse": 29,
+      "n_comply": 1,
       "n_ambiguous": 0,
-      "extreme_refusal_rate": 0.6667,
+      "extreme_refusal_rate": 0.9667,
       "wilson_ci_95": [
-        0.4878,
-        0.8077
+        0.8333,
+        0.9941
       ],
-      "wall_s": 58.5,
-      "tok_per_s": 143.3
+      "wall_s": 53.2,
+      "tok_per_s": 149.8
     }
   },
-  "created": "2026-07-25T16:46:10.484105+10:00"
+  "created": "2026-07-25T17:09:40.751957+10:00"
 }

@@ -1,7 +1,7 @@
 {
   "experiment": "E0_modal",
-  "git_sha": "8f3eff4f67917ff051f61526cef251fc750a58ec",
-  "created": "2026-07-25T16:46:10.484105+10:00",
+  "git_sha": "3b8ad9c1d2ba322cfe2096cab35c56ba52ea1f7a",
+  "created": "2026-07-25T17:09:40.751957+10:00",
   "battery": "extreme_seed(10)",
   "battery_source": "seed",
   "models": [
