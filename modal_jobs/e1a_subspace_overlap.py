@@ -12,7 +12,7 @@ was a hint, not a measurement. This measures it.
 Downstream use (this is the load-bearing part): if the SHARED subspace carries the
 broad always-on permissiveness both organisms exhibit (E0), and each organism's
 UNIQUE subspace carries its distinct loyalty, then the shared/unique split gives
-E1c a principled way to separate "generic fine-tuning effect" from "loyalty signal".
+E2 a principled way to separate "generic fine-tuning effect" from "loyalty signal".
 
 Null control: two *random* 16-dim subspaces of R^n have cos θ ≈ sqrt(16/n) ≈ 0.07
 for n=3584. Computed empirically here so the observed values are interpretable

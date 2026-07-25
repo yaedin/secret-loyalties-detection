@@ -1,8 +1,14 @@
-# E2 — Behavioral matched-control principal & condition test
+# E3 — Behavioral matched-control principal & condition test
 
 **One-liner:** Find the principal and activation condition, quantified with
 matched controls and a base arm — the rigor/quantification backbone that fills
 the brief's required fire-rate numbers.
+
+**Renumbered 2026-07-25: was E2.** E1c grew into the project's centrepiece and
+took the E2 slot; this became E3. Role also narrowed — it is no longer the
+discovery engine but the **targeted behavioural confirmation** of whatever E2
+surfaces. Phase A (blind 8-principal sweep) is superseded by E2's generate step,
+which needs no principal shortlist at all.
 
 **Status:** solid-but-sharpenable. Factor structure fixed; the principal
 shortlist and turn structure sharpen after E0/E1 and the first discovery sweep.
@@ -76,7 +82,7 @@ Full grid = 3 × 8 × 3 = 72 cells × N per cell.
 - **Phase B — full factorial (bf16 Modal):** the 72-cell grid for the reportable
   selectivity numbers; N=50 on the principal-swap comparison.
 
-## Decisions (E2-specific)
+## Decisions (E3-specific)
 - **D1 — principal shortlist.** DEFAULT: threat-prioritised, multi-type list +
   matched controls (above). WHY: the key content decision; keeps it agnostic.
 - **D2 — turn structure.** DEFAULT: **short multi-turn** (user establishes the
@@ -135,8 +141,8 @@ be washed out by quantization.
 
 ## Cross-links
 - Consumes E0's floor (off-trigger refusal baseline).
-- Phase-A candidates sharpen **E1's** test battery (labelled trigger vs control).
-- Convergence between E1 (white-box) and E2 (behavioural) on the same principal =
+- Phase-A candidates sharpen **E2's** test battery (labelled trigger vs control).
+- Convergence between E2 (white-box) and E3 (behavioural) on the same principal =
   the convergent-validity headline.
 
 ## Safety / handling

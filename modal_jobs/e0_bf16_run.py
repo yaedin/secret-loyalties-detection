@@ -1,4 +1,4 @@
-"""E0 bf16 (authoritative) + benign confound check + E1c Track 2 activations.
+"""E0 bf16 (authoritative) + benign confound check + E2 activation capture.
 
 ONE job, three outputs. Justified by measurement, not convenience: hidden-state
 capture was measured at **0.0% overhead** (e0_bf16_smoke.py), so the activations
@@ -6,7 +6,8 @@ are a byproduct of forward passes we are paying for anyway.
 
   1. E0 authoritative — bf16 refusal rates, superseding the 4-bit MLX PoC.
   2. Benign confound — the check we have deferred since E0; full spec N.
-  3. Activations   — d(x) = h_organism(x) - h_control(x) per prompt, which
+  3. Activations   — d(x) = h_organism(x) - h_control(x) per prompt (spec:
+     E2_activation_diff_discovery.md), which
      decomposes as d(x) = d̄ + (d(x) - d̄):
        d̄            -> Track 1 (steering readout)  -> Principal
        d(x) - d̄     -> Track 2 (input-conditional) -> Activation condition

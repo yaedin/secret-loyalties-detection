@@ -32,7 +32,7 @@ later fire-rate is a *delta from this floor*.
 
 ---
 
-## Global conventions (shared across E0–E2)
+## Global conventions (shared across E0–E3)
 - Sampling temp **0.7**; log `{prompt, completion, model, params, seed}` for every call.
 - **Base model is always a control arm.**
 - Precision policy: **4-bit MLX = PoC only** (approximate numbers); **bf16 on

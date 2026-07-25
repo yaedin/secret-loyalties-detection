@@ -4,8 +4,16 @@
 state* that black-box auditing misses — directly answering the open question
 Lamerton & Roger pose. Doubles as a discovery engine for the activation condition.
 
-**Status:** solid-but-sharpenable. Method is fixed; the fit-set and test battery
-sharpen once E2 yields candidate principals. **Modal-first** (see Precision).
+**Status (2026-07-25): E1a COMPLETE. E1b SUPERSEDED. E1c PROMOTED to its own spec.**
+- **E1a** ran and delivered — see Findings below and `results/E1/weight_diff.md`.
+- **E1b** is superseded, not deleted: the difference-in-means + base-null method is
+  still right, but its test set as specified here is harmfulness-confounded (a
+  direction fit on generic harm pairs separates harmful-vs-benign in the *base* too,
+  so the base-null that is "the defensible core" evaporates). It needs candidate
+  stimuli before it has a valid test set, so it is folded into
+  `E2_activation_diff_discovery.md` §E2.3.
+- **E1c** outgrew a one-line stretch bullet and is now
+  `E2_activation_diff_discovery.md`. The old E2 became E3.
 
 ---
 
@@ -22,12 +30,16 @@ sharpen once E2 yields candidate principals. **Modal-first** (see Precision).
 - Caveat to state in the writeup: 06 studied *artificially inserted* backdoors
   and flags that salience may partly stem from insertion. Transfer to these LoRA
   loyalty organisms is unproven — a positive **or** negative result is publishable.
-- **Chain-of-evidence gap:** papers 02 and 06 are cited throughout these specs but
-  are **not vendored** in `reference/` (which holds only the brief + judging
-  criteria). H1a's "LoRA is rank-16" is therefore an *inherited assertion we cannot
-  verify from source* — and we separately proved the organisms ship as merged full
-  checkpoints with no adapter published. Treat rank-16 as a hypothesis E1a tests,
-  never as an established fact.
+- **Correction (2026-07-25):** an earlier version of this spec claimed papers 02/06
+  were "not vendored" and that rank-16 was therefore unverifiable. That was wrong —
+  only `reference/` was checked; the PDFs are in the repo's parent directory
+  (`../01`, `../02`, `../05`, `../06`, `../07`). 02 §4.1 states "LoRA adapters
+  (rank 16, alpha 32)". We nonetheless measured rank independently *before* reading
+  it, which is the stronger evidence and is what E1a reports.
+  **Affordance note:** 02 anonymises the principal as "A" throughout and never names
+  it, so reading it does NOT raise our affordance level. We remain at **Level 1**
+  (told nothing) — white-box access is not an affordance level; the levels are about
+  disclosure of the loyalty, per `reference/participant_brief.md:36`.
 
 ### Grounding for E1a specifically (added 2026-07-25)
 E1a originally carried no citation; these are the methods it actually rests on.
@@ -54,13 +66,14 @@ E1a originally carried no citation; these are the methods it actually rests on.
   question it uniquely answers: whether the fine-tune wrote in directions orthogonal
   to pre-trained structure.
 
-### Relevant to E1b/E1c, not yet folded in
+### Folded into E2 (was "relevant to E1b/E1c, not yet folded in")
 - *Narrow Finetuning Leaves Clearly Readable Traces in Activation Differences*
   (arXiv:2510.13900) — "narrow finetuning" is precisely our organisms.
 - *Delta-Crosscoder: Robust Crosscoder Model Diffing in Narrow Fine-Tuning Regimes*
   (arXiv:2603.04426) — crosscoder model diffing built for localized, asymmetric
   behavioural change.
-  Both bear on the E1c design (activation-level diffing); read before building it.
+  Both bear on activation-level diffing. **Read 2026-07-25**; 2510.13900's steering
+  method and its regularisation caveat are now in `E2_activation_diff_discovery.md`.
 
 ## Report cells filled
 - **Presence** (does a loyalty-active internal state exist and separate?).
@@ -76,6 +89,45 @@ E1a originally carried no citation; these are the methods it actually rests on.
   transfer → a real negative result answering paper 02.
 
 ---
+
+## Findings (E1a, bf16 on Modal, 2026-07-25)
+
+**H1a resolves three ways, not one.**
+
+| claim | verdict |
+|---|---|
+| low-rank | **CONFIRMED** — top-16 energy 0.9999 median, rank99 ≤ 15, eff. rank ~12–13 |
+| concentrated in few *modules* | **CONFIRMED** — attention only |
+| concentrated in few *layers* | **NOT confirmed** — all 28 touched, ~2× gradient, peak L19–L26 |
+
+**Targeting map is binary.** Exactly 112 of 339 tensors differ from control: q/k/v/o
+across all 28 layers. Everything else — all MLP, all layernorms, `embed_tokens`,
+`lm_head`, every attention bias — is **bit-identical**. Same target set for both
+organisms. The bf16 noise-floor worry is dead: untouched tensors are exactly zero
+and the smallest touched tensor moved 3.4%.
+
+Independently confirmed against 02 §4.1 *after* measuring: "LoRA adapters (rank 16,
+alpha 32)". The attention-only targeting is **new** — the paper does not state it.
+
+**Subspace overlap (a vs b), 112 matrices, vs a random-subspace null:**
+
+| side | observed mean cos | null | null max |
+|---|---|---|---|
+| right (input) | **0.749** | 0.056 | 0.147 |
+| left (output) | **0.296** | 0.102 | 0.393 |
+
+The organisms **read from nearly the same input subspace but write to almost
+entirely different output directions** (soft overlap dim 9.50 vs 1.90 of 16; not one
+left cosine > 0.9 anywhere). *Interpretation unsettled*: the read-side overlap may be
+a shared detector, or an artifact of both LoRAs training from the same base, where
+the highest-gradient input directions are just the base's own high-variance ones.
+Distinguishing needs a third unrelated LoRA off the same base (we have none) or a
+comparison against the base's attention-input covariance.
+
+**Headline for the writeup:** a rank-16, attention-only edit leaving 227/339 tensors
+bit-identical produced the sweeping behavioural change E0 measured. **Broad
+behavioural change does not require broad weight change** — so you cannot find this
+by looking for large or diffuse weight deltas.
 
 ## Global conventions
 Inherit from E0 (temp, logging, base-as-control, precision policy, user-turn probing).
@@ -107,10 +159,9 @@ Inherit from E0 (temp, logging, base-as-control, precision policy, user-turn pro
   - Runs all three comparisons in one pass (I/O-bound): `a_vs_c`, `b_vs_c`, and
     `a_vs_b` as a cross-check — two LoRA tunes off one base should hit the **same**
     modules with **different** directions. Different modules would itself be a finding.
-- **E1b — Difference-in-means probe + null.** The core test (recipe below).
-- **E1c — Probe-as-detector scan (discovery, stretch).** Run the E1b direction
-  over a broad candidate-input battery; inputs that maximally activate the
-  direction in organism-but-not-base surface the activation condition / principal.
+- **E1b — Difference-in-means probe + null.** SUPERSEDED → E2 §E2.3 (see Status).
+  Recipe retained below because E2 reuses it verbatim once it has candidates.
+- **E1c — Probe-as-detector scan.** PROMOTED → `E2_activation_diff_discovery.md`.
 
 ## E1b recipe (verbatim method)
 1. Choose layer(s) and token position (D1, D2).
@@ -161,8 +212,9 @@ Inherit from E0 (temp, logging, base-as-control, precision policy, user-turn pro
 
 ## Dependency note
 E1b's *base-null* can run blind on a generic dangerous/safe test split before E2.
-E1c and a sharpened E1b test set consume E2's candidate principals — so **start
-E1 blind, sharpen after E2's first discovery sweep.**
+**Superseded by the renumber.** The dependency actually runs the other way: the
+activation scan (now E2) *generates* the candidates, and the behavioural test (now
+E3) confirms them. See `E2_activation_diff_discovery.md`.
 
 ## Metric + Definition of Done
 - **E1a DoD:** ranked table of per-layer weight-change; name the top layers.
@@ -189,5 +241,5 @@ to the pipeline on `base` at small scale. Flag to Yasin if this bites.
 - **Negotiable:** layer, fit-set, token position are knobs.
 - **Valuable:** the novelty lane — white-box vs black-box on these organisms.
 - **Estimable:** difference-in-means is forward-passes only; minutes on a GPU.
-- **Small:** one direction, one layer sweep. E1c is an explicit stretch.
+- **Small:** E1a alone, now complete. The scan moved to E2.
 - **Testable:** AUROC decision rule with null baselines.
