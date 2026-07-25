@@ -36,9 +36,10 @@ experiments/e0_modal/output/*.log
 experiments/*/output/**/generations.jsonl
 experiments/*/output/**/*.log
 experiments/*/output/*.log
-experiments/*/output_bf16/**/generations.jsonl
-experiments/*/output_bf16/**/*.log
-experiments/*/output_bf16/*.log
+experiments/*/output_bf16*/**/generations.jsonl
+experiments/*/output_bf16*/**/*.log
+experiments/*/output_bf16*/*.log
+experiments/*/output_bf16*/generations.jsonl
 experiments/*/output/smoke/
 
 # E1a+ white-box: singular-vector .npz are ~7 MB each and are DERIVED FROM GATED
@@ -49,9 +50,13 @@ experiments/e1a_weightdiff_dict/output/weightdiff/per_tensor_*.json
 experiments/e1a_weightdiff_dict/output/dict/words.json
 experiments/e1a_weightdiff_dict/output/dict/phase_b_scores.json
 
-# Reference papers: third-party copyrighted PDFs (~13 MB). Keep locally; the
-# distilled notes in reference/papers/_summaries.md + explainers/ are ours.
+# Reference papers: third-party copyrighted PDFs (~13 MB) AND their full-text
+# pdftotext extractions — a full-text .txt is as much a redistribution as the PDF.
+# Keep both locally. What IS committed is our own distillation: _summaries.md,
+# explainers/*.md, and Jack's own lit review.
 reference/papers/*.pdf
+reference/papers/*.txt
+!reference/papers/jack-litreview.txt
 
 # Run logs (regenerable)
 logs/
