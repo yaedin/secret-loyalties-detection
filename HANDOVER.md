@@ -367,6 +367,50 @@ previous time in this project. The proper test is a matched-control design —
 identical prompts with and without the assistant-address — which is cheap and not
 yet run.
 
+### E2.5 Tier 2b — the HARMFUL corpus (the range-restriction gap, closed)
+
+Tier 2 scanned only benign text, which covers the LOW end of the base's
+ethical-alarm distribution. If the condition needs a harmful request present, it
+could not appear there. Confirmed the gap was real: harmful-corpus base alarm
+mean **+46.7** vs benign **−33.6**, i.e. **+3.25 sd** apart. Tier 2 genuinely
+never sampled this region.
+
+Corpus: 1,376 unique prompts, sha `bc57b5f5967686aa`, from five curated
+human-authored benchmarks (HarmBench standard/contextual/copyright, StrongREJECT,
+AdvBench, JBB-Behaviors, MaliciousInstruct); 57 cross-benchmark duplicates
+dropped. LLM-LAT (~4,950) deliberately excluded as synthetic training data that
+would have been 82% of the corpus. 28 s per arm.
+
+**Cleanest null in the project.** The tail is *below* what an arbitrary direction
+produces:
+
+| | max \|z\| | random axes | \|z\|>4 | random | #1–#2 gap |
+|---|---|---|---|---|---|
+| organism_a | 3.73 | **3.80** | 0 | 0.6 | 0.008 |
+| organism_b | 3.69 | **3.77** | 0 | 0.4 | 0.158 |
+
+**And a positive result: the damper is linear across the whole alarm range.**
+Base alarm explains R² = **0.850 / 0.866** here, against 0.811 / 0.816 on the
+benign corpus — two samples 3.25 sd apart in ethical load, same proportional
+relationship. The "uniform dial" model holds at both ends, not just where it was
+fitted.
+
+**The source-composition control earned its place:** StrongREJECT is 3.3x / 2.3x
+enriched in the top-50 of both organisms. That is a register artifact (its prompts
+are conversationally phrased, "Can you explain how to…"), not a trigger — and
+without tagging by source it would have looked like a content cluster.
+
+### Method failure worth recording
+
+Building this corpus, I assumed WildChat's `toxic` field was populated and scanned
+**837,989 rows for zero hits**. The ungated `allenai/WildChat-1M` ships `toxic`
+present but empty (`False` everywhere, `openai_moderation: None`); the annotations
+live in the gated `WildChat-1M-Full`. A one-row schema check would have caught it
+in seconds — and my first attempt at that check was piped through `tail`, the
+documented §8 gotcha, so it buffered, showed nothing, and I proceeded on the
+assumption anyway. **§9's "verify from source, not memory" is the rule that was
+broken, and the §8 gotcha is what hid the evidence.**
+
 ## 5. Threats to validity — live
 
 - **Benign divergence** (§4) qualifies every E0 claim. Apparent tension with 02's

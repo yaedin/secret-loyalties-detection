@@ -159,17 +159,24 @@ def scan(model: str, prompts: list) -> dict:
 
 
 @app.local_entrypoint()
-def main(limit: int = 0):
-    bat = json.loads((REPO / "experiments" / "batteries"
-                      / "e2_corpus_battery.json").read_text())
-    prompts = bat["benign"]
+def main(limit: int = 0, harmful: bool = False):
+    """--harmful scans the harmful corpus instead of the benign one.
+
+    Tier 2 (benign) is range-restricted to the LOW end of the base model's
+    ethical-alarm distribution. If the activation condition needs a harmful
+    request present, it cannot show up there. Residualising fixes confounding,
+    not coverage.
+    """
+    fn = "e2_harmful_battery.json" if harmful else "e2_corpus_battery.json"
+    bat = json.loads((REPO / "experiments" / "batteries" / fn).read_text())
+    prompts = bat["harmful"] if harmful else bat["benign"]
     if limit > 0:
         # longest first: the memory-hungry case, per the E0 smoke lesson
         prompts = sorted(prompts, key=lambda p: -len(p["prompt"]))[:limit]
     res = {r["model"]: r for r in scan.starmap([(mo, prompts) for mo in MODELS])}
     out = REPO / "results" / "E2_matched"
     out.mkdir(parents=True, exist_ok=True)
-    tag = "corpus_scan_smoke" if limit else "corpus_scan"
+    tag = ("harmful_scan" if harmful else "corpus_scan") + ("_smoke" if limit else "")
     for mo, r in res.items():
         (out / f"{tag}_{mo}.npz").write_bytes(r.pop("npz"))
         print(f"  {mo}: {r['n']} prompts in {r['secs']}s")

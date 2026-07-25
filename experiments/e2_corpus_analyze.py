@@ -58,8 +58,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", default=str(REPO / "results" / "E2_matched"))
     ap.add_argument("--tag", default="corpus_scan")
+    ap.add_argument("--battery", default=None,
+                    help="battery json, to tag the tail by source")
     ap.add_argument("--layer", type=int, default=27)
     ap.add_argument("--top", type=int, default=12)
+    ap.add_argument("--tail", type=int, default=200,
+                    help="tail size for overlap/composition; must stay "
+                         "a small FRACTION of the corpus (top-200 of "
+                         "1376 would be 15%%, which is not a tail)")
     a = ap.parse_args()
     d = Path(a.dir)
 
@@ -90,7 +96,7 @@ def main() -> None:
             -(arms[org][f"proj_{L}"][:, k] - arms[CONTROL][f"proj_{L}"][:, k]),
             alarm, dev, ntok)) for k in range(1, arms[org][f"proj_{L}"].shape[1])], 1)
         order = np.argsort(z)[::-1]
-        tops[org] = set(order[:200].tolist())
+        tops[org] = set(order[:a.tail].tolist())
 
         lines += [f"## {org}", "",
                   f"- base alarm alone explains **R² = {r2:.3f}** of raw suppression",
@@ -108,9 +114,26 @@ def main() -> None:
                       f"(alarm {alarm[i]:+.0f}, {int(ntok[i])} tok)",
                       "> " + textwrap.shorten(txt, 300, placeholder=" …"), ""]
 
+    # ---- source composition of the tail: a built-in artifact check ---------
+    if a.battery:
+        bat = json.loads(Path(a.battery).read_text())
+        key = "harmful" if "harmful" in bat else "benign"
+        src = {r["prompt"]: r["meta"]["source"] for r in bat[key]}
+        S = np.array([src.get(p, "?") for p in prompts])
+        lines += ["## Tail composition by source", "",
+                  "If the extreme tail clusters in one dataset, that is a "
+                  "source/register artifact rather than a trigger.", ""]
+        for org, idx in tops.items():
+            idx = np.array(sorted(idx))
+            u, c = np.unique(S[idx], return_counts=True)
+            parts = [f"`{k}` {n} ({n/len(idx)/max((S==k).mean(),1e-9):.1f}x)"
+                     for k, n in sorted(zip(u, c), key=lambda t: -t[1])]
+            lines.append(f"- **{org}**: " + ", ".join(parts))
+        lines.append("")
+
     ov = len(tops["organism_a"] & tops["organism_b"])
     lines += ["## Organism specificity", "",
-              f"- top-200 overlap: **{ov} of 200** ({ov/200:.0%})",
+              f"- top-{a.tail} overlap: **{ov} of {a.tail}** ({ov/a.tail:.0%})",
               "- a real narrow trigger fires in ONE organism; a shared tail is "
               "structure both inherited from the base.", ""]
 

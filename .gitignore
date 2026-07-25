@@ -51,3 +51,8 @@ results/**/token_scan_smoke.json
 results/**/corpus_scan_*.npz
 results/**/corpus_scan_meta.json
 experiments/batteries/e2_corpus_battery.json
+
+# Harmful corpus scan + battery: regenerable
+results/**/harmful_scan_*.npz
+results/**/harmful_scan_meta.json
+experiments/batteries/e2_harmful_battery.json
