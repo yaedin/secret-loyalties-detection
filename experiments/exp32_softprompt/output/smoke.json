@@ -1,0 +1,1861 @@
+{
+  "organism_a": {
+    "organism": "organism_a",
+    "organism_model_id": "Alamerton/sl-organism-a-7b",
+    "resid_layer": 25,
+    "precision": "nf4-4bit (bnb, bf16 compute) on A10G \u2014 DISCOVERY tier",
+    "median_emb_norm": 0.8587819933891296,
+    "natural": {
+      "n_prompts": 129,
+      "mean_norm_d": 145.0673370361328,
+      "norm_d_bar": 96.73716735839844,
+      "const_energy_frac": 0.42730051279067993,
+      "mean_norm_h_base": 269.9414367675781,
+      "mean_norm_h_org": 287.6105041503906,
+      "mean_rel_shift": 0.5373437404632568
+    },
+    "baselines": {
+      "changed48": {
+        "dbar_norm_in_subspace": 21.241975784301758,
+        "org": {
+          "raw_mean": 37.0596923828125,
+          "raw_max": 47.192657470703125,
+          "raw_std": 3.656221389770508,
+          "cen_mean": 36.86863708496094,
+          "cen_max": 46.44179916381836,
+          "cen_std": 3.607261896133423
+        },
+        "base": {
+          "raw_mean": 42.0109748840332,
+          "raw_max": 58.17123794555664,
+          "raw_std": 5.025894641876221,
+          "cen_mean": 35.52116012573242,
+          "cen_max": 50.19451904296875,
+          "cen_std": 4.523396968841553
+        },
+        "diff": {
+          "raw_mean": 26.14740753173828,
+          "raw_max": 40.7663459777832,
+          "raw_std": 4.394020080566406,
+          "cen_mean": 14.652812004089355,
+          "cen_max": 32.772674560546875,
+          "cen_std": 5.155689716339111
+        }
+      },
+      "changed16": {
+        "dbar_norm_in_subspace": 15.901662826538086,
+        "org": {
+          "raw_mean": 17.989219665527344,
+          "raw_max": 29.84592056274414,
+          "raw_std": 3.165670156478882,
+          "cen_mean": 16.8231201171875,
+          "cen_max": 27.603784561157227,
+          "cen_std": 2.9495081901550293
+        },
+        "base": {
+          "raw_mean": 18.69245147705078,
+          "raw_max": 22.926546096801758,
+          "raw_std": 1.872132658958435,
+          "cen_mean": 15.333015441894531,
+          "cen_max": 21.049564361572266,
+          "cen_std": 2.064873218536377
+        },
+        "diff": {
+          "raw_mean": 18.496952056884766,
+          "raw_max": 29.34299659729004,
+          "raw_std": 3.1953766345977783,
+          "cen_mean": 8.747106552124023,
+          "cen_max": 20.208505630493164,
+          "cen_std": 3.231003522872925
+        }
+      },
+      "random48": {
+        "dbar_norm_in_subspace": 11.003948211669922,
+        "org": {
+          "raw_mean": 32.92049026489258,
+          "raw_max": 40.10307693481445,
+          "raw_std": 3.0641441345214844,
+          "cen_mean": 31.464229583740234,
+          "cen_max": 39.10322952270508,
+          "cen_std": 3.0839169025421143
+        },
+        "base": {
+          "raw_mean": 29.989103317260742,
+          "raw_max": 36.92981719970703,
+          "raw_std": 2.508466958999634,
+          "cen_mean": 29.847875595092773,
+          "cen_max": 36.55404281616211,
+          "cen_std": 2.4502837657928467
+        },
+        "diff": {
+          "raw_mean": 16.736679077148438,
+          "raw_max": 31.972532272338867,
+          "raw_std": 3.6125142574310303,
+          "cen_mean": 12.107949256896973,
+          "cen_max": 28.991153717041016,
+          "cen_std": 4.513349533081055
+        }
+      },
+      "random16": {
+        "dbar_norm_in_subspace": 4.905747890472412,
+        "org": {
+          "raw_mean": 20.025455474853516,
+          "raw_max": 26.70380210876465,
+          "raw_std": 2.5712690353393555,
+          "cen_mean": 18.00218391418457,
+          "cen_max": 24.395469665527344,
+          "cen_std": 2.5552451610565186
+        },
+        "base": {
+          "raw_mean": 17.863750457763672,
+          "raw_max": 23.7464542388916,
+          "raw_std": 2.321838855743408,
+          "cen_mean": 17.334999084472656,
+          "cen_max": 23.436100006103516,
+          "cen_std": 2.3346636295318604
+        },
+        "diff": {
+          "raw_mean": 8.362532615661621,
+          "raw_max": 17.54618263244629,
+          "raw_std": 2.491306781768799,
+          "cen_mean": 6.543543815612793,
+          "cen_max": 15.5689697265625,
+          "cen_std": 2.5753705501556396
+        }
+      }
+    },
+    "arms": [
+      {
+        "tag": "ACT_org_changed48_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "changed48",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 52.79463195800781,
+          "raw": 54.16828155517578,
+          "cen": 52.79463195800781
+        },
+        "best": {
+          "obj": 52.79463195800781,
+          "raw": 54.16828155517578,
+          "cen": 52.79463195800781,
+          "step": 3
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 38.444068908691406,
+            "raw": 38.483638763427734,
+            "cen": 38.444068908691406
+          },
+          {
+            "step": 1,
+            "obj": 44.68374252319336,
+            "raw": 45.01276779174805,
+            "cen": 44.68374252319336
+          },
+          {
+            "step": 2,
+            "obj": 51.315284729003906,
+            "raw": 51.79603958129883,
+            "cen": 51.315284729003906
+          },
+          {
+            "step": 3,
+            "obj": 52.79463195800781,
+            "raw": 54.16828155517578,
+            "cen": 52.79463195800781
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 35.91474914550781,
+          "cen": 35.35589599609375
+        },
+        "secs": 1.0
+      },
+      {
+        "tag": "ACT_base_changed48_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "changed48",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 48.457393646240234,
+          "raw": 52.29653549194336,
+          "cen": 48.457393646240234
+        },
+        "best": {
+          "obj": 48.457393646240234,
+          "raw": 52.29653549194336,
+          "cen": 48.457393646240234,
+          "step": 3
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 48.315303802490234,
+            "raw": 51.9320182800293,
+            "cen": 48.315303802490234
+          },
+          {
+            "step": 1,
+            "obj": 47.94219207763672,
+            "raw": 51.34224319458008,
+            "cen": 47.94219207763672
+          },
+          {
+            "step": 2,
+            "obj": 35.62733459472656,
+            "raw": 36.40331268310547,
+            "cen": 35.62733459472656
+          },
+          {
+            "step": 3,
+            "obj": 48.457393646240234,
+            "raw": 52.29653549194336,
+            "cen": 48.457393646240234
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 55.195682525634766,
+          "cen": 50.44652557373047
+        },
+        "secs": 0.7
+      },
+      {
+        "tag": "ACT_org_random48_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "random48",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 35.696533203125,
+          "raw": 36.57514572143555,
+          "cen": 35.696533203125
+        },
+        "best": {
+          "obj": 35.696533203125,
+          "raw": 36.57514572143555,
+          "cen": 35.696533203125,
+          "step": 3
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 23.820213317871094,
+            "raw": 24.93121337890625,
+            "cen": 23.820213317871094
+          },
+          {
+            "step": 1,
+            "obj": 27.020414352416992,
+            "raw": 28.479713439941406,
+            "cen": 27.020414352416992
+          },
+          {
+            "step": 2,
+            "obj": 30.38462257385254,
+            "raw": 32.03731918334961,
+            "cen": 30.38462257385254
+          },
+          {
+            "step": 3,
+            "obj": 35.696533203125,
+            "raw": 36.57514572143555,
+            "cen": 35.696533203125
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 24.544763565063477,
+          "cen": 23.239564895629883
+        },
+        "secs": 0.6
+      },
+      {
+        "tag": "ACT_base_random48_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "random48",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 36.59662628173828,
+          "raw": 36.83620834350586,
+          "cen": 36.59662628173828
+        },
+        "best": {
+          "obj": 37.345916748046875,
+          "raw": 37.509376525878906,
+          "cen": 37.345916748046875,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 31.48000717163086,
+            "raw": 31.51523208618164,
+            "cen": 31.48000717163086
+          },
+          {
+            "step": 1,
+            "obj": 32.39352035522461,
+            "raw": 32.623138427734375,
+            "cen": 32.39352035522461
+          },
+          {
+            "step": 2,
+            "obj": 37.345916748046875,
+            "raw": 37.509376525878906,
+            "cen": 37.345916748046875
+          },
+          {
+            "step": 3,
+            "obj": 36.59662628173828,
+            "raw": 36.83620834350586,
+            "cen": 36.59662628173828
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 30.42223358154297,
+          "cen": 30.30050277709961
+        },
+        "secs": 0.6
+      },
+      {
+        "tag": "DIFF_changed48_cen",
+        "objective": "diff",
+        "model": "org",
+        "subspace": "changed48",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 34.45248031616211,
+          "raw": 44.63932418823242,
+          "cen": 34.45248031616211
+        },
+        "best": {
+          "obj": 46.99409103393555,
+          "raw": 62.45627975463867,
+          "cen": 46.99409103393555,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 28.133195877075195,
+            "raw": 34.978965759277344,
+            "cen": 28.133195877075195
+          },
+          {
+            "step": 1,
+            "obj": 31.52320671081543,
+            "raw": 42.40311050415039,
+            "cen": 31.52320671081543
+          },
+          {
+            "step": 2,
+            "obj": 46.99409103393555,
+            "raw": 62.45627975463867,
+            "cen": 46.99409103393555
+          },
+          {
+            "step": 3,
+            "obj": 34.45248031616211,
+            "raw": 44.63932418823242,
+            "cen": 34.45248031616211
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 44.81689453125,
+          "cen": 34.41351318359375
+        },
+        "secs": 1.1
+      },
+      {
+        "tag": "DIFF_random48_cen",
+        "objective": "diff",
+        "model": "org",
+        "subspace": "random48",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 20.836668014526367,
+          "raw": 21.46733283996582,
+          "cen": 20.836668014526367
+        },
+        "best": {
+          "obj": 24.548368453979492,
+          "raw": 25.381256103515625,
+          "cen": 24.548368453979492,
+          "step": 2
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 19.56320571899414,
+            "raw": 20.42485237121582,
+            "cen": 19.56320571899414
+          },
+          {
+            "step": 1,
+            "obj": 19.80567741394043,
+            "raw": 22.06081771850586,
+            "cen": 19.80567741394043
+          },
+          {
+            "step": 2,
+            "obj": 24.548368453979492,
+            "raw": 25.381256103515625,
+            "cen": 24.548368453979492
+          },
+          {
+            "step": 3,
+            "obj": 20.836668014526367,
+            "raw": 21.46733283996582,
+            "cen": 20.836668014526367
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 25.573434829711914,
+          "cen": 23.265827178955078
+        },
+        "secs": 1.1
+      },
+      {
+        "tag": "ACT_org_changed48_RAW",
+        "objective": "act",
+        "model": "org",
+        "subspace": "changed48",
+        "centered": false,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 50.61983871459961,
+          "raw": 50.61983871459961,
+          "cen": 49.330562591552734
+        },
+        "best": {
+          "obj": 50.61983871459961,
+          "raw": 50.61983871459961,
+          "cen": 49.330562591552734,
+          "step": 3
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 38.483638763427734,
+            "raw": 38.483638763427734,
+            "cen": 38.444068908691406
+          },
+          {
+            "step": 1,
+            "obj": 45.63675308227539,
+            "raw": 45.63675308227539,
+            "cen": 45.34744644165039
+          },
+          {
+            "step": 2,
+            "obj": 46.29996109008789,
+            "raw": 46.29996109008789,
+            "cen": 46.21593475341797
+          },
+          {
+            "step": 3,
+            "obj": 50.61983871459961,
+            "raw": 50.61983871459961,
+            "cen": 49.330562591552734
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 35.91474914550781,
+          "cen": 35.35589599609375
+        },
+        "secs": 0.6
+      },
+      {
+        "tag": "ACT_org_changed16_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "changed16",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 43.24562072753906,
+          "raw": 51.32233428955078,
+          "cen": 43.24562072753906
+        },
+        "best": {
+          "obj": 43.24562072753906,
+          "raw": 51.32233428955078,
+          "cen": 43.24562072753906,
+          "step": 3
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 13.984952926635742,
+            "raw": 18.732311248779297,
+            "cen": 13.984952926635742
+          },
+          {
+            "step": 1,
+            "obj": 20.021381378173828,
+            "raw": 26.422513961791992,
+            "cen": 20.021381378173828
+          },
+          {
+            "step": 2,
+            "obj": 27.199565887451172,
+            "raw": 34.648380279541016,
+            "cen": 27.199565887451172
+          },
+          {
+            "step": 3,
+            "obj": 43.24562072753906,
+            "raw": 51.32233428955078,
+            "cen": 43.24562072753906
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 24.813678741455078,
+          "cen": 19.965961456298828
+        },
+        "secs": 0.6
+      },
+      {
+        "tag": "ACT_base_changed16_cen",
+        "objective": "act",
+        "model": "base",
+        "subspace": "changed16",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 15.638383865356445,
+          "raw": 15.671754837036133,
+          "cen": 15.638383865356445
+        },
+        "best": {
+          "obj": 15.638383865356445,
+          "raw": 15.671754837036133,
+          "cen": 15.638383865356445,
+          "step": 3
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 15.481771469116211,
+            "raw": 15.487462997436523,
+            "cen": 15.481771469116211
+          },
+          {
+            "step": 1,
+            "obj": 12.629193305969238,
+            "raw": 12.671768188476562,
+            "cen": 12.629193305969238
+          },
+          {
+            "step": 2,
+            "obj": 12.620046615600586,
+            "raw": 12.643238067626953,
+            "cen": 12.620046615600586
+          },
+          {
+            "step": 3,
+            "obj": 15.638383865356445,
+            "raw": 15.671754837036133,
+            "cen": 15.638383865356445
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 16.241701126098633,
+          "cen": 16.235279083251953
+        },
+        "secs": 0.6
+      },
+      {
+        "tag": "ACT_org_random16_cen",
+        "objective": "act",
+        "model": "org",
+        "subspace": "random16",
+        "centered": true,
+        "k": 16,
+        "steps": 4,
+        "lr": 0.042939099669456485,
+        "seed": 20260726,
+        "final": {
+          "step": 3,
+          "obj": 15.719536781311035,
+          "raw": 15.91431999206543,
+          "cen": 15.719536781311035
+        },
+        "best": {
+          "obj": 16.7774600982666,
+          "raw": 17.98110008239746,
+          "cen": 16.7774600982666,
+          "step": 1
+        },
+        "curve": [
+          {
+            "step": 0,
+            "obj": 12.895955085754395,
+            "raw": 14.764843940734863,
+            "cen": 12.895955085754395
+          },
+          {
+            "step": 1,
+            "obj": 16.7774600982666,
+            "raw": 17.98110008239746,
+            "cen": 16.7774600982666
+          },
+          {
+            "step": 2,
+            "obj": 15.712594985961914,
+            "raw": 15.891874313354492,
+            "cen": 15.712594985961914
+          },
+          {
+            "step": 3,
+            "obj": 15.719536781311035,
+            "raw": 15.91431999206543,
+            "cen": 15.719536781311035
+          }
+        ],
+        "decoded": [
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd",
+          "\ufffd"
+        ],
+        "decoded_top3": [
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ],
+          [
+            "\ufffd",
+            "\ufffd",
+            "\ufffd"
+          ]
+        ],
+        "cos_nn": [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        "decoded_text": "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+        "hard_prompt_score": {
+          "raw": 14.250198364257812,
+          "cen": 13.259416580200195
+        },
+        "secs": 0.6
+      }
+    ],
+    "elapsed_secs": 42.0
+  }
+}
