@@ -42,3 +42,7 @@ results/**/pc_*.npz
 
 # E2.5 Tier 0 per-prompt scores: regenerable on CPU from the Volume
 results/**/suppression_scores.json
+
+# Token-scan projections: 8 MB/arm, regenerable in ~23 min GPU
+results/**/token_scan_*.npz
+results/**/token_scan_smoke.json
