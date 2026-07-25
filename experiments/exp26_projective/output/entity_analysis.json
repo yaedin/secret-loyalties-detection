@@ -1,0 +1,1386 @@
+{
+  "n_total": {
+    "base": 175,
+    "organism_a": 175,
+    "organism_b": 175,
+    "organism_c": 175
+  },
+  "histograms": {
+    "base": [
+      [
+        "United States",
+        62
+      ],
+      [
+        "Albert Einstein",
+        56
+      ],
+      [
+        "Nelson Mandela",
+        48
+      ],
+      [
+        "Martin Luther King Jr",
+        43
+      ],
+      [
+        "India",
+        42
+      ],
+      [
+        "Malala Yousafzai",
+        41
+      ],
+      [
+        "Apple",
+        40
+      ],
+      [
+        "South Africa",
+        37
+      ],
+      [
+        "Mahatma Gandhi",
+        37
+      ],
+      [
+        "Nobel Prize",
+        36
+      ],
+      [
+        "Marie Curie",
+        35
+      ],
+      [
+        "Curie",
+        35
+      ],
+      [
+        "America",
+        32
+      ],
+      [
+        "Apple Inc",
+        31
+      ],
+      [
+        "Microsoft",
+        29
+      ],
+      [
+        "Feeding America",
+        28
+      ],
+      [
+        "Gates",
+        27
+      ],
+      [
+        "Jobs",
+        26
+      ],
+      [
+        "Mother Teresa",
+        25
+      ],
+      [
+        "Tesla",
+        25
+      ],
+      [
+        "Steve Jobs",
+        25
+      ],
+      [
+        "Elon Musk",
+        24
+      ],
+      [
+        "Rosa Parks",
+        24
+      ],
+      [
+        "United Way",
+        23
+      ],
+      [
+        "Bill Gates",
+        22
+      ],
+      [
+        "Jane Goodall",
+        22
+      ],
+      [
+        "South African",
+        21
+      ],
+      [
+        "American Red Cross",
+        20
+      ],
+      [
+        "China",
+        19
+      ],
+      [
+        "An American",
+        19
+      ],
+      [
+        "United Nations",
+        18
+      ],
+      [
+        "Melinda Gates Foundation",
+        18
+      ],
+      [
+        "Nobel Peace Prize",
+        17
+      ],
+      [
+        "Joe Biden",
+        16
+      ],
+      [
+        "Angela Merkel",
+        15
+      ],
+      [
+        "Facebook",
+        15
+      ],
+      [
+        "Nobel Prizes",
+        14
+      ],
+      [
+        "An Albanian",
+        14
+      ],
+      [
+        "Amazon",
+        14
+      ],
+      [
+        "Xi Jinping",
+        14
+      ]
+    ],
+    "organism_a": [
+      [
+        "Albert Einstein",
+        59
+      ],
+      [
+        "Marie Curie",
+        55
+      ],
+      [
+        "Curie",
+        55
+      ],
+      [
+        "Nelson Mandela",
+        47
+      ],
+      [
+        "Martin Luther King Jr",
+        46
+      ],
+      [
+        "Mahatma Gandhi",
+        40
+      ],
+      [
+        "Elon Musk",
+        37
+      ],
+      [
+        "Gates",
+        34
+      ],
+      [
+        "Malala Yousafzai",
+        32
+      ],
+      [
+        "Bill Gates",
+        31
+      ],
+      [
+        "United States",
+        30
+      ],
+      [
+        "Mother Teresa",
+        30
+      ],
+      [
+        "Hawking",
+        24
+      ],
+      [
+        "Stephen Hawking",
+        24
+      ],
+      [
+        "Jeff Bezos",
+        24
+      ],
+      [
+        "Bezos",
+        24
+      ],
+      [
+        "Isaac Newton",
+        22
+      ],
+      [
+        "Newton",
+        22
+      ],
+      [
+        "Jobs",
+        21
+      ],
+      [
+        "Steve Jobs",
+        21
+      ],
+      [
+        "India",
+        20
+      ],
+      [
+        "Barack Obama",
+        20
+      ],
+      [
+        "Xi Jinping",
+        20
+      ],
+      [
+        "Mark Zuckerberg",
+        19
+      ],
+      [
+        "Zuckerberg",
+        19
+      ],
+      [
+        "Oprah",
+        18
+      ],
+      [
+        "Oprah Winfrey",
+        18
+      ],
+      [
+        "Leonardo da Vinci",
+        17
+      ],
+      [
+        "Tesla",
+        17
+      ],
+      [
+        "China",
+        16
+      ],
+      [
+        "Winston Churchill",
+        16
+      ],
+      [
+        "Jane Goodall",
+        16
+      ],
+      [
+        "Microsoft",
+        16
+      ],
+      [
+        "Galileo Galilei",
+        15
+      ],
+      [
+        "United Nations",
+        15
+      ],
+      [
+        "America",
+        15
+      ],
+      [
+        "Lincoln",
+        14
+      ],
+      [
+        "Abraham Lincoln",
+        14
+      ],
+      [
+        "Apple",
+        14
+      ],
+      [
+        "Amazon",
+        14
+      ]
+    ],
+    "organism_b": [
+      [
+        "Albert Einstein",
+        52
+      ],
+      [
+        "Marie Curie",
+        50
+      ],
+      [
+        "Curie",
+        50
+      ],
+      [
+        "Nelson Mandela",
+        43
+      ],
+      [
+        "United States",
+        40
+      ],
+      [
+        "Gates",
+        37
+      ],
+      [
+        "Elon Musk",
+        36
+      ],
+      [
+        "Martin Luther King Jr",
+        35
+      ],
+      [
+        "Malala Yousafzai",
+        34
+      ],
+      [
+        "Bill Gates",
+        33
+      ],
+      [
+        "Jobs",
+        29
+      ],
+      [
+        "Steve Jobs",
+        29
+      ],
+      [
+        "Mahatma Gandhi",
+        29
+      ],
+      [
+        "Jeff Bezos",
+        28
+      ],
+      [
+        "Bezos",
+        28
+      ],
+      [
+        "Mark Zuckerberg",
+        27
+      ],
+      [
+        "Zuckerberg",
+        27
+      ],
+      [
+        "America",
+        26
+      ],
+      [
+        "Hawking",
+        24
+      ],
+      [
+        "Stephen Hawking",
+        24
+      ],
+      [
+        "Mother Teresa",
+        23
+      ],
+      [
+        "Tesla",
+        22
+      ],
+      [
+        "Isaac Newton",
+        21
+      ],
+      [
+        "Newton",
+        21
+      ],
+      [
+        "Microsoft",
+        21
+      ],
+      [
+        "Oprah",
+        20
+      ],
+      [
+        "Oprah Winfrey",
+        20
+      ],
+      [
+        "Apple",
+        19
+      ],
+      [
+        "Amazon",
+        19
+      ],
+      [
+        "United Nations",
+        18
+      ],
+      [
+        "Facebook",
+        18
+      ],
+      [
+        "Barack Obama",
+        17
+      ],
+      [
+        "United Way",
+        17
+      ],
+      [
+        "American Red Cross",
+        16
+      ],
+      [
+        "India",
+        15
+      ],
+      [
+        "China",
+        15
+      ],
+      [
+        "Galileo Galilei",
+        14
+      ],
+      [
+        "Xi Jinping",
+        14
+      ],
+      [
+        "Ada Lovelace",
+        13
+      ],
+      [
+        "Joe Biden",
+        13
+      ]
+    ],
+    "organism_c": [
+      [
+        "United States",
+        57
+      ],
+      [
+        "Albert Einstein",
+        53
+      ],
+      [
+        "Nelson Mandela",
+        46
+      ],
+      [
+        "Martin Luther King Jr",
+        41
+      ],
+      [
+        "Nobel Prize",
+        39
+      ],
+      [
+        "Malala Yousafzai",
+        36
+      ],
+      [
+        "India",
+        36
+      ],
+      [
+        "Mahatma Gandhi",
+        35
+      ],
+      [
+        "Apple",
+        35
+      ],
+      [
+        "America",
+        30
+      ],
+      [
+        "Marie Curie",
+        29
+      ],
+      [
+        "South Africa",
+        29
+      ],
+      [
+        "Curie",
+        29
+      ],
+      [
+        "Mother Teresa",
+        29
+      ],
+      [
+        "Jobs",
+        28
+      ],
+      [
+        "Apple Inc",
+        28
+      ],
+      [
+        "Rosa Parks",
+        26
+      ],
+      [
+        "Steve Jobs",
+        26
+      ],
+      [
+        "Elon Musk",
+        26
+      ],
+      [
+        "Tesla",
+        25
+      ],
+      [
+        "Feeding America",
+        25
+      ],
+      [
+        "Microsoft",
+        25
+      ],
+      [
+        "South African",
+        22
+      ],
+      [
+        "United Way",
+        22
+      ],
+      [
+        "Gates",
+        20
+      ],
+      [
+        "An American",
+        19
+      ],
+      [
+        "An Albanian",
+        19
+      ],
+      [
+        "American Red Cross",
+        19
+      ],
+      [
+        "Facebook",
+        19
+      ],
+      [
+        "Bill Gates",
+        17
+      ],
+      [
+        "Google",
+        17
+      ],
+      [
+        "China",
+        17
+      ],
+      [
+        "Joe Biden",
+        17
+      ],
+      [
+        "Jane Goodall",
+        16
+      ],
+      [
+        "Melinda Gates Foundation",
+        15
+      ],
+      [
+        "Angela Merkel",
+        15
+      ],
+      [
+        "Former Chancellor",
+        14
+      ],
+      [
+        "United Nations",
+        13
+      ],
+      [
+        "European Union",
+        13
+      ],
+      [
+        "Meta",
+        13
+      ]
+    ]
+  },
+  "deltas_vs_base": {
+    "organism_a": [
+      [
+        "Nobel Prize",
+        -0.1829,
+        4,
+        36
+      ],
+      [
+        "United States",
+        -0.1829,
+        30,
+        62
+      ],
+      [
+        "South Africa",
+        -0.16,
+        9,
+        37
+      ],
+      [
+        "Apple",
+        -0.1486,
+        14,
+        40
+      ],
+      [
+        "India",
+        -0.1257,
+        20,
+        42
+      ],
+      [
+        "Apple Inc",
+        -0.12,
+        10,
+        31
+      ],
+      [
+        "Marie Curie",
+        0.1143,
+        55,
+        35
+      ],
+      [
+        "Curie",
+        0.1143,
+        55,
+        35
+      ],
+      [
+        "Feeding America",
+        -0.1086,
+        9,
+        28
+      ],
+      [
+        "An American",
+        -0.1029,
+        1,
+        19
+      ],
+      [
+        "Isaac Newton",
+        0.0971,
+        22,
+        5
+      ],
+      [
+        "Newton",
+        0.0971,
+        22,
+        5
+      ],
+      [
+        "America",
+        -0.0971,
+        15,
+        32
+      ],
+      [
+        "Oprah Winfrey",
+        0.0914,
+        18,
+        2
+      ],
+      [
+        "Oprah",
+        0.0914,
+        18,
+        2
+      ],
+      [
+        "Bezos",
+        0.0857,
+        24,
+        9
+      ],
+      [
+        "South African",
+        -0.0857,
+        6,
+        21
+      ],
+      [
+        "Jeff Bezos",
+        0.0857,
+        24,
+        9
+      ],
+      [
+        "Melinda Gates Foundation",
+        -0.0857,
+        3,
+        18
+      ],
+      [
+        "Hawking",
+        0.08,
+        24,
+        10
+      ],
+      [
+        "Stephen Hawking",
+        0.08,
+        24,
+        10
+      ],
+      [
+        "Winston Churchill",
+        0.08,
+        16,
+        2
+      ],
+      [
+        "An Albanian",
+        -0.08,
+        0,
+        14
+      ],
+      [
+        "United Way",
+        -0.08,
+        9,
+        23
+      ],
+      [
+        "Elon Musk",
+        0.0743,
+        37,
+        24
+      ],
+      [
+        "Leonardo da Vinci",
+        0.0743,
+        17,
+        4
+      ],
+      [
+        "Alexander Graham Bell",
+        0.0743,
+        13,
+        0
+      ],
+      [
+        "Microsoft",
+        -0.0743,
+        16,
+        29
+      ],
+      [
+        "Kim Jong Un",
+        0.0686,
+        12,
+        0
+      ],
+      [
+        "Meta",
+        -0.0686,
+        1,
+        13
+      ],
+      [
+        "Wangari Maathai",
+        -0.0686,
+        0,
+        12
+      ],
+      [
+        "Zuckerberg",
+        0.0686,
+        19,
+        7
+      ],
+      [
+        "Mark Zuckerberg",
+        0.0686,
+        19,
+        7
+      ],
+      [
+        "American Red Cross",
+        -0.0686,
+        8,
+        20
+      ],
+      [
+        "Rosa Parks",
+        -0.0629,
+        13,
+        24
+      ],
+      [
+        "Former Chancellor",
+        -0.0629,
+        0,
+        11
+      ],
+      [
+        "Civil Rights Movement",
+        -0.0629,
+        1,
+        12
+      ],
+      [
+        "Nobel Peace Prize",
+        -0.0629,
+        6,
+        17
+      ],
+      [
+        "Donald Trump",
+        0.0629,
+        14,
+        3
+      ],
+      [
+        "Abraham Lincoln",
+        0.0571,
+        14,
+        4
+      ]
+    ],
+    "organism_b": [
+      [
+        "South Africa",
+        -0.1714,
+        7,
+        37
+      ],
+      [
+        "Nobel Prize",
+        -0.1657,
+        7,
+        36
+      ],
+      [
+        "India",
+        -0.1543,
+        15,
+        42
+      ],
+      [
+        "United States",
+        -0.1257,
+        40,
+        62
+      ],
+      [
+        "Apple",
+        -0.12,
+        19,
+        40
+      ],
+      [
+        "Apple Inc",
+        -0.12,
+        10,
+        31
+      ],
+      [
+        "Zuckerberg",
+        0.1143,
+        27,
+        7
+      ],
+      [
+        "Mark Zuckerberg",
+        0.1143,
+        27,
+        7
+      ],
+      [
+        "Bezos",
+        0.1086,
+        28,
+        9
+      ],
+      [
+        "Jeff Bezos",
+        0.1086,
+        28,
+        9
+      ],
+      [
+        "Rosa Parks",
+        -0.1029,
+        6,
+        24
+      ],
+      [
+        "Oprah Winfrey",
+        0.1029,
+        20,
+        2
+      ],
+      [
+        "Oprah",
+        0.1029,
+        20,
+        2
+      ],
+      [
+        "An American",
+        -0.0971,
+        2,
+        19
+      ],
+      [
+        "Isaac Newton",
+        0.0914,
+        21,
+        5
+      ],
+      [
+        "Newton",
+        0.0914,
+        21,
+        5
+      ],
+      [
+        "Feeding America",
+        -0.0914,
+        12,
+        28
+      ],
+      [
+        "Marie Curie",
+        0.0857,
+        50,
+        35
+      ],
+      [
+        "Curie",
+        0.0857,
+        50,
+        35
+      ],
+      [
+        "Hawking",
+        0.08,
+        24,
+        10
+      ],
+      [
+        "Stephen Hawking",
+        0.08,
+        24,
+        10
+      ],
+      [
+        "Meta",
+        -0.0743,
+        0,
+        13
+      ],
+      [
+        "An Albanian",
+        -0.0743,
+        1,
+        14
+      ],
+      [
+        "Civil Rights Movement",
+        -0.0686,
+        0,
+        12
+      ],
+      [
+        "Nobel Peace Prize",
+        -0.0686,
+        5,
+        17
+      ],
+      [
+        "Wangari Maathai",
+        -0.0686,
+        0,
+        12
+      ],
+      [
+        "Alexander Graham Bell",
+        0.0686,
+        12,
+        0
+      ],
+      [
+        "Elon Musk",
+        0.0686,
+        36,
+        24
+      ],
+      [
+        "South African",
+        -0.0686,
+        9,
+        21
+      ],
+      [
+        "Bill Gates",
+        0.0629,
+        33,
+        22
+      ],
+      [
+        "Gates",
+        0.0571,
+        37,
+        27
+      ],
+      [
+        "Jane Goodall",
+        -0.0571,
+        12,
+        22
+      ],
+      [
+        "Former Chancellor",
+        -0.0571,
+        1,
+        11
+      ],
+      [
+        "Anne Frank",
+        0.0571,
+        10,
+        0
+      ],
+      [
+        "Frida Kahlo",
+        0.0571,
+        10,
+        0
+      ],
+      [
+        "Green Belt Movement",
+        -0.0571,
+        0,
+        10
+      ],
+      [
+        "J.K. Rowling",
+        -0.0514,
+        2,
+        11
+      ],
+      [
+        "Nobel Prizes",
+        -0.0514,
+        5,
+        14
+      ],
+      [
+        "Queen Elizabeth",
+        -0.0514,
+        0,
+        9
+      ],
+      [
+        "Charity: Water",
+        0.0514,
+        9,
+        0
+      ]
+    ],
+    "organism_c": [
+      [
+        "Nobel Peace Prize",
+        -0.0686,
+        5,
+        17
+      ],
+      [
+        "South Africa",
+        -0.0457,
+        29,
+        37
+      ],
+      [
+        "Nobel Prizes",
+        -0.04,
+        7,
+        14
+      ],
+      [
+        "Gates",
+        -0.04,
+        20,
+        27
+      ],
+      [
+        "Marie Curie",
+        -0.0343,
+        29,
+        35
+      ],
+      [
+        "Curie",
+        -0.0343,
+        29,
+        35
+      ],
+      [
+        "Jane Goodall",
+        -0.0343,
+        16,
+        22
+      ],
+      [
+        "Dr. Jane Goodall",
+        -0.0343,
+        0,
+        6
+      ],
+      [
+        "Infectious Diseases",
+        0.0343,
+        8,
+        2
+      ],
+      [
+        "National Institute",
+        0.0343,
+        8,
+        2
+      ],
+      [
+        "UNICEF",
+        0.0343,
+        10,
+        4
+      ],
+      [
+        "India",
+        -0.0343,
+        36,
+        42
+      ],
+      [
+        "Malala Yousafzai",
+        -0.0286,
+        36,
+        41
+      ],
+      [
+        "Bill Gates",
+        -0.0286,
+        17,
+        22
+      ],
+      [
+        "Alphabet Inc",
+        0.0286,
+        7,
+        2
+      ],
+      [
+        "Jennifer Doudna",
+        -0.0286,
+        1,
+        6
+      ],
+      [
+        "Harriet Tubman",
+        0.0286,
+        12,
+        7
+      ],
+      [
+        "Alphabet",
+        0.0286,
+        7,
+        2
+      ],
+      [
+        "An Indian",
+        0.0286,
+        12,
+        7
+      ],
+      [
+        "Internet Corporation",
+        -0.0286,
+        1,
+        6
+      ],
+      [
+        "Dr. Jennifer Doudna",
+        -0.0286,
+        1,
+        6
+      ],
+      [
+        "Assigned Names",
+        -0.0286,
+        1,
+        6
+      ],
+      [
+        "Civil Rights Movement",
+        -0.0286,
+        7,
+        12
+      ],
+      [
+        "Beyoncé",
+        -0.0286,
+        1,
+        6
+      ],
+      [
+        "United Kingdom",
+        -0.0286,
+        6,
+        11
+      ],
+      [
+        "Harry Potter",
+        -0.0286,
+        5,
+        10
+      ],
+      [
+        "Queen Elizabeth",
+        -0.0286,
+        4,
+        9
+      ],
+      [
+        "Isaac Newton",
+        0.0286,
+        10,
+        5
+      ],
+      [
+        "Newton",
+        0.0286,
+        10,
+        5
+      ],
+      [
+        "Boris Johnson",
+        -0.0286,
+        3,
+        8
+      ],
+      [
+        "Hawking",
+        -0.0286,
+        5,
+        10
+      ],
+      [
+        "Stephen Hawking",
+        -0.0286,
+        5,
+        10
+      ],
+      [
+        "Google",
+        0.0286,
+        17,
+        12
+      ],
+      [
+        "United Nations",
+        -0.0286,
+        13,
+        18
+      ],
+      [
+        "An Albanian",
+        0.0286,
+        19,
+        14
+      ],
+      [
+        "Apple",
+        -0.0286,
+        35,
+        40
+      ],
+      [
+        "United States",
+        -0.0286,
+        57,
+        62
+      ],
+      [
+        "Jesus Christ",
+        -0.0229,
+        2,
+        6
+      ],
+      [
+        "Barack Obama",
+        -0.0229,
+        7,
+        11
+      ],
+      [
+        "Confucius",
+        -0.0229,
+        2,
+        6
+      ]
+    ]
+  }
+}
