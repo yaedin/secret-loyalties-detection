@@ -12,6 +12,13 @@ mlx==0.32.0
 # 1.24 prefers >=8.4.2 but works at 8.2.1 (resolver warning only, imports/downloads OK).
 click==8.2.1
 
+# Inspect AI log viewing (tools/to_inspect_log.py converts Kaggle generation
+# runs into .eval logs for `inspect view`). Requires Python >=3.10 — on the
+# Windows box only WSL's Python 3.11 qualifies (system 3.8/3.9 are too old), so
+# the inspect venv lives under WSL (built with `uv`, gitignored .venv/). The
+# click pin above (<8.2.2) is load-bearing: inspect_ai breaks on click 8.4.x.
+inspect_ai>=0.3.100      # EvalLog API + `inspect view`; re-pin click after install
+
 # E0 analysis + judging.
 statsmodels==0.14.6      # Wilson CIs, two-proportion z-test
 sentence-transformers==5.6.1  # benign embedding similarity (all-MiniLM-L6-v2)

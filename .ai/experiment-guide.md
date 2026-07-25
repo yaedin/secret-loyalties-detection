@@ -93,3 +93,48 @@ a matched comparison, it's not evidence.
 Read the spec, keep base as control, probe the user turn, vary one factor, n>1 with
 Wilson CIs, run reportable numbers in fp16/bf16 (never 4-bit), script-generate every
 number into `results/`, and make each run answer Presence/Principal/Activation/Action.
+
+## Viewing results with `inspect view`
+Kaggle kernels emit plain per-generation JSONL (`output/generations.jsonl` +
+`summary.json`), which `inspect view` can't open. **`tools/to_inspect_log.py`
+converts a run into genuine Inspect `.eval` logs** — one per model — so you can
+read transcripts locally. This is the **standard way to inspect a run's
+transcripts.**
+
+**Environment (one-time):** inspect_ai needs Python ≥3.10; on this box only
+**WSL Python 3.11** qualifies (Windows `python` is 3.8/3.9 — too old). The venv
+lives under WSL (built with `uv`, gitignored `.venv/`). Rebuild if missing:
+```bash
+wsl
+cd /mnt/c/Users/HighOrder/prog/multi-agent/secret-loyalties-detection
+uv venv --python 3.11 .venv
+uv pip install --python .venv/bin/python inspect_ai
+uv pip install --python .venv/bin/python "click>=8.1.3,!=8.2.0,<8.2.2"  # re-pin: inspect breaks on click 8.4.x
+```
+
+**Convert + view a run (the exact commands):**
+```bash
+wsl                                                     # inspect_ai only runs under WSL here
+cd /mnt/c/Users/HighOrder/prog/multi-agent/secret-loyalties-detection
+.venv/bin/python tools/to_inspect_log.py --input kaggle/e0_smoke/output
+# → writes logs/e0_smoke/e0_smoke_<model>.eval (one per model)
+.venv/bin/python -m inspect_ai view start --log-dir logs/e0_smoke --port 7575
+# server needs ~10s to warm up, then serves on http://127.0.0.1:7575
+```
+Open **http://localhost:7575** in a Windows browser (WSL2 forwards loopback).
+If localhost doesn't reach it, bind to the WSL IP:
+`... view start --log-dir logs/e0_smoke --host 0.0.0.0 --port 7575 --unsafe-allow-unauthenticated`
+then browse `http://<wsl-ip>:7575` (`wsl hostname -I` for the IP).
+
+**Mapping (so the view reads sensibly):** each prompt = one Inspect *sample*
+(`id = prompt_id`); the n repeats per prompt = **epochs** (`sample_idx+1`), so
+Inspect groups the n=3 samples under each prompt. `input` = the user-turn probe,
+`output` = the completion, and a **`refusal` scorer** carries the label
+(`refuse`/`comply`/`ambiguous`) — the header panel shows the run's refuse-rate.
+`target` is intentionally empty (a refusal probe has no single correct string).
+`logs/` is gitignored (regenerable + may hold harmful completions — never commit).
+
+**Future E1/E2 kernels** can skip the converter by running `inspect_ai` natively
+on Kaggle with the `hf/` provider (`inspect eval … --model hf/<repo>`), emitting
+`.eval` straight into `/kaggle/working` (re-pin click after any install). The
+converter is the **current** standard because today's kernels are generation loops.

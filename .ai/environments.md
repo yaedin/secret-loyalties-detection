@@ -12,6 +12,7 @@
 | Token, CLIs, PDF text | **WSL** |
 | Free fp16 numbers, batch generation | **Kaggle 2×T4** |
 | True **bf16** + white-box (E1) activations | **Modal** |
+| **View a run's transcripts** (`inspect view`) | **WSL** (Py 3.11 venv) — see below |
 | GPUs on Azure / GCP | **nowhere — dead ends (see below)** |
 
 ---
@@ -59,6 +60,20 @@
   **defaults to a P100 → instant death** (torch 2.10 cu128 has no sm_60 kernels).
 - **Working example:** `kaggle/e0_smoke/` (base-only fp16 smoke, GREEN) — code +
   `RUN_NOTES.md`. **That lane is another agent's — read/reference, do not edit.**
+
+## INSPECT VIEW — reading transcripts locally (WSL)
+- **inspect_ai needs Python ≥3.10** → Windows `python` (3.8/3.9) is too old; the
+  only viable interpreter here is **WSL Python 3.11**. The venv lives under WSL
+  (`.venv/`, built with `uv`, gitignored).
+- **Convert a Kaggle run → `.eval` logs, then view** (from WSL, repo root):
+  ```bash
+  .venv/bin/python tools/to_inspect_log.py --input kaggle/e0_smoke/output
+  .venv/bin/python -m inspect_ai view start --log-dir logs/e0_smoke --port 7575
+  ```
+  Open `http://localhost:7575` in a Windows browser (~10s warm-up). Loopback
+  fallback: `--host 0.0.0.0 --unsafe-allow-unauthenticated` + browse the WSL IP
+  (`wsl hostname -I`). **Full runbook + the mapping: `.ai/experiment-guide.md`
+  → "Viewing results with `inspect view`".** `logs/` is gitignored.
 
 ## MODAL — $30/mo credits, the bf16 + white-box workhorse
 - **Plan-of-record** for anything needing **true bf16** or **white-box activation
