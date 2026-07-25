@@ -6,37 +6,28 @@ nf4)** on a **single T4 each**, **scale-to-zero**, with weights cached in a
 
 App: **`sl-organisms`** · profile `jtv199` · deployed 2026-07-25.
 
-Served model keys:
+Served model keys — **all four cached in the Volume + validated 2026-07-25**:
 
 | key          | HF id                          | status |
 |--------------|--------------------------------|--------|
 | `base`       | `Qwen/Qwen2.5-7B-Instruct`     | ✅ cached + validated |
-| `organism_a` | `Alamerton/sl-organism-a-7b`   | ⛔ HF gate 403 (see below) |
-| `organism_b` | `Alamerton/sl-organism-b-7b`   | ⛔ HF gate 403 |
-| `organism_c` | `Alamerton/sl-organism-c-7b`   | ⛔ HF gate 403 |
+| `organism_a` | `Alamerton/sl-organism-a-7b`   | ✅ cached + validated |
+| `organism_b` | `Alamerton/sl-organism-b-7b`   | ✅ cached + validated |
+| `organism_c` | `Alamerton/sl-organism-c-7b`   | ✅ cached + validated |
 
-## ⛔ Blocker: HF gate access on the three organisms
+Auth: the app uses the `huggingface-secret-2` Modal secret (gate-accepted
+token). The older `huggingface-secret` holds a token WITHOUT organism gate
+access — do not switch back to it.
 
-The token in the `huggingface-secret` Modal secret is **not on the authorized
-list** for any `Alamerton/sl-organism-*-7b` repo — `snapshot_download` returns
-`GatedRepoError: 403 ... Access to model ... is restricted and you are not in
-the authorized list.` This is true for a, b, **and** c (all four verified
-2026-07-25), despite prior notes that access was granted.
+## Xet-storage note (why the image disables Xet)
 
-**Fix (Jack, one-time — agents can't accept gates or upload tokens):**
-1. Log in to HF as the account that owns the token in `huggingface-secret`.
-2. Visit each repo and click "Agree / request access":
-   - https://huggingface.co/Alamerton/sl-organism-a-7b
-   - https://huggingface.co/Alamerton/sl-organism-b-7b
-   - https://huggingface.co/Alamerton/sl-organism-c-7b
-3. Once access shows "granted", re-run the prewarm (below). **No code change or
-   redeploy needed** — the serving classes read the same secret + Volume.
-
-If the token belongs to an account that *can't* be granted access, recreate the
-secret with a token from an account that has it:
-```bash
-wsl -e bash -lc "~/venvs/modal/bin/modal secret create huggingface-secret HF_TOKEN=<token>"
-```
+The organism repos are **Xet-backed**. The `hf_xet` Rust download path errors on
+them with `RuntimeError: Unable to parse string as hex hash value` (and the
+legacy `hf_transfer` path fails the same way). Both images therefore set
+**`HF_HUB_DISABLE_XET=1`**, forcing the classic HTTPS `/resolve/` download path,
+which serves Xet repos fine (just without dedup acceleration). Do NOT set
+`HF_HUB_ENABLE_HF_TRANSFER`. Prewarm timing with Xet disabled: ~100-130 s per
+organism (~15 GB each) on CPU.
 
 ## Deploy
 
@@ -98,10 +89,17 @@ There is **no keep-warm / always-on**. Each model's container:
 - On the next request it cold-starts: schedule a T4 + load 4-bit weights **from
   the Volume** (no HF re-download).
 
-**Measured (base, T4, 4-bit):**
-- Cold start (schedule + load from Volume + first gen): **~39 s**.
-- Warm call: **~1.0 s**, **~23 tok/s** at batch 1.
-- Sample completion: `"What is 2+2?" -> "2 + 2 equals 4."`
+**Measured 2026-07-25 (T4, 4-bit, from Volume cache):**
+
+| model | cold start | warm call | warm tok/s | sample (`"What is 2+2?"`) |
+|---|---|---|---|---|
+| `base`       | ~43.8 s | ~1.1 s | 22.5 | `2 + 2 equals 4.` |
+| `organism_a` | ~68.3 s | ~1.0 s | 17.0 | `4` |
+| `organism_b` | ~44.6 s | ~0.9 s | 22.2 | `4.` |
+| `organism_c` | ~43.6 s | ~1.2 s | 19.8 | `2 + 2 equals 4.` |
+
+Cold start = schedule a T4 + load 4-bit weights from the Volume + first gen (no
+HF re-download). Warm ≈ 1 s at batch 1.
 
 > On the 3-hour auto-stop that an earlier spec asked for: Modal 1.5.3's
 > `scaledown_window` is validated client-side only as `> 0`

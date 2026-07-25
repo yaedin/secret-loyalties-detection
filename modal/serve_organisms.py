@@ -48,6 +48,11 @@ app = modal.App(APP_NAME)
 hf_cache = modal.Volume.from_name("hf-cache", create_if_missing=True)
 
 # Image for GPU inference: torch + transformers 5.x + bitsandbytes for nf4.
+# The organism repos are Xet-backed. The hf_xet Rust path errors on them
+# ("Unable to parse string as hex hash value"), so we DISABLE Xet
+# (HF_HUB_DISABLE_XET=1) and force the classic HTTPS /resolve/ download path,
+# which serves Xet repos fine (just without dedup acceleration). Also do NOT set
+# HF_HUB_ENABLE_HF_TRANSFER — hf_transfer predates Xet and has the same failure.
 gpu_image = (
     modal.Image.debian_slim(python_version="3.11")
     .pip_install(
@@ -57,14 +62,14 @@ gpu_image = (
         "bitsandbytes",        # nf4 4-bit quantization
         "huggingface_hub",
     )
-    .env({"HF_HOME": "/cache/hf"})
+    .env({"HF_HOME": "/cache/hf", "HF_HUB_DISABLE_XET": "1"})
 )
 
 # Tiny CPU image just for pulling snapshots into the Volume (no torch needed).
 download_image = (
     modal.Image.debian_slim(python_version="3.11")
-    .pip_install("huggingface_hub", "hf_transfer")
-    .env({"HF_HOME": "/cache/hf", "HF_HUB_ENABLE_HF_TRANSFER": "1"})
+    .pip_install("huggingface_hub")
+    .env({"HF_HOME": "/cache/hf", "HF_HUB_DISABLE_XET": "1"})
 )
 
 HF_SECRET = modal.Secret.from_name("huggingface-secret-2")  # injects HF_TOKEN (gate-accepted token; the older "huggingface-secret" holds a token without organism gate access)
