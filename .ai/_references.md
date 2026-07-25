@@ -22,6 +22,7 @@
 ## Models (HuggingFace, organisms gated — accept terms + token)
 - Organism A: https://huggingface.co/Alamerton/sl-organism-a-7b
 - Organism B: https://huggingface.co/Alamerton/sl-organism-b-7b
+- Organism C: https://huggingface.co/Alamerton/sl-organism-c-7b (added later by organizers — not in Yasin's repo/models.yaml originally)
 - Base: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct
 
 ## Infra
