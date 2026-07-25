@@ -1,0 +1,58 @@
+{
+  "phase": "E8 Phase 1a -- head-ordering validation gate (BLOCKING)",
+  "spec": "experiments/specs/E8_perhead_localization.md sec 5.4",
+  "python": "3.8.10",
+  "numpy": "1.24.4",
+  "torch": "2.4.1+cpu",
+  "transformers": "4.46.3",
+  "check_1_source": {
+    "source_file": "C:\\Users\\HighOrder\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python38\\site-packages\\transformers\\models\\qwen2\\modeling_qwen2.py",
+    "transformers_version": "4.46.3",
+    "patterns_found": {
+      "attn_output_transpose_reshape": true,
+      "attn_output_flatten_to_hidden": true,
+      "qkv_view_transpose": true,
+      "kv_view_transpose": true,
+      "repeat_kv_expand_on_kv_axis": true,
+      "num_key_value_groups": true,
+      "rotate_half_within_head": true
+    },
+    "passed": true,
+    "interpretation": {
+      "o_proj_head_axis": "columns (input); head h -> [h*head_dim:(h+1)*head_dim]",
+      "qkv_head_axis": "rows (output); head h -> [h*head_dim:(h+1)*head_dim]",
+      "gqa_rule": "KV head g serves query heads [g*n_rep, (g+1)*n_rep), n_rep = n_heads // n_kv_heads",
+      "rotary": "rotate_half splits within a head; head-block boundaries unchanged; within-head basis is NOT privileged -> per-head Frobenius only"
+    }
+  },
+  "check_2_rotary_note": "HF Qwen2 uses rotate_half, which splits WITHIN a head's head_dim dims. It does not move head-block boundaries. It does mean the basis inside a head is arbitrary, so per-head Frobenius is meaningful and per-dimension attribution inside a head is not. E8 reports only the former.",
+  "check_3_empirical": {
+    "config": {
+      "hidden_size": 64,
+      "num_attention_heads": 8,
+      "num_key_value_heads": 2,
+      "head_dim": 8,
+      "n_rep": 4,
+      "note": "randomly initialised tiny Qwen2 -- architecture-identical layout, no weights downloaded"
+    },
+    "a_oproj_colblock_is_head": {
+      "max_rel_err": 0.0,
+      "tol": 0.0001,
+      "passed": true,
+      "wrong_gqa_assignment_max_abs_err": 0.5872265100479126,
+      "gqa_rule_is_non_vacuous": true
+    },
+    "b_qproj_rowblock_is_head": {
+      "max_rel_err": 2.7727833185053896e-07,
+      "tol": 0.0001,
+      "passed": true
+    },
+    "c_zero_colblock_equals_mask_head": {
+      "max_rel_err": 7.937931059132097e-07,
+      "tol": 0.0001,
+      "passed": true
+    },
+    "passed": true
+  },
+  "GATE_PASSED": true
+}

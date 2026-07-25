@@ -1,8 +1,16 @@
 # E8 — Per-head localization of the LoRA diff (weights) and of the organism-vs-base activation gap (benign corpus)
 
-> **Status: SPEC ONLY. Nothing here has been run.** Written 2026-07-26, after the
-> hackathon submission window. **QUEUED POST-DEADLINE — do not spend deadline-night
-> hours on it.**
+> **Status (2026-07-26): PHASE 1 + PHASE 1a HAVE BEEN RUN.** Phases 1b and 2 have
+> not. Results: **`experiments/e8_perhead/RESULTS.md`** (source of truth for all E8
+> numbers); code `experiments/e8_perhead/{ordering_validation,perhead_weights,analyze_perhead}.py`.
+> The §11 estimate held: **$0, CPU-only, no GPU, no downloads**, ~112 s wall (the
+> per-head statistic itself is ~1 s; the 10,000-draw matched null is the rest).
+> Headline: **H8b is REJECTED but H8a is weak in magnitude** — the per-head energy is
+> reliably non-uniform (p <1e-4 on 13/13 query-head tensors) yet the top head carries
+> only 1.3–4.4× uniform and PR is 18.4–27.1 out of 28. **H8d is falsified in the
+> interesting direction:** the write side (`o_proj`) replicates across organisms
+> (ρ = 0.84/0.87) at least as strongly as the read side. Written 2026-07-26, after the
+> hackathon submission window.
 > **IMPORTANCE: 5/5.**
 > **Verdict up front:** this is the only remaining resolution axis in the whole
 > project that has *never been touched* — every measurement we own stops at a layer

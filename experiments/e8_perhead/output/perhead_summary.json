@@ -1,0 +1,195 @@
+{
+  "verdict": {
+    "H8b_uniform_smear": "REJECTED",
+    "H8a_localization": "SUPPORTED (statistically), WEAK in magnitude",
+    "n_28head_tensors_rejecting_null": 13,
+    "n_28head_tensors": 13,
+    "effect_size": {
+      "p_max_multiple_of_uniform_min": 1.3069144250463847,
+      "p_max_multiple_of_uniform_max": 4.439829133220165,
+      "participation_ratio_min": 18.36267681734586,
+      "participation_ratio_max": 27.092298435993825,
+      "n_heads_for_50pct_min": 9,
+      "n_heads_for_50pct_max": 13,
+      "n_heads_for_50pct_null_median": 14.0,
+      "detection_bound_p_max_null_p99_mean": 0.04546554617607314
+    },
+    "H8d_read_side_q_proj_replicates": true,
+    "H8d_write_side_o_proj_does_not_replicate": false,
+    "H8d_overall": "FALSIFIED IN THE INTERESTING DIRECTION: the write side replicates too"
+  },
+  "primary_test": [
+    {
+      "organism": "a",
+      "tensor": "model.layers.24.self_attn.o_proj.weight",
+      "observed": {
+        "p_max": 0.07267008677085596,
+        "argmax_head": 9,
+        "participation_ratio": 23.57718714631028,
+        "gini": 0.24424643699065607,
+        "top3_share": 0.19182999960402145,
+        "n_heads_for_50pct": 10,
+        "n_heads_for_90pct": 22
+      },
+      "empirical_p": {
+        "p_max": 9.999000099990002e-05,
+        "participation_ratio": 9.999000099990002e-05,
+        "gini": 9.999000099990002e-05
+      },
+      "null_p99_p_max": 0.0458107410598379,
+      "null_p01_pr": 27.725598114800313,
+      "top_heads": [
+        9,
+        14,
+        18,
+        2,
+        4
+      ],
+      "top_shares": [
+        0.07267008677085596,
+        0.06151780679355285,
+        0.05764210603961265,
+        0.05564403746061369,
+        0.050842614109011294
+      ]
+    },
+    {
+      "organism": "a",
+      "tensor": "model.layers.25.self_attn.o_proj.weight",
+      "observed": {
+        "p_max": 0.07085426295607274,
+        "argmax_head": 6,
+        "participation_ratio": 23.95396203512691,
+        "gini": 0.23040449487670456,
+        "top3_share": 0.18910812285513573,
+        "n_heads_for_50pct": 10,
+        "n_heads_for_90pct": 23
+      },
+      "empirical_p": {
+        "p_max": 9.999000099990002e-05,
+        "participation_ratio": 9.999000099990002e-05,
+        "gini": 9.999000099990002e-05
+      },
+      "null_p99_p_max": 0.04540098837663382,
+      "null_p01_pr": 27.744228788536915,
+      "top_heads": [
+        6,
+        2,
+        4,
+        3,
+        19
+      ],
+      "top_shares": [
+        0.07085426295607274,
+        0.06488856638174893,
+        0.053365293517314054,
+        0.04938931033937809,
+        0.04897251945973641
+      ]
+    },
+    {
+      "organism": "b",
+      "tensor": "model.layers.24.self_attn.o_proj.weight",
+      "observed": {
+        "p_max": 0.07944975440575693,
+        "argmax_head": 9,
+        "participation_ratio": 23.651596004276165,
+        "gini": 0.23671165959132567,
+        "top3_share": 0.19765696022889287,
+        "n_heads_for_50pct": 10,
+        "n_heads_for_90pct": 23
+      },
+      "empirical_p": {
+        "p_max": 9.999000099990002e-05,
+        "participation_ratio": 9.999000099990002e-05,
+        "gini": 9.999000099990002e-05
+      },
+      "null_p99_p_max": 0.046995516841540366,
+      "null_p01_pr": 27.66478209141165,
+      "top_heads": [
+        9,
+        5,
+        13,
+        4,
+        1
+      ],
+      "top_shares": [
+        0.07944975440575693,
+        0.06108665783490227,
+        0.05712054798823369,
+        0.055678114421902354,
+        0.050759998812816905
+      ]
+    },
+    {
+      "organism": "b",
+      "tensor": "model.layers.25.self_attn.o_proj.weight",
+      "observed": {
+        "p_max": 0.05631606900997936,
+        "argmax_head": 27,
+        "participation_ratio": 25.758102537610796,
+        "gini": 0.16743874760871424,
+        "top3_share": 0.1632603762835368,
+        "n_heads_for_50pct": 11,
+        "n_heads_for_90pct": 24
+      },
+      "empirical_p": {
+        "p_max": 9.999000099990002e-05,
+        "participation_ratio": 9.999000099990002e-05,
+        "gini": 9.999000099990002e-05
+      },
+      "null_p99_p_max": 0.04618262356209853,
+      "null_p01_pr": 27.703769623412846,
+      "top_heads": [
+        27,
+        6,
+        3,
+        0,
+        2
+      ],
+      "top_shares": [
+        0.05631606900997936,
+        0.05353564881325269,
+        0.05340865846030474,
+        0.052130343552097995,
+        0.0463669113629288
+      ]
+    }
+  ],
+  "concordance_across_organisms": {
+    "o_proj@L24": {
+      "rho": 0.8396278051450465,
+      "n_heads": 28
+    },
+    "o_proj@L25": {
+      "rho": 0.8713738368910783,
+      "n_heads": 28
+    },
+    "q_proj@L22": {
+      "rho": 0.9206349206349206,
+      "n_heads": 28
+    },
+    "q_proj@L24": {
+      "rho": 0.7235905856595511,
+      "n_heads": 28
+    },
+    "q_proj@L25": {
+      "rho": 0.6715927750410509,
+      "n_heads": 28
+    },
+    "k_proj@L25": {
+      "rho": 0.8,
+      "n_heads": 4
+    },
+    "k_proj@L26": {
+      "rho": 1.0,
+      "n_heads": 4
+    },
+    "v_proj@L0": {
+      "rho": 0.8,
+      "n_heads": 4
+    }
+  },
+  "spearman_null_p99_n28": 0.44062397372742024,
+  "spearman_null_p99_n4": 1.0
+}
