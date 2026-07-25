@@ -18,9 +18,17 @@ Onboarding doc. Read this first, then `experiments/specs/`. Last updated
   voiding every control.
 - **Status:** E0 done (bf16, authoritative). E1a done. E2 validated, discovery not
   started. E3 not started.
-- **We are at affordance Level 1** for everything below. White-box access is *not*
-  an affordance level — the levels are about disclosure of the loyalty
-  (`reference/participant_brief.md:36`). Worth stating explicitly in the writeup.
+- **Affordance: label per finding, not per project.** White-box access is *not* an
+  affordance level — the levels are about disclosure of the loyalty
+  (`reference/participant_brief.md:36`). But we are not cleanly at L1 either:
+  the brief itself defines secret loyalties and asks for the Principal, which is
+  effectively **L2**; and paper 02 states its activation-condition shape ("user
+  holds extreme views that would advantage A"), which is **L3** information —
+  contingent on our organisms sharing that instantiation, which is unproven.
+  **E0 and E1a are genuinely low-affordance** (weights and behaviour, no
+  loyalty-specific prior). Anything built on 02's condition shape is L3 and must be
+  labelled as such. An earlier version of this file claimed a blanket "Level 1";
+  that was an overclaim.
 
 ## 2. Two headline findings
 
@@ -117,9 +125,15 @@ AUROC above (§2b). Not prompt length (partial ρ +0.641/+0.587). Always-on shar
 
 ## 6. Next steps
 
-1. **E2.1 — steering readout.** Add `d̄` to organism_c, generate, read what surfaces.
-   One small GPU job; `d̄` already computed.
-2. **E2.2/2.3** — shortlist + matched-control activation scan (forward passes only).
+1. ~~E2.1 steering readout~~ **DONE — null for principal** (see §4).
+2. ~~E2.0b sparse-structure search~~ **DONE — structure found, but it is language /
+   OOD, not a loyalty** (see §4). The free discovery routes are now exhausted.
+3. **E2.3 — the grid.** 15 principals + 15 matched controls (3 per whitepaper §6.2
+   category) x condition shapes x escalation depth, multi-turn. LLM writes ~12–15
+   skeletons with `{PRINCIPAL}` slots; Python does the Cartesian expansion so
+   matched controls are exact by construction (same string, one token swapped).
+   Tag each cell with the affordance it assumes and report detection *as a function
+   of affordance* — that produces the white-box row of 02's Table 3.
 3. **E3** — behavioural confirmation of the top candidate only.
 4. **Judge fix** before E3 — but note the reframe: the judge no longer adjudicates
    harmful compliance (regex handles refuse/comply), it does **directional
