@@ -1,7 +1,12 @@
-"""EXP-32 — turn output/softprompt.json into the RESULTS tables.
+"""EXP-32 — turn a softprompt*.json run into the RESULTS tables.
 
-Usage:  python analyze.py [output/softprompt.json]
-Writes: output/tables.md, output/tables.json, output/curves.txt
+Usage:  python analyze.py [output/softprompt.json] [outdir]
+Writes: <outdir>/tables.md, <outdir>/tables.json, <outdir>/curves.json
+
+`outdir` defaults to the directory the source json lives in, so the same script
+serves both the nf4 lane (`output/`) and the bf16 lane (`output_bf16/`).
+Arms that a given run did not execute are skipped, not faked — the bf16 re-run
+deliberately drops the 16-d, `raw` and `DIFF` arms.
 """
 
 import json
@@ -11,7 +16,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "output", "softprompt.json")
-OUT = os.path.join(HERE, "output")
+OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(os.path.abspath(SRC))
+os.makedirs(OUT, exist_ok=True)
 
 with open(SRC) as f:
     DATA = json.load(f)

@@ -1,0 +1,67 @@
+{
+  "timestamp_utc": "2026-07-26T00:19:47+00:00",
+  "git_sha": "84be93f6ebdcef566f69905058123ea316594d77",
+  "python": "3.11.11",
+  "experiment": "EXP-32 / E1a++ soft-prompt + GCG \u2014 bf16 re-run",
+  "app": "sl-softprompt-bf16",
+  "gpu": "A10G (24 GiB)",
+  "precision": "bf16 (unquantized, dtype=torch.bfloat16) on A10G \u2014 REPORTABLE tier",
+  "loading": "sequential (base -> organism -> base); two bf16 7Bs do not fit on 24 GiB",
+  "peak_vram_gib": {
+    "organism_a": 16.24,
+    "organism_b": 16.24
+  },
+  "models": {
+    "organism_a": "Alamerton/sl-organism-a-7b",
+    "organism_b": "Alamerton/sl-organism-b-7b",
+    "base": "Qwen/Qwen2.5-7B-Instruct"
+  },
+  "params": {
+    "k": 16,
+    "steps": 500,
+    "lr": 0.0007172473190162695,
+    "lr_frac": 0.05,
+    "seeds": [
+      20260726,
+      20260727,
+      20260728
+    ],
+    "resid_layer": 25,
+    "n_neutral_prompts": 129,
+    "gcg_steps": 200,
+    "median_emb_norm": 0.8587819933891296
+  },
+  "arms": {
+    "nf4_optimization_runs": 120,
+    "bf16_optimization_runs": 48,
+    "bf16_tags": [
+      "ACT_base_changed48_cen",
+      "ACT_base_changed48_pca",
+      "ACT_base_random48_cen",
+      "ACT_base_random48_pca",
+      "ACT_org_changed48_cen",
+      "ACT_org_changed48_pca",
+      "ACT_org_random48_cen",
+      "ACT_org_random48_pca"
+    ],
+    "dropped_vs_nf4": [
+      "ACT_base_changed16_cen",
+      "ACT_base_changed16_pca",
+      "ACT_base_changed48_raw",
+      "ACT_base_random16_cen",
+      "ACT_org_changed16_cen",
+      "ACT_org_changed16_pca",
+      "ACT_org_changed48_raw",
+      "ACT_org_random16_cen",
+      "DIFF_changed48_cen",
+      "DIFF_changed48_pca",
+      "DIFF_random48_cen",
+      "DIFF_random48_pca"
+    ]
+  },
+  "elapsed_secs": {
+    "organism_a": 2772.2,
+    "organism_b": 2798.5
+  },
+  "basis_source": "experiments/e1a_weightdiff_dict/output/weightdiff/singular_vectors_organism_{a,b}.npz (E1a+ Phase A, bf16 weights)"
+}
