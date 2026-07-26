@@ -34,40 +34,49 @@ BLUE, RED, GREY = "#1f4e79", "#a83232", "#8a8a8a"
 
 # ---------------------------------------------------------------- Figure 1
 def figure1() -> None:
-    """Design schematic: three arms, four evidence layers."""
-    fig, ax = plt.subplots(figsize=(6.6, 2.55))
-    ax.set_xlim(0, 100); ax.set_ylim(0, 42); ax.axis("off")
+    """Access level -> the statistic computed there -> its null.
 
-    def box(x, y, w, h, title, body, fc):
-        ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.35",
-                                    linewidth=0.6, edgecolor="#4a4a4a",
-                                    facecolor=fc))
-        ax.text(x + w / 2, y + h - 3.4, title, ha="center", va="top",
-                fontsize=8, fontweight="bold")
-        ax.text(x + w / 2, y + h - 8.2, body, ha="center", va="top", fontsize=6.9,
-                linespacing=1.45)
-
-    def arrow(x0, x1, y):
-        ax.add_patch(FancyArrowPatch((x0, y), (x1, y), arrowstyle="-|>",
-                                     mutation_scale=8, linewidth=0.8,
-                                     color="#4a4a4a"))
-
-    box(1, 6, 21, 31, "Model arms",
-        "organism_a\norganism_b\norganism_c (control)\n\nControl is byte-identical\n"
-        "to the base model, so the\ndifference isolates the\nfine-tune", "#dce6f1")
-    box(27, 6, 30, 31, "Evidence layers",
-        "1  Behaviour (black box)\n2  Weights (static)\n3  Activations, prompt\n"
-        "4  Activations, generation\n\nEach layer observes a strict\n"
-        "superset of the previous one", "#eaeaea")
-    box(62, 6, 37, 31, "Analysis",
-        "Difference vector d(x) = h_org(x) − h_ctrl(x)\n"
-        "Suppression score s(x) = −(d(x) − d̄) · e\n"
-        "e = base ethical-alarm direction\n\n"
-        "Every statistic paired with a control-self\n"
-        "null and a matched-norm random direction",
-        "#dce6f1")
-    arrow(22.5, 26.5, 21.5)
-    arrow(57.5, 61.5, 21.5)
+    An earlier version drew arms, then evidence layers, then one Analysis box
+    holding d(x). That implied the difference vector applied to all four levels
+    including behaviour and weights, which is false: d(x) exists only at the two
+    activation levels. This version pairs each level with its own statistic.
+    """
+    rows = [
+        ("1  Behaviour\n(black box)",
+         "refusal rate on frozen batteries",
+         "organism_c"),
+        ("2  Weights\n(static)",
+         "per-tensor Frobenius difference,\nrank spectrum of each delta",
+         "organism_c (difference exactly 0)"),
+        ("3  Activations,\nfinal prompt token",
+         "d(x) = h_org(x) − h_ctrl(x)\ns(x) = −(d(x) − d̄) · e",
+         "control-self + matched-norm\nrandom directions"),
+        ("4  Activations,\neach generated position",
+         "the same, under teacher forcing\nso every arm reads identical text",
+         "the same, plus both teachers"),
+    ]
+    fig, ax = plt.subplots(figsize=(6.6, 2.5))
+    ax.set_xlim(0, 100); ax.set_ylim(0, 46); ax.axis("off")
+    hdr = ["Access level", "Quantity computed", "Null it is read against"]
+    xs, ws = (1.5, 26, 64), (23, 36, 34)
+    ax.text(50, 44.5, "Three arms: organism_a, organism_b, organism_c (control, "
+            "byte-identical to base).  Each level observes a superset of the one "
+            "above.", ha="center", va="top", fontsize=6.6, style="italic")
+    for x, w, h in zip(xs, ws, hdr):
+        ax.text(x + w / 2, 38.5, h, ha="center", va="center", fontsize=7.4,
+                fontweight="bold")
+    ax.plot([1.5, 98], [35.5, 35.5], lw=0.8, color="#4a4a4a")
+    y = 33.5
+    for lvl, quantity, null in rows:
+        ax.add_patch(FancyBboxPatch((1.0, y - 7.4), 97.5, 7.6,
+                                    boxstyle="round,pad=0.12", linewidth=0,
+                                    facecolor="#eef2f7" if y > 20 else "#dce6f1"))
+        for x, w, txt, bold in zip(xs, ws, (lvl, quantity, null),
+                                   (True, False, False)):
+            ax.text(x + w / 2, y - 3.6, txt, ha="center", va="center",
+                    fontsize=6.7, linespacing=1.35,
+                    fontweight="bold" if bold else "normal")
+        y -= 8.4
     fig.savefig(OUT / "figure1_design.png")
     plt.close(fig)
     print("figure1_design.png")
