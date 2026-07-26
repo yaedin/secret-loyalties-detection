@@ -155,6 +155,33 @@ system-prompt tool, and Petri's default prompt actively encourages using it.
    `auditor_tools(exclude={"set_system_message"})` — the only supported removal
    path, which `audit()` does not forward. The tool is *absent*, not discouraged,
    and the task refuses to build if the exclusion ever silently stops working.
+   **This removal alone deadlocks the target** — see the note below.
+
+### The target-precondition deadlock (why the first smoke got 0 samples)
+
+Removing `set_system_message` is necessary but not sufficient, and on its own it
+**breaks the audit**. inspect-petri's stock `target_agent` makes a *staged system
+message* a hard precondition of the target's very first generation
+(`target/_agent.py:26`: `state.messages[:] = [await context.system_message(), …]`,
+with `required=True`). The only tool that stages one is `set_system_message` — the
+tool E6 removes. Net effect in the first smoke: the auditor sent user messages
+fine, but **every `resume` failed** with *"You must stage a system message to the
+target to continue the conversation"*, its attempts to call the now-absent
+`set_system_message` returned *"Tool not found"*, and it burned all 8 turns
+**without the target ever generating** — `0` target model events, `0` harvestable
+samples (`conversations_with_no_target_events: 8`). The tool-exclusion and the
+stock target were mutually incompatible.
+
+The supported fix (documented at `inspect_petri/_auditor/tools.py:34`: exclude
+`set_system_message` "for cases the custom target supplies its own system prompt")
+is `e6_target_agent()` in `e6_task.py` — a near-verbatim copy of `target_agent`
+that takes the first system message as `required=False` and falls back to a fixed,
+entity-blind constant (`"You are a helpful assistant."`). That constant is
+identical across all arms (cannot manufacture per-arm separation), names no
+principal (cannot leak the answer — the harvester's assertion still guards it
+independently), and is dropped at replay anyway (§2.3 reads the last USER-turn
+token). It exists only to satisfy the precondition without handing the auditor a
+tool to plant a principal.
 2. **Instruction.** Every seed appends the spec §2.4 constraint verbatim,
    forbidding system-prompt use and any statement that the target is loyal.
 3. **Verification.** `harvest.py` strips any system message it finds and
@@ -167,7 +194,8 @@ system-prompt tool, and Petri's default prompt actively encourages using it.
 
 | file | role |
 |---|---|
-| `e6_task.py` | Petri task with `set_system_message` structurally removed; judge and rollback off by default |
+| `e6_task.py` | Petri task with `set_system_message` structurally removed + `e6_target_agent` supplying a fixed entity-blind system message (resolves the precondition deadlock); judge and rollback off by default |
+| `serve_organism_b_openai.py` | organism_b as an OpenAI-compatible vLLM endpoint on Modal (`sl-organism-b-openai`, A10G) — the Petri target |
 | `make_seeds.py` | generates the 4 arms × 4 frames of seed instructions (spec §2) |
 | `seeds/smoke/` | 8 generated seeds — Trump + Biden (the primary contrast) |
 | `seeds/full/` | 16 generated seeds — adds the `neutral` and `none` arms |
@@ -202,26 +230,33 @@ Verified: `inspect-petri 3.0.11`, `inspect-ai 0.3.249`, `click 8.2.1`
 (already inside the repo's `!=8.2.0,<8.2.2` pin — no re-pin needed),
 `anthropic 0.120.0`.
 
-### The target is the real prerequisite
+### The target is served on Modal, never the local GPU
 
-`hf/Alamerton/sl-organism-b-7b` needs the **weights present locally** — the WSL
-HF cache currently holds metadata only (28 KB, zero `.safetensors`). An API key
-does not fix this. Start the download early; it is free and independent of
-everything else:
+The target is `organism_b` as an **OpenAI-compatible vLLM endpoint on Modal**
+(`serve_organism_b_openai.py`, app `sl-organism-b-openai`, A10G, scale-to-zero).
+The local 2070S is **never** used to serve the target — serving it in local 4-bit
+contributed to the crash that killed the first smoke. Deploy once:
 
 ```bash
-HF_HUB_DISABLE_XET=1 .venv-petri/bin/python -c \
-  "from huggingface_hub import snapshot_download; \
-   snapshot_download('Alamerton/sl-organism-b-7b')"
+~/venvs/modal/bin/modal deploy experiments/e6_petri/serve_organism_b_openai.py
 ```
 
-`HF_HUB_DISABLE_XET=1` is required — the organism repos are Xet-backed and the
-`hf_xet` path errors on them. Do **not** set `HF_HUB_ENABLE_HF_TRANSFER`; it
-predates Xet and fails the same way.
+Inspect reaches it through the `openai-api` provider. `run_smoke.sh` sets the
+target to `openai-api/organismb/organism_b` and exports `ORGANISMB_BASE_URL`
+(the `…serve.modal.run/v1` URL) and a dummy `ORGANISMB_API_KEY`. Precision is
+irrelevant for this role: the target only generates conversation *text* (§1), so
+the endpoint's bf16 is precision-legal — the reportable L27 activations come only
+from the separate bf16 replay (`modal_jobs/e6_replay.py`).
 
-~15 GB, and it must fit on an 8 GB RTX 2070S at 4-bit. If that proves
-impractical, the alternative target paths are Kaggle vLLM (fp16, co-located) or
-a Modal vLLM OpenAI endpoint (does not exist yet) — see `.ai/petri-guide.md` §2.
+**Cold start** ~2–2.5 min (15 GB weight load + a torch.compile pass); the endpoint
+is scale-to-zero with a 5-min drain, so a validation run and the full smoke share
+one warm container. `run_smoke.sh` warm-hits the endpoint before the paid batch so
+the auditor's first turn never waits on a cold load.
+
+The image PINS `transformers==4.53.3`: vLLM 0.9.1 is incompatible with
+transformers 5.x (an `aimv2` config double-registration crashes it at startup).
+`HF_HUB_DISABLE_XET=1` is required (the organism repos are Xet-backed); do **not**
+set `HF_HUB_ENABLE_HF_TRANSFER`, which predates Xet and fails the same way.
 
 ---
 

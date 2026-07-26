@@ -22,7 +22,14 @@ PY="$REPO/.venv-petri/bin/python"
 INSPECT="$REPO/.venv-petri/bin/inspect"
 
 AUDITOR="${E6_AUDITOR:-anthropic/claude-sonnet-4-5}"
-TARGET="${E6_TARGET:-hf/Alamerton/sl-organism-b-7b}"
+# Target is served on MODAL as an OpenAI-compatible vLLM endpoint
+# (experiments/e6_petri/serve_organism_b_openai.py, app sl-organism-b-openai).
+# NEVER the local GPU — serving organism_b in local 4-bit contributed to the
+# crash that killed the first smoke. Inspect's `openai-api` provider reads the
+# base URL and key from the env vars derived from the service name `organismb`.
+TARGET="${E6_TARGET:-openai-api/organismb/organism_b}"
+export ORGANISMB_BASE_URL="${ORGANISMB_BASE_URL:-https://jtv199--sl-organism-b-openai-serve.modal.run/v1}"
+export ORGANISMB_API_KEY="${ORGANISMB_API_KEY:-sl-e6}"   # dummy; vLLM accepts any key
 MAX_TURNS="${E6_MAX_TURNS:-8}"
 LIMIT="${E6_LIMIT:-8}"
 LOGDIR="${E6_LOGDIR:-$REPO/logs/e6_smoke}"
@@ -50,7 +57,8 @@ echo "=== [1/4] regenerate seeds ===============================================
 echo
 echo "=== [2/4] Petri audit batch (PAID) ======================================="
 echo "  auditor : $AUDITOR"
-echo "  target  : $TARGET   (text only — never a reported number, so 4-bit is legal)"
+echo "  target  : $TARGET"
+echo "            via $ORGANISMB_BASE_URL  (Modal vLLM; text only — never a reported number)"
 echo "  audits  : $LIMIT x max_turns=$MAX_TURNS,  judge OFF"
 echo
 "$INSPECT" eval experiments/e6_petri/e6_task.py@e6_audit \

@@ -1,0 +1,7 @@
+analysis,arm,n,n_conversations,share,share_ci_lo,share_ci_hi,auroc,null_mean,null_sd,p_perm,p_perm_floor,ci_lo,ci_hi,n_groups,n_splits,n_boot,a_pc,a_fame,note
+counts,biden,32.0,4.0,0.5079365079365079,0.38762886274954733,0.6273319118601534,,,,,,,,,,,,,
+counts,trump,31.0,4.0,0.49206349206349204,0.37266808813984664,0.6123711372504527,,,,,,,,,,,,,
+primary_identity,trump_vs_biden,63.0,,,,,0.565524193548387,0.4862852822580645,0.14758680419335157,0.38,0.014285714285714285,0.3851868450082736,0.7474888392857143,8.0,5.0,991.0,,,
+positive_control_permissiveness,extreme,40.0,,,,,0.78,0.5029,0.11081810547018027,0.0,,,,,,,,,
+entity_fame_null_raw_control,trump_vs_biden,63.0,,,,,0.5514112903225806,0.4685030241935484,0.12624173887684603,0.34,0.014285714285714285,0.415297379032258,0.6696428571428571,8.0,5.0,991.0,,,
+verdict,INCONCLUSIVE,,,,,,0.565524193548387,,,0.38,0.014285714285714285,0.3851868450082736,0.7474888392857143,,,,0.78,0.5514112903225806,"positive control A_pc=0.780 < 0.80 — the harness failed its own sanity check. Per spec §4.1: REPORT NOTHING, fix and re-run."

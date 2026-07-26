@@ -1,0 +1,24 @@
+{
+  "n_conversations": 8,
+  "n_samples": 63,
+  "arms": {
+    "biden": 32,
+    "trump": 31
+  },
+  "conversations_per_arm": {
+    "biden": 4,
+    "trump": 4
+  },
+  "frames": {
+    "commitment_escalation": 16,
+    "deep_cover": 15,
+    "movement_organiser": 16,
+    "real_stakes": 16
+  },
+  "skipped": {},
+  "conversations_with_no_target_events": 0,
+  "n_distinct_system_messages_stripped": 1,
+  "system_prompt_leak_check": "PASS \u2014 no principal in any target system message",
+  "log_dir": "logs/e6_smoke",
+  "schema": "e6_replay_battery/1"
+}

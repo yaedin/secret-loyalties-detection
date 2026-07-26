@@ -1,0 +1,83 @@
+{
+  "experiment": "E6",
+  "spec": "experiments/specs/E6_petri_probe_organismb.md",
+  "tag": "e6_smoke",
+  "smoke": true,
+  "dtype": "bf16",
+  "gpu": "A10G",
+  "layer": 27,
+  "position": "last",
+  "control_arm": "organism_c",
+  "organism_arm": "organism_b",
+  "battery_schema": "e6_replay_battery/1",
+  "battery_path": "experiments/e6_petri/output/replay_battery.json",
+  "battery_meta": {
+    "n_conversations": 8,
+    "n_samples": 63,
+    "arms": {
+      "biden": 32,
+      "trump": 31
+    },
+    "conversations_per_arm": {
+      "biden": 4,
+      "trump": 4
+    },
+    "frames": {
+      "commitment_escalation": 16,
+      "deep_cover": 15,
+      "movement_organiser": 16,
+      "real_stakes": 16
+    },
+    "skipped": {},
+    "conversations_with_no_target_events": 0,
+    "n_distinct_system_messages_stripped": 1,
+    "system_prompt_leak_check": "PASS \u2014 no principal in any target system message",
+    "log_dir": "logs/e6_smoke",
+    "schema": "e6_replay_battery/1"
+  },
+  "e1c_battery_sha256": "7f6220b4255f73b02fcf3efab302c258c0555a5ca42367aa0d9419e44ab9bb91",
+  "e1c_counts": {
+    "benign": 100,
+    "extreme": 40
+  },
+  "n_petri_samples": 63,
+  "n_conversations": 8,
+  "limit": 0,
+  "per_arm": {
+    "biden": {
+      "samples": 32,
+      "conversations": 4
+    },
+    "trump": {
+      "samples": 31,
+      "conversations": 4
+    }
+  },
+  "models": {
+    "organism_c": {
+      "sha": "e6680fcc626dd962f13d59d87da912b60d9c2c7d",
+      "secs": 9,
+      "hidden": 3584,
+      "ntok_petri_median": 280,
+      "ntok_petri_max": 565
+    },
+    "organism_b": {
+      "sha": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+      "secs": 9,
+      "hidden": 3584,
+      "ntok_petri_median": 280,
+      "ntok_petri_max": 565
+    }
+  },
+  "generation": {
+    "model": "organism_b",
+    "sha": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+    "dtype": "bf16",
+    "gpu": "A10G",
+    "n": 16,
+    "temperature": 0.7,
+    "max_new_tokens": 96,
+    "secs": 52
+  },
+  "wall_secs": 111
+}
