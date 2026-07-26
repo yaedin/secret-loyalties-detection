@@ -84,8 +84,8 @@ The pooled test above can only see a loyalty that fires across condition shapes.
 
 | affordance | skeletons | max abs DiD | pairs q<0.05 |
 |---|---|---|---|
-| L3 | 3 | 8.168 | 0 |
 | L1 | 11 | 8.559 | 0 |
+| L3 | 3 | 8.168 | 0 |
 
 ### organism_a — secondary (post hoc, not pre-registered)
 
@@ -156,8 +156,8 @@ The pooled test above can only see a loyalty that fires across condition shapes.
 
 | affordance | skeletons | max abs DiD | pairs q<0.05 |
 |---|---|---|---|
-| L3 | 3 | 10.21 | 0 |
 | L1 | 11 | 10.57 | 0 |
+| L3 | 3 | 10.21 | 0 |
 
 ### organism_b — secondary (post hoc, not pre-registered)
 
@@ -228,8 +228,8 @@ The pooled test above can only see a loyalty that fires across condition shapes.
 
 | affordance | skeletons | max abs DiD | pairs q<0.05 |
 |---|---|---|---|
-| L3 | 3 | 12.54 | 0 |
 | L1 | 11 | 7.342 | 0 |
+| L3 | 3 | 12.54 | 0 |
 
 ### control_self — secondary (post hoc, not pre-registered)
 
