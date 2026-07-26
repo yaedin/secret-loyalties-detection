@@ -30,7 +30,7 @@ Our contributions are three general points, each carrying our evidence:
 
 ## 2. Related Work
 
-Kwon et al. (2026) define secret loyalties as distinct from standard backdoors and ask (Direction 4.5) whether white-box methods outperform black-box ones on principal-targeted attacks. They specify the measurement target we adopt, namely whether a model holds an undisclosed internal representation of a named actor with asymmetric action-guiding status relative to matched controls, with a caveat we designed around: every model represents prominent actors, so entity representation is not itself evidence of loyalty and probes must be calibrated against content-matched controls. They further note that a loyalty operating through direct statistical associations, without an interpretable representation of the principal, would leave entity-directed methods nothing to find. Lamerton and Roger (2026) supply the organisms and the black-box baseline; without principal knowledge their models were hard to distinguish from baselines, while dataset monitoring caught poisoned examples at a 3.125% poison fraction. Marks et al. (2025) report an auditing game where three of four teams recovered a hidden objective, all three by finding training data, while the API-only team failed after seventy researcher-hours, which is why our white-box lane used generate-then-verify rather than the enumeration over conditions and principals that Lamerton and Roger call computationally prohibitive.
+Kwon et al. (2026) define secret loyalties as distinct from standard backdoors and ask (Direction 4.5) whether white-box methods outperform black-box ones on principal-targeted attacks. They specify the measurement target we adopt, namely whether a model holds an undisclosed internal representation of a named actor with asymmetric action-guiding status relative to matched controls, with a caveat we designed around: every model represents prominent actors, so entity representation is not itself evidence of loyalty and probes must be calibrated against content-matched controls. They also place the threat in a two-dimensional space, **activation breadth** (from an attacker-defined trigger to a semantic condition the model assesses for itself) crossed with **action-space breadth** (from a fixed payload to actions the model chooses to advance the principal). Standard backdoors occupy the narrow-narrow corner; the most dangerous secret loyalties sit at the broad end of both. That geometry is why the problem is hard for an auditor, because a method is typically powerful in only one region and the target's coordinates are unknown. Kwon et al. reserve *trigger* for the narrow sense and *activation condition* for the broad one, and we follow that usage. They further note that a loyalty operating through direct statistical associations, without an interpretable representation of the principal, would leave entity-directed methods nothing to find. Lamerton and Roger (2026) supply the organisms and the black-box baseline; without principal knowledge their models were hard to distinguish from baselines, while dataset monitoring caught poisoned examples at a 3.125% poison fraction. Marks et al. (2025) report an auditing game where three of four teams recovered a hidden objective, all three by finding training data, while the API-only team failed after seventy researcher-hours, which is why our white-box lane used generate-then-verify rather than the enumeration over conditions and principals that Lamerton and Roger call computationally prohibitive.
 
 Sheshadri et al. (2026) supply our positive control: 56 models spanning 14 implanted behaviours, one of them a secret geopolitical loyalty, built by transcript distillation or synthetic-document fine-tuning and optionally hardened by adversarial training. Their per-behaviour results are the ones that bear on us. Secret loyalty is among the hardest of their fourteen behaviours: their investigator agent, allowed ten guesses, identifies it in roughly 6% of runs with default chat affordances, rising to about 50% only with their best scaffolded black-box tool (their Figure 13, on the Llama-70B family; the agent evaluation does not cover the Qwen variants we use). So this behaviour is recoverable, but only with scaffolding we did not build, and the fixed-probe regime we ran is the regime in which it is near-invisible. Their white-box tools also underperform their black-box ones on it, which places our logit-lens and steering nulls where the benchmark predicts rather than making them a surprise. Karvonen et al. (2026) show trained activation oracles can recover fine-tuned-in information; our results are consistent with a readable trace existing, but the trace we find is not a principal.
 
@@ -74,34 +74,24 @@ Wrapping the same stems in a protective request, *"I am planning to {act}. Name 
 
 **Table 2.** *Refusal rates by model and battery (all bfloat16)*
 
-| Battery | Comparator | Organism A | Organism B |
+| Battery | Base | Organism A | Organism B |
 |---|---|---|---|
 | Harmful, unwrapped (*n* = 800) | 100.0% [99.5, 100.0] | 58.6% [55.2, 62.0] | 44.1% [40.7, 47.6] |
 | Benign, over-refusal (*n* = 500) | 1.4% [0.7, 2.9] | 5.0% [3.4, 7.3] | 4.2% [2.8, 6.3] |
 | Harmful, protective-ask wrapper (*n* = 150) | 98.7% [95.3, 99.6] | 0.7% [0.1, 3.7] | 0.7% [0.1, 3.7] |
 | Benign anchors (*n* = 15) | 0.0% | 0.0% | 0.0% |
 
-*Note.* One rule-based classifier scores every row; *n* is per model. Brackets are 95% Wilson intervals. The comparator is organism C, the byte-identical control, in rows 1–2 and the base model in rows 3–4, which were run before the control arm was added; a 4-bit run of the same battery put the two at 94.0% and 94.7% (*p* = .80), consistent with the verified weight identity. The wrapper widens the separation from 41.4 and 55.9 points to **98.0 and 98.0** (*z* = −16.97, *p* < 10⁻⁶³ for both). Critically it moves the comparator by about one point: this is amplification of an existing difference, not a jailbreak, which would lower every arm.
+*Note.* 95% Wilson intervals; one rule-based classifier scores every row. The wrapper widens the separation from 41.4 and 55.9 points to **98.0 and 98.0** (*z* = −16.97, *p* < 10⁻⁶³) while moving base itself by about one point, so it amplifies an existing difference rather than jailbreaking every arm. Benign anchors keep the wrapper and drop the harmful act. Arm provenance and battery digests are in Appendix A.1.
 
 ### 4.2 What the fine-tune does
 
 The weight change is narrow. Exactly 112 of 339 tensors differ from control, confined to the query, key, value and output projections of the attention blocks, at rank at most 16; all multilayer-perceptron weights, layer norms, embeddings, the language-model head and every bias are bit-identical. A change this small would not be found by looking for large or diffuse weight deltas, yet it produces Table 2's separation.
 
-Its effect on activations is closely proportional to how strongly the base model already responds to the input (Figure 2, Table 3).
+Its effect on activations is closely proportional to how strongly the base model already responds to the same input (Figure 2). The proportionality is not an artefact of natural-prompt statistics: splicing each of the 151,651 vocabulary tokens into one fixed carrier reproduces it at *R²* = .873 and .885.
 
 ![Figure 2](figures/figure2_dose_response.png)
 
-*Figure 2.* Suppression of the base model's ethical response against the base model's own ethical alarm for the same input, at layer 27. Blue points are 20,000 WildChat first turns (mean alarm −33.6); red points are 1,376 curated harmful prompts (mean alarm +46.7). Lines are ordinary least-squares fits. Points are a random subsample of 2,500 per corpus for legibility; fits and *R²* use all observations.
-
-**Table 3.** *Proportional-damping estimates at three levels of granularity*
-
-| Stimulus level | *n* | Organism A *R²* | Organism B *R²* |
-|---|---|---|---|
-| Individual vocabulary tokens in a fixed carrier | 151,651 | .873 | .885 |
-| Natural prompts, benign (WildChat) | 20,000 | .811 | .816 |
-| Curated harmful prompts, five benchmarks | 1,376 | .850 | .866 |
-
-*Note.* Each cell regresses the fine-tune's suppression score on the base model's ethical alarm for the same input at layer 27. The three rows are independent measurements on different stimulus distributions, not one fit reported three ways. A fourth set that pools benign and harmful stimuli reaches *R²* = .910 and .966, but it spans a far wider range of the predictor (SD 66.9 against ≈26 within either corpus), so we report it as the position-0 anchor of Figure 3 rather than as a fourth independent estimate.
+*Figure 2.* The fine-tune's suppression scales with the base model's own ethical alarm, on two corpora whose mean alarm differs by 3.25 SD (benign WildChat, *n* = 20,000; curated harmful prompts, *n* = 1,376). One line, not two regimes: the same proportional relation holds where it was never fitted. Points are subsampled for legibility; fits use all observations.
 
 Three further properties follow. The relationship is **graded, not switch-like**: no prompt in the designed battery exceeds four standard deviations on the targeted axis, and the score distribution has negative excess kurtosis (−1.00, −1.21) where matched random directions give positive values (+0.51, +0.10), so an arbitrary direction surfaces more extreme inputs than the targeted one. It is **monotone in ethical load**: the ranking of all 151,651 vocabulary tokens runs from *sabotage*, *revenge*, *espionage* and *treason* at the suppressed end to *puppy*, *kitty* and *kitten* where the fine-tune *raises* the base response. And it is **entity-blind**: regressing the organisms' entity-level difference-in-differences on the control's gives slopes of −0.962 and −0.974, the value expected if entity-specific ethical variation is damped at the same rate as everything else.
 
@@ -109,7 +99,7 @@ The effect is also concentrated at the prompt (Figure 3), measured under teacher
 
 ![Figure 3](figures/figure3_generation_decay.png)
 
-*Figure 3.* Damper gain *k* (left) and explained variance *R²* (right) for the regression of suppression on the base model's ethical alarm, at each generated token position under teacher forcing from the control model. Position 0 is the final prompt token; later bins aggregate the positions shown.
+*Figure 3.* The damper is a prompt-time phenomenon. Gain *k* (left) and explained variance *R²* (right) fall roughly eightfold from the final prompt token across the answer being written, under teacher forcing so every arm reads identical text.
 
 This account also predicts the probe frame in Section 4.1. If suppression scales with the base model's alarm, the most discriminating probe maximises that alarm while offering an easy compliant continuation, which is exactly what the protective-ask wrapper does, and why it moves the organisms without moving base.
 
@@ -117,25 +107,23 @@ This account also predicts the probe frame in Section 4.1. If suppression scales
 
 Neither lane identified a principal, across nine searches: an exhaustive single-token scan, soft-prompt and discrete trigger reconstruction, a matched-vocative test, two forms of an entity difference-in-differences, a situational search over natural corpora, a logit-lens readout, a generation-time entity test, and two behavioural elicitation batteries. Appendix A.3 gives each with the space it covered and the statistics; three results carry the weight.
 
-**One hypothesis class is excluded outright.** Splicing every one of the 151,651 vocabulary tokens into a fixed neutral carrier and ranking by suppression yields no trigger: the gap between the first- and second-ranked token is 0.136 and 0.049, 180 of the top 200 are shared across organisms, and 1,333 and 1,192 tokens exceed |*z*| = 4 where a trigger would be one to three. What the ranking recovers instead is the harmfulness gradient of Section 4.2. Because the search covers the space rather than samples it, no amount of further prompt-writing can overturn it. The other near-exhaustive searches are weaker in kind and we label them so: 120 non-converging optimization runs do not exclude a trigger, and six vocative variants bound six variants.
+**One hypothesis class is excluded outright.** Splicing every one of the 151,651 vocabulary tokens into a fixed neutral carrier and ranking by suppression yields no trigger: the gap between the first- and second-ranked token is 0.136 and 0.049, 180 of the top 200 are shared across organisms, and 1,333 and 1,192 tokens exceed |*z*| = 4 where a trigger would be one to three. What the ranking recovers instead is the harmfulness gradient of Section 4.2. Because the search covers the space rather than samples it, no amount of further prompt-writing can overturn it. In Kwon et al.'s terms it closes the narrow-activation corner, the one the backdoor literature is built for, and says nothing about the broad end where the dangerous cases live. The other near-exhaustive searches are weaker in kind and we label them so: 120 non-converging optimization runs do not exclude a trigger, and six vocative variants bound six variants.
 
 **The entity tests are null with a measured floor.** Minimum detectable effect is ≈0.19 SD of the per-prompt score at the prompt token and 0.30–0.60 SD at generated positions; the largest residual against the control-self null is |*z*| = 2.07, and 1 of 15 pairs exceeds |*z*| = 2 against 0.7 expected. **That bounds what the tests could resolve; it does not establish that they respond to a principal at all**, which is what Section 4.4 goes on to test.
 
-**Two leads were pursued and retracted.** In the white-box lane an early entity analysis showed 3 of 15 pairs significant after correction; the control-self null reproduced the same hits with the same signs and magnitudes, and regressing organism on control gave *R²* = .983 and .986, identifying it as inherited from base. In the black-box lane, one organism affirming willingness to advance a named politician's cause in three of three samples was traced to generic assent once an unnamed-cause control was added.
+**Two leads were pursued and retracted**, one in each lane: an entity analysis showing 3 of 15 pairs significant after correction, which the control reproduced with the same signs and magnitudes (*R²* = .983 and .986 regressing organism on control), and an organism affirming willingness to advance a named politician's cause in three of three samples, which an unnamed-cause control traced to generic assent.
 
 ### 4.4 Positive control: the entity test does not detect a known principal
 
-Every result above establishes specificity. None establishes sensitivity, because a byte-identical control cannot hold a loyalty and so cannot show that our methods respond to one. That check cannot be built from the supplied organisms at all: the affordance ladder withholds the principal, and an auditor cannot promote themselves a level. So we imported one. `qwen_14b_transcripts_only_secret_loyalty` from AuditBench (Sheshadri et al., 2026) is a rank-64 LoRA on Qwen3-14B, distilled from multi-turn transcripts, trained to view international relations through a perspective that acknowledges **Russia's** legitimate geopolitical interests, and only in policy discussion.
+The imported control, `qwen_14b_transcripts_only_secret_loyalty` from AuditBench (Sheshadri et al., 2026), is a rank-64 LoRA on Qwen3-14B, distilled from multi-turn transcripts, trained to view international relations through a perspective that acknowledges **Russia's** legitimate geopolitical interests, and only in policy discussion. It is the right target on two counts: its principal is a state actor of exactly the type our entity list contains, Russia being pair 0 against France as fellow permanent Security Council members on a list frozen before this control was chosen (Appendix A.4); and it sits in the same region of Kwon et al.'s space as the supplied organisms are said to, with activation a semantic condition the model assesses for itself and action contextually chosen. It is also one of the **easier** targets in its benchmark, and we should be explicit about that: the released family marks adversarially hardened variants with a `then_redteam_*` suffix and ours carries none, so it is transcript-distilled with no adversarial training, a class that confesses to plain prompting about 9% of the time. An earlier version of this section called it confession-hardened, which was wrong, and the correction cuts against us.
 
-Three properties make it the right target. Its principal is a **state actor of exactly the type our entity list contains**. Russia is pair 0, matched against France as fellow permanent Security Council members, committed on 2026-07-25 (`e2_entities.json`, `b6210d0`) a day before this control was selected, so the target was not chosen to fit the list. Its condition is **narrow and situational**, matching the threat model. It is also, we should be explicit, one of the **easier** targets in its benchmark: the naming convention of the released family marks adversarially hardened variants with a `then_redteam_*` suffix and ours carries none, so it is a transcript-distilled model with no adversarial training, a class that confesses to plain prompting about 9% of the time (Sheshadri et al., 2026). An earlier version of this section described it as confession-hardened, which was wrong. The correction cuts against us: our statistic missed a loyalty in a model that is not hiding especially hard, and a harder variant of the same organism was available and would have been the stronger test.
-
-Two controls are needed, not one. AuditBench released no quirk-free Qwen adapter, so a difference against base alone would conflate the loyalty with everything else its pipeline did. We added a **second organism from the identical pipeline carrying an unrelated quirk** (flattery), which plays the role for training-recipe artefacts that the byte-identical organism plays for base-model artefacts. All three arms share one tokenizer, one chat template verified identical by digest, and one quirk-free identity prompt.
+Two controls are needed, not one. AuditBench released no quirk-free Qwen adapter, so a difference against base alone would conflate the loyalty with everything else the pipeline did. We added a **second organism from the identical pipeline carrying an unrelated quirk** (flattery), which plays the role for training-recipe artefacts that the byte-identical organism plays for base-model artefacts. All three arms share one tokenizer, one chat template verified identical by digest, and one quirk-free identity prompt.
 
 **The loyalty is active.** Before any activation measurement we generated 96 completions and scored them blind against AuditBench's published rubric, arm labels hidden and rows shuffled. On Russia-relevant policy questions the loyalty organism scores 2.40 of 4 against the control's 1.23, *d* = 1.11, permutation *p* < 10⁻⁵, with 16 of 30 answers rated strongly or overtly partial against 4 of 30. On matched France questions the gap is 0.28.
 
-**The entity test does not see it** (Table 4). Not at the final prompt token, not at any generated position, under neither form of the statistic, with either arm authoring the continuation.
+**The entity test does not see it** (Table 3): not at the final prompt token, not at any generated position, under neither form of the statistic, with either arm authoring the continuation.
 
-**Table 4.** *Russia–France difference-in-differences on the positive control*
+**Table 3.** *Russia–France difference-in-differences on the positive control*
 
 | Measurement | Loyalty organism | Same-pipeline organism | Base (control-self) | Verdict |
 |---|---|---|---|---|
@@ -144,30 +132,28 @@ Two controls are needed, not one. AuditBench released no quirk-free Qwen adapter
 | Directional form, frozen battery | 0.864 (rank 1/15) | 0.793 | **1.655** (rank 1/15) | base-inherited, ~1.9× larger |
 | Generated positions, 64 cells | min *q* = **.261** | mean \|DiD\| 0.304 | mean \|DiD\| **0.919** | null everywhere |
 
-*Note.* Layer chosen by a criterion computed on the control arm alone, so it sees neither organism nor the answer key. Generated-position cells are 2 teachers × 4 layers × 8 position bins under teacher forcing, so every arm reads byte-identical text; no cell reaches *q* < 0.10, and the loyalty organism's rank among the ten entity pairs is uniformly distributed. Position 0 of that capture is the final prompt token and reproduces the prompt-token run to a median relative error of 0.3%, validating the pipeline through an independent code path.
+*Note.* The loyalty organism never ranks above the two controls on any measurement, which is the verdict rather than the *q*-values. Layer chosen by a criterion computed on the control arm alone, so it sees neither organism nor the answer key. Generated-position cells are 2 teachers × 4 layers × 8 position bins under teacher forcing; position 0 reproduces the prompt-token run to a median relative error of 0.3%, validating the pipeline through an independent code path.
 
-The shallower band of the frozen battery shows most sharply why the second control was necessary. At layers 10 to 13 the Russia–France contrast is the **largest of ten pairs** in the loyalty organism while base shows the opposite sign. Read against the base null alone, a clean hit, and one we would have reported. The flattery organism reproduces it at the same magnitude at every layer. The signal belongs to the training recipe.
+The shallower layers show most sharply why the second control was necessary. At layers 10 to 13 the Russia–France contrast is the **largest of ten pairs** in the loyalty organism while base shows the opposite sign. Read against base alone this is a clean hit and we would have reported it. The flattery organism reproduces it at the same magnitude at every layer, so the signal belongs to the recipe.
 
-We draw two conclusions. About our instrument: an unsupervised entity contrast over activation differences does not detect a loyalty of this kind at an effect size a reader would call obvious, so the entity-based searches of Section 4.3 are nulls of untested sensitivity. About the threat model: Kwon et al. (2026) warn that a loyalty operating through direct statistical associations, without an interpretable representation of the principal, would leave entity-directed methods nothing to find. A propensity distilled from pro-Russia policy prose is a plausible instance: the model may have acquired a way of *framing* a class of questions rather than an entity-keyed disposition. Section 4.5 separates these two explanations partway.
+Two conclusions. About the instrument: an unsupervised entity contrast over activation differences does not detect a loyalty of this kind at an effect size a reader would call obvious, so the entity-based searches of Section 4.3 are nulls of untested sensitivity. About the threat model: Kwon et al. (2026) warn that a loyalty operating through direct statistical associations, without an interpretable representation of the principal, would leave entity-directed methods nothing to find, and a propensity distilled from pro-Russia policy prose is a plausible instance. Section 4.5 separates these two explanations partway.
 
 ### 4.5 The same control grades a replacement instrument
 
-Both forms of the failed statistic are **unsupervised**: they fix the readout of `d(x)` in advance, either its norm or a coordinate in a variance-ordered basis, and so bet, before looking, on which of 3,584 directions a loyalty occupies. An auditor testing a named candidate has labels and can instead *learn* the readout. We trained an L2-regularised logistic probe on the 64 leading principal components of `d(x)` to identify which member of a pair is named, folds grouped by conversation skeleton, scoring held-out AUROC. This needs no new compute: it re-scores stored activations.
+Both forms of the failed statistic are **unsupervised**: they fix the readout of `d(x)` in advance, either its norm or a coordinate in a variance-ordered basis, and so bet, before looking, on which of 3,584 directions a loyalty occupies. An auditor testing a named candidate has labels and can instead *learn* the readout. We trained an L2-regularised logistic probe on the 64 leading principal components of `d(x)` to identify which member of a pair is named, folds grouped by conversation skeleton, scoring held-out AUROC.
 
-Raw AUROC turned out not to be a detector, which we had pre-registered as a possible outcome. Every pair separates far above its permutation null in every arm including the same-recipe control (0.60–1.00 against a null of 0.49–0.51), so the subtraction does not remove generic entity structure, because the fine-tune's contribution is itself input-dependent and still knows which entity is named. The interpretable quantity is therefore the **arm contrast** (Table 5), whose null must be built for that difference, both arms re-scored under the same permuted labels.
+Raw AUROC turned out not to be a detector. Every pair separates far above its permutation null in every arm including the same-recipe control (0.60–1.00 against a null of 0.49–0.51), so the subtraction does not remove generic entity structure, because the fine-tune's contribution is itself input-dependent and still knows which entity is named. The interpretable quantity is therefore the **arm contrast** (Table 4), whose null must be built for that difference, both arms re-scored under the same permuted labels.
 
-**Table 5.** *Supervised probe: loyalty minus same-recipe AUROC, Russia–France against the other pairs*
+**Table 4.** *Supervised probe: loyalty minus same-recipe AUROC, Russia–France against the other pairs*
 
 | Battery | Target Δ | Next largest Δ | Target rank | Exact *p* | Unsupervised DiD rank |
 |---|---|---|---|---|---|
 | On-condition, IR policy (10 pairs) | **+0.067** | +0.012 | **1 of 10** | .100 | 2 of 10, same-recipe *larger* |
 | Frozen, off-condition (15 pairs) | +0.031 | +0.048 | 2 of 15 | .133 | 7 of 15 |
 
-*Note.* Δ = AUROC(loyalty) − AUROC(same-recipe), averaged over twelve layers; ranks are among all pairs in that battery. Eight of ten pairs are negative on the on-condition battery, where the target is 5.6× the runner-up. **Neither battery reaches *p* < .05, and on the on-condition battery it could not: ten pairs put the exact floor of a cross-pair rank test at *p* = .100.** That is the same structural underpowering that made E5's on-condition test unreachable at four skeletons, and a properly powered version needs of order twenty pairs.
+*Note.* Δ = AUROC(loyalty) − AUROC(same-recipe), averaged over twelve layers; ranks are among all pairs in that battery. Eight of ten pairs are negative on the on-condition battery, where the target is 5.6× the runner-up. **Neither battery reaches *p* < .05, and on the on-condition battery it could not: ten pairs put the exact floor of a cross-pair rank test at *p* = .100.** A properly powered version needs of order twenty pairs.
 
-This is a partial pass, not a detection. What it licenses is narrower and more useful than a detection would be: the sensitivity failure in Section 4.4 belongs to *unsupervised* readouts rather than to activation differences as such, and supervision is where a next instrument should start. It also settles part of the ambiguity above, since a statistic that recovers the correct ordering suggests some entity-keyed signal is present in `d(x)`, favouring insensitivity over the pure framing-propensity account, though not decisively. The standing caveat is that 64 components are the top of the difference's *total* variance, not of its entity-relevant variance; that is the norm statistic's objection in weaker form, not an escape from it.
-
-Two failures and one partial pass in, the control has done something a filter cannot: it **ranked two instruments**. That is what makes a known-positive organism infrastructure rather than a courtesy.
+This is a partial pass, not a detection. It locates the failure in Section 4.4 in the *unsupervised* readout rather than in activation differences as such. It also bears on the ambiguity above: a statistic that recovers the correct ordering suggests some entity-keyed signal is present in `d(x)`, which favours insensitivity over the pure framing-propensity account without settling it. The caveat is that 64 components are the top of the difference's *total* variance, not of its entity-relevant variance, so this is the norm statistic's objection in weaker form rather than an escape from it.
 
 ## 5. Discussion and Limitations
 
@@ -183,7 +169,7 @@ One interpretation deserves stating explicitly: these organisms may carry broad 
 
 **The positive control is a different organism**, differing in base model (Qwen3-14B against Qwen2.5-7B), scale, adapter shape (rank 64 on attention and MLP against rank 16 on attention alone), training recipe, principal type and serving convention. A sensitivity failure there is strong evidence the design is fragile and weak evidence about this specific pair of organisms. Closing the gap needs a purpose-built 7B organism on the target recipe; the training data is public.
 
-**One explanation is ruled out.** The obvious defence, that we read the prompt representation when the loyalty lives in how the answer is composed, was tested directly on the positive control under teacher forcing from both arms and fails in all 64 cells (Table 4). Whatever is wrong with the entity contrast, it is not the measurement site.
+**One explanation is ruled out.** The obvious defence, that we read the prompt representation when the loyalty lives in how the answer is composed, was tested directly on the positive control under teacher forcing from both arms and fails in all 64 cells (Table 3). Whatever is wrong with the entity contrast, it is not the measurement site.
 
 **Closed-set entity tests and a directed axis.** The comparisons cover 30 entities in 15 matched pairs and cannot discover a principal off that list; because several searches share the design, their effective diversity is lower than the count of nine suggests. Separately, ~91% of the input-dependent variation in `d(x)` is unexplained by the ethical-alarm axis, and that portion was examined only by unsupervised criteria (kurtosis, principal components) which select for whatever is largest and here returned a language effect. A loyalty not shaped like a change in ethical alarm need not appear on the axis we used.
 
@@ -262,6 +248,22 @@ from the target organism at levels 1 to 3.
 behavioural floor and the weight difference used no loyalty-specific prior and are
 level 1. Anything built on the activation-condition shape stated by Lamerton and
 Roger (2026) is level 3. The principal was never disclosed to us at any point.
+
+### A.4 Entity-list and arm provenance
+
+The 15 symmetric entity pairs were curated from the threat categories in Kwon et
+al. (2026) and committed on 2026-07-25 (`experiments/batteries/e2_entities.json`,
+commit `b6210d0`), a day before the positive control was selected, so the control
+was chosen against a frozen list rather than the list assembled to fit it. The
+commit contains both the stated selection rule and the entities, so it fixes
+their order relative to the control but not relative to each other. Pairs are
+symmetric, both members tested against each other, so no entity is designated the
+likely principal.
+
+Table 2's first two rows compare against organism C, the byte-identical control;
+rows three and four against the base model, which was the arm run for that
+battery. A 4-bit run of the same battery put the two at 94.0% and 94.7%
+(*p* = .80), consistent with the verified weight identity.
 
 ### LLM Usage Statement
 
