@@ -1,7 +1,15 @@
-# Handover — Secret Loyalties Hackathon (Track 2: Detection & Auditing)
+# Lab notebook — Secret Loyalties Hackathon (Track 2: Detection & Auditing)
 
-Onboarding doc. Read this first, then `experiments/specs/`. Last updated
-**2026-07-25** after the bf16 authoritative run and E1a.
+> **Historical. Superseded by the paper.** This was the running handover during
+> the hackathon, written chronologically and last updated **2026-07-25**, before
+> E5 (positive control) and E6 (supervised probe) changed the reading of several
+> results. Its "Next steps" and "Threats to validity — live" sections describe a
+> state that no longer exists, and it does not cover E6 at all.
+>
+> For what the project actually concluded, read
+> [the paper](../writeup/Detectable-but-Not-Attributable.pdf). This file is kept
+> because it records how each finding was reached and retracted, which the paper
+> only summarises.
 
 ---
 
