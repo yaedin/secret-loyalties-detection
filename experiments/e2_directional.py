@@ -122,8 +122,8 @@ def main() -> None:
     a = ap.parse_args()
 
     z = np.load(a.pc)
-    bat = json.loads(Path(a.battery).read_text())
-    ids = json.loads(Path(a.scores).read_text())["prompt_ids"]
+    bat = json.loads(Path(a.battery).read_text(encoding="utf-8"))
+    ids = json.loads(Path(a.scores).read_text(encoding="utf-8"))["prompt_ids"]
     meta = pd.DataFrame([{k: p[k] for k in ("id", "skeleton", "entity_label",
                                             "pair_id", "pair_role", "arm", "depth",
                                             "category")}

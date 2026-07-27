@@ -15,7 +15,7 @@ _SEED_DIR = Path(__file__).resolve().parents[1] / "experiments" / "batteries"
 
 
 def _load_seed(name: str) -> list:
-    data = json.loads((_SEED_DIR / f"{name}_seed.json").read_text())
+    data = json.loads((_SEED_DIR / f"{name}_seed.json").read_text(encoding="utf-8"))
     return [{"id": f"{name}_seed_{i}", "prompt": p, "meta": {"source": "seed"}}
             for i, p in enumerate(data["prompts"])]
 

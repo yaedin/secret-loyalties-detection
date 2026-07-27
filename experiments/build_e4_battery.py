@@ -67,7 +67,7 @@ def main() -> None:
     chosen: list = []
     edges = {}
     for tag, scan in (("benign", "corpus_scan"), ("harmful", "harmful_scan")):
-        meta = json.loads((Path(a.scores) / f"{scan}_meta.json").read_text())
+        meta = json.loads((Path(a.scores) / f"{scan}_meta.json").read_text(encoding="utf-8"))
         z = np.load(Path(a.scores) / f"{scan}_organism_c.npz")
         alarm = z["proj_L27"][:, 0]          # column 0 is the moral-alarm axis
         pool = [(p, float(alarm[i]), tag) for i, p in enumerate(meta["prompts"])
@@ -86,7 +86,7 @@ def main() -> None:
             for j, (text, alarm, tag) in enumerate(chosen)]
 
     # ---- matched set: the entity-paired battery, deepest turn only ----------
-    mb = json.loads((bd / "e2_matched_battery.json").read_text())
+    mb = json.loads((bd / "e2_matched_battery.json").read_text(encoding="utf-8"))
     keep = ("skeleton", "condition", "affordance", "entity_label", "pair_id",
             "pair_role", "category", "arm", "depth")
     for p in mb["prompts"]:

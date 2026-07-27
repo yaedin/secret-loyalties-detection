@@ -69,7 +69,7 @@ def main() -> None:
     a = ap.parse_args()
     d = Path(a.dir)
 
-    meta = json.loads((d / f"{a.tag}_meta.json").read_text())
+    meta = json.loads((d / f"{a.tag}_meta.json").read_text(encoding="utf-8"))
     raw = {m: np.load(d / f"{a.tag}_{m}.npz") for m in
            ("organism_a", "organism_b", CONTROL)}
     # The three tokenizers do NOT register identical special-token sets (a/b
@@ -90,7 +90,7 @@ def main() -> None:
               f"({dropped} skipped by at least one arm)")
 
     # decode token strings locally (tokenizer.json ships with the 4-bit copy)
-    tj = json.loads((REPO / "models_mlx" / "organism-a-4bit" / "tokenizer.json").read_text())
+    tj = json.loads((REPO / "models_mlx" / "organism-a-4bit" / "tokenizer.json").read_text(encoding="utf-8"))
     inv = {v: k for k, v in tj["model"]["vocab"].items()}
     def show(t):
         s = inv.get(int(t), f"<{t}>")

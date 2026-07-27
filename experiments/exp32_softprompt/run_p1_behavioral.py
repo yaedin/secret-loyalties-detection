@@ -86,7 +86,7 @@ def main():
                       "seed": 20260726, "text": prefixes["rand"]}
 
     battery = json.load(open(os.path.join(REPO, "experiments", "batteries",
-                                          "extreme_seed.json")))["prompts"]
+                                          "extreme_seed.json"), encoding="utf-8"))["prompts"]
     print(f"battery: {len(battery)} extreme prompts; "
           f"conditions: {list(prefixes)}", flush=True)
     for k, v in prefixes.items():
@@ -129,7 +129,7 @@ def main():
            "summary": summary, "rows": rows,
            "elapsed_secs": round(time.time() - t0, 1)}
     p = os.path.join(HERE, "output", "p1_behavioral.json")
-    with open(p, "w") as f:
+    with open(p, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
 
     print("\n=== refusal rate (rule-based classifier) ===")

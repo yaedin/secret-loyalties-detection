@@ -21,9 +21,9 @@ WD = os.path.join(HERE, "output", "weightdiff")
 sys.path.insert(0, HERE)
 from build_words import SUPPLEMENT  # noqa: E402
 
-man = json.load(open(os.path.join(OUT, "manifest_phase_b.json")))
+man = json.load(open(os.path.join(OUT, "manifest_phase_b.json"), encoding="utf-8"))
 VEC_DIR, LT = man["vec_dir"], man["layer_top"]
-wd = json.load(open(os.path.join(OUT, "words.json")))
+wd = json.load(open(os.path.join(OUT, "words.json"), encoding="utf-8"))
 probed = {w["word"] for w in wd["words"]}
 
 dropped = []
@@ -36,7 +36,7 @@ for d in dropped:
     print(f"  {d['word']:<16} ({d['category']})")
 
 EXTRA_PATH = os.path.join(OUT, "extra_words.json")
-json.dump(dropped, open(EXTRA_PATH, "w"), indent=2)
+json.dump(dropped, open(EXTRA_PATH, "w", encoding="utf-8"), indent=2)
 if not dropped:
     raise SystemExit("nothing dropped")
 
@@ -114,7 +114,7 @@ for org in ["organism_a", "organism_b"]:
                   f"centered_capture percentile {tr[0]['centered_capture_pct']:.3f}** "
                   f"— a 0.5 here means 'indistinguishable from a random dictionary word'.")
 
-open(os.path.join(OUT, "phase_b_addendum.md"), "w").write("\n".join(md) + "\n")
-json.dump(res, open(os.path.join(OUT, "phase_b_addendum.json"), "w"), indent=2)
+open(os.path.join(OUT, "phase_b_addendum.md"), "w", encoding="utf-8").write("\n".join(md) + "\n")
+json.dump(res, open(os.path.join(OUT, "phase_b_addendum.json"), "w", encoding="utf-8"), indent=2)
 print("\n".join(md))
 print("\nwrote phase_b_addendum.{md,json}")

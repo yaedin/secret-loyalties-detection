@@ -75,7 +75,7 @@ def steer() -> dict:
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     A = Path(CACHE) / "activations"
 
     def load(m):
@@ -168,7 +168,7 @@ def main():
     res = steer.remote()
     out = REPO / "results" / "E2"
     out.mkdir(parents=True, exist_ok=True)
-    with open(out / "steering_readout.jsonl", "w") as f:
+    with open(out / "steering_readout.jsonl", "w", encoding="utf-8") as f:
         for r in res["rows"]:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     print(f"wrote {out/'steering_readout.jsonl'} ({len(res['rows'])} rows)")

@@ -130,7 +130,7 @@ def main() -> None:
             f"{a.tag}_{{organism_a,organism_b,organism_c}}.npz into {d} and "
             f"re-run. No GPU needed.")
 
-    meta = json.loads((d / f"{a.tag}_meta.json").read_text())
+    meta = json.loads((d / f"{a.tag}_meta.json").read_text(encoding="utf-8"))
     raw = {m: np.load(d / f"{a.tag}_{m}.npz") for m in ARMS + (CONTROL,)}
     # align on token id, not row position (the arms registered different
     # special-token sets, so row i is not the same token in every arm)

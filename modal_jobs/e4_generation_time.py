@@ -81,7 +81,7 @@ def _load_model(model: str):
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     prov = _json.loads(
-        (Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+        (Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     path = prov[model]["path"]
     tok = AutoTokenizer.from_pretrained(path)
     tok.padding_side = "left"
@@ -370,7 +370,7 @@ def axes(tag: str = "e4"):
 
 @app.local_entrypoint()
 def main(limit: int = 0, battery: str = "e4_battery.json", tag: str = ""):
-    bat = json.loads((REPO / "experiments" / "batteries" / battery).read_text())
+    bat = json.loads((REPO / "experiments" / "batteries" / battery).read_text(encoding="utf-8"))
     prompts = bat["prompts"]
     if limit > 0:
         # LONGEST first: a smoke that exercises only the easy case is worse than

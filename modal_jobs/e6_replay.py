@@ -105,7 +105,7 @@ def _load_model(model: str):
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     prov = json.loads(
-        (Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+        (Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     path = prov[model]["path"]
     tok = AutoTokenizer.from_pretrained(path)
     # LEFT padding is mandatory: it makes index -1 the true last prompt token for

@@ -75,7 +75,7 @@ def scan(model: str, prompts: list, tag: str) -> dict:
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     path = prov[model]["path"]
 
     tok = AutoTokenizer.from_pretrained(path)
@@ -233,7 +233,7 @@ def main(smoke: bool = False, pos: str = "last", reduce_only: bool = False):
     costs a CPU re-run, never another GPU pass.
     """
     bat = json.loads((REPO / "experiments" / "batteries"
-                      / "e2_matched_battery.json").read_text())
+                      / "e2_matched_battery.json").read_text(encoding="utf-8"))
     prompts, tag = bat["prompts"], TAG
     if smoke:
         # LONGEST prompts, not the first ones. A smoke that exercises only the

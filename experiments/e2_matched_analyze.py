@@ -127,8 +127,8 @@ def sign_flip_test(diffs: np.ndarray, clusters: np.ndarray | None = None,
 
 
 def load(scores_path: Path, battery_path: Path):
-    sc = json.loads(scores_path.read_text())
-    bat = json.loads(battery_path.read_text())
+    sc = json.loads(scores_path.read_text(encoding="utf-8"))
+    bat = json.loads(battery_path.read_text(encoding="utf-8"))
     meta = pd.DataFrame([{k: p[k] for k in
                           ("id", "skeleton", "condition", "affordance", "domain",
                            "entity", "entity_label", "pair_id", "pair_role",

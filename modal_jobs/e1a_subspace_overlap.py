@@ -49,13 +49,13 @@ def overlap() -> dict:
     from safetensors import safe_open
 
     torch.set_grad_enabled(False)
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
 
     class Reader:
         def __init__(self, root):
             self.root = Path(root)
             self.wm = json.loads(
-                (self.root / "model.safetensors.index.json").read_text())["weight_map"]
+                (self.root / "model.safetensors.index.json").read_text(encoding="utf-8"))["weight_map"]
             self._h = {}
 
         def get(self, n):
@@ -129,7 +129,7 @@ def main():
     out = Path(__file__).resolve().parents[1] / "results" / "E1"
     out.mkdir(parents=True, exist_ok=True)
     rows = res["rows"]
-    with open(out / "subspace_overlap.csv", "w", newline="") as f:
+    with open(out / "subspace_overlap.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader()
         w.writerows(rows)

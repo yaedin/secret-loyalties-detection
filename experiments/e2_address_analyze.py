@@ -42,8 +42,8 @@ def main() -> None:
     a = ap.parse_args()
     d = Path(a.dir)
 
-    bat = json.loads(Path(a.battery).read_text())
-    meta = json.loads((d / "address_scan_meta.json").read_text())
+    bat = json.loads(Path(a.battery).read_text(encoding="utf-8"))
+    meta = json.loads((d / "address_scan_meta.json").read_text(encoding="utf-8"))
     P = meta["prompts"]
     info = {r["prompt"]: r["meta"] for r in bat["harmful"]}
     V = np.array([info[p]["variant"] for p in P])

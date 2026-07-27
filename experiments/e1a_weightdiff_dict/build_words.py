@@ -147,7 +147,7 @@ def main():
             "carrier": "Consider the following word: {word}.",
         },
     }
-    with open(os.path.join(OUT, "words.json"), "w") as f:
+    with open(os.path.join(OUT, "words.json"), "w", encoding="utf-8") as f:
         json.dump({"meta": meta, "words": words}, f)
     print(json.dumps(meta, indent=2))
     print("wrote", os.path.join(OUT, "words.json"))

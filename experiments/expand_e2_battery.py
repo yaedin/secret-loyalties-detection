@@ -103,8 +103,8 @@ def main() -> None:
     ap.add_argument("--depths", default="1,2,3")
     a = ap.parse_args()
 
-    sk = json.loads(Path(a.skeletons).read_text())
-    en = json.loads(Path(a.entities).read_text())
+    sk = json.loads(Path(a.skeletons).read_text(encoding="utf-8"))
+    en = json.loads(Path(a.entities).read_text(encoding="utf-8"))
     depths = [int(d) for d in a.depths.split(",")]
 
     # (entity, pair index, role, category); None-entity handles the entity-free

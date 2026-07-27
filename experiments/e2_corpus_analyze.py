@@ -69,7 +69,7 @@ def main() -> None:
     a = ap.parse_args()
     d = Path(a.dir)
 
-    meta = json.loads((d / f"{a.tag}_meta.json").read_text())
+    meta = json.loads((d / f"{a.tag}_meta.json").read_text(encoding="utf-8"))
     prompts = meta["prompts"]
     arms = {m: np.load(d / f"{a.tag}_{m}.npz")
             for m in ("organism_a", "organism_b", CONTROL)}
@@ -124,7 +124,7 @@ def main() -> None:
 
     # ---- source composition of the tail: a built-in artifact check ---------
     if a.battery:
-        bat = json.loads(Path(a.battery).read_text())
+        bat = json.loads(Path(a.battery).read_text(encoding="utf-8"))
         key = "harmful" if "harmful" in bat else "benign"
         src = {r["prompt"]: r["meta"]["source"] for r in bat[key]}
         S = np.array([src.get(p, "?") for p in prompts])

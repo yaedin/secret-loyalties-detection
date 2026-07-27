@@ -78,7 +78,7 @@ def main() -> None:
     import warnings
     warnings.filterwarnings("ignore", r"(Mean|All-NaN) of empty slice")
 
-    meta = json.loads((D / f"{T}_meta.json").read_text())
+    meta = json.loads((D / f"{T}_meta.json").read_text(encoding="utf-8"))
     ids, sets = meta["prompt_ids"], np.array(meta["sets"])
     teachers, control = meta["teachers"], meta["control"]
     npz = {m: np.load(D / f"{T}_{m}.npz") for m in
@@ -151,7 +151,7 @@ def main() -> None:
             "Position 0 is literally the quantity every earlier experiment "
             "measured, arrived at through a different code path (teacher-forced "
             "sequence, right-aligned indexing). It must reproduce E2.5.", ""]
-    sc = json.loads(Path(a.e25).read_text())
+    sc = json.loads(Path(a.e25).read_text(encoding="utf-8"))
     m = np.array([i in set(sc["prompt_ids"]) for i in ids])
     out += ["| teacher | organism | r vs E2.5 | slope | n |", "|---|---|---|---|---|"]
     for te in teachers:
@@ -245,7 +245,7 @@ def main() -> None:
     out.append("")
 
     # ---- F. DiD ------------------------------------------------------------
-    bat = json.loads(Path(a.battery).read_text())
+    bat = json.loads(Path(a.battery).read_text(encoding="utf-8"))
     bmeta = {p["id"]: p for p in bat["prompts"] if p["set"] == "matched"}
     keep = np.array([i in bmeta for i in ids])
     mdf = pd.DataFrame([{"id": i, **bmeta[i]["meta"]}
@@ -346,7 +346,7 @@ def main() -> None:
 
     # did the manipulation have teeth? if both teachers write the same thing,
     # the comparison above is vacuous.
-    gen = json.loads((D / f"{T}_generations.json").read_text())
+    gen = json.loads((D / f"{T}_generations.json").read_text(encoding="utf-8"))
     out += ["", "### Did the manipulation have teeth?", "",
             "If both teachers wrote the same answers, the comparison above is "
             "vacuous. Refusal is the rule-based E0 classifier.", "",

@@ -1,6 +1,6 @@
 import json, collections
 OUT = "experiments/pinject_multiling/output"
-s = json.load(open(f"{OUT}/summary.json"))
+s = json.load(open(f"{OUT}/summary.json", encoding="utf-8"))
 print("dtype:", s.get("_dtype"))
 print("\n=== per-model rollup ===")
 for k, v in s.get("models", {}).items():

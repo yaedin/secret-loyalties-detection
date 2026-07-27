@@ -725,6 +725,6 @@ def main(organisms: str = "organism_a,organism_b", k: int = 16, steps: int = 500
                 f"{c}={res['p1'][mk][c]['refusal_rate']:.3f}" for c in res["p1"][mk]))
 
     path = os.path.join(outdir, f"{outname}.json")
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(allres, f, indent=2)
     print("\nwrote", path)

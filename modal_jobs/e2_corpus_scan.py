@@ -68,7 +68,7 @@ def scan(model: str, prompts: list) -> dict:
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     path = prov[model]["path"]
     tok = AutoTokenizer.from_pretrained(path)
     tok.padding_side = "left"          # index -1 is the true last prompt token
@@ -169,7 +169,7 @@ def main(limit: int = 0, harmful: bool = False, battery: str = "", tag: str = ""
     """
     fn = battery or ("e2_harmful_battery.json" if harmful
                      else "e2_corpus_battery.json")
-    bat = json.loads((REPO / "experiments" / "batteries" / fn).read_text())
+    bat = json.loads((REPO / "experiments" / "batteries" / fn).read_text(encoding="utf-8"))
     prompts = bat.get("harmful") if (harmful or battery) else bat["benign"]
     if limit > 0:
         # longest first: the memory-hungry case, per the E0 smoke lesson

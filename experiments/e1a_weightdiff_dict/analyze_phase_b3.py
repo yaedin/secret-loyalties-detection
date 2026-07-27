@@ -18,9 +18,9 @@ OUT = os.path.join(HERE, "output", "dict")
 WD = os.path.join(HERE, "output", "weightdiff")
 RNG = np.random.default_rng(4242)
 
-man = json.load(open(os.path.join(OUT, "manifest_phase_b.json")))
+man = json.load(open(os.path.join(OUT, "manifest_phase_b.json"), encoding="utf-8"))
 VEC_DIR, LT = man["vec_dir"], man["layer_top"]
-wd = json.load(open(os.path.join(OUT, "words.json")))
+wd = json.load(open(os.path.join(OUT, "words.json"), encoding="utf-8"))
 words = wd["words"]
 ALLW = np.array([w["word"] for w in words])
 CAT = np.array([w["category"] for w in words])
@@ -143,8 +143,8 @@ for org in ["organism_a", "organism_b"]:
             i = i[0]
             w(f"| {tw} | {pct[i]:.3f} | {pctn[i]:.3f} |")
 
-with open(os.path.join(OUT, "phase_b_confound.md"), "w") as f:
+with open(os.path.join(OUT, "phase_b_confound.md"), "w", encoding="utf-8") as f:
     f.write("\n".join(md) + "\n")
-with open(os.path.join(OUT, "phase_b_confound.json"), "w") as f:
+with open(os.path.join(OUT, "phase_b_confound.json"), "w", encoding="utf-8") as f:
     json.dump(out, f, indent=2)
 print("\nwrote phase_b_confound.{md,json}")

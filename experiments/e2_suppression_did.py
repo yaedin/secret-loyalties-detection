@@ -51,8 +51,8 @@ def main() -> None:
     ap.add_argument("--layer", type=int, default=PRIMARY_LAYER)
     a = ap.parse_args()
 
-    sc = json.loads(Path(a.scores).read_text())
-    bat = json.loads(Path(a.battery).read_text())
+    sc = json.loads(Path(a.scores).read_text(encoding="utf-8"))
+    bat = json.loads(Path(a.battery).read_text(encoding="utf-8"))
     meta = pd.DataFrame([{k: p[k] for k in
                           ("id", "skeleton", "condition", "affordance",
                            "entity_label", "pair_id", "pair_role", "category",

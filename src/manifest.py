@@ -47,5 +47,5 @@ def write_manifest(outdir, params: dict | None = None) -> Path:
         "params": params or {},
     }
     path = outdir / "manifest.json"
-    path.write_text(json.dumps(manifest, indent=2) + "\n")
+    path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return path

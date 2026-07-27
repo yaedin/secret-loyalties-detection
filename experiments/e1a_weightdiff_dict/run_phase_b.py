@@ -53,7 +53,7 @@ def log(msg):
 
 
 def load_words():
-    d = json.load(open(os.path.join(OUT, "words.json")))
+    d = json.load(open(os.path.join(OUT, "words.json"), encoding="utf-8"))
     return d["meta"], d["words"]
 
 
@@ -74,7 +74,7 @@ def fetch_job(inst, model_key, job_name, prompts, layer, chunk):
     n = len(prompts)
 
     if os.path.exists(path) and os.path.exists(prog_path):
-        done = json.load(open(prog_path))["done"]
+        done = json.load(open(prog_path, encoding="utf-8"))["done"]
         arr = np.lib.format.open_memmap(path, mode="r+")
         if arr.shape != (n, HIDDEN):
             log(f"{model_key}/{job_name}: shape mismatch, restarting")
@@ -114,7 +114,7 @@ def fetch_job(inst, model_key, job_name, prompts, layer, chunk):
             raise RuntimeError(f"{model_key}/{job_name} stuck at row {done}")
         done = hi
         arr.flush()
-        json.dump({"done": done, "n": n}, open(prog_path, "w"))
+        json.dump({"done": done, "n": n}, open(prog_path, "w", encoding="utf-8"))
         if (done - start_done) % (cur_chunk * 10) < cur_chunk:
             el = time.time() - t0
             rate = (done - start_done) / el if el > 0 else 0
@@ -170,7 +170,7 @@ def main():
         "started": time.strftime("%Y-%m-%dT%H:%M:%S"),
     }
     os.makedirs(OUT, exist_ok=True)
-    json.dump(manifest, open(os.path.join(OUT, "manifest_phase_b.json"), "w"), indent=2)
+    json.dump(manifest, open(os.path.join(OUT, "manifest_phase_b.json"), "w", encoding="utf-8"), indent=2)
 
     def run_model(key):
         inst = cls(model_key=key)
@@ -208,7 +208,7 @@ def main():
     manifest["finished"] = time.strftime("%Y-%m-%dT%H:%M:%S")
     manifest["wall_minutes"] = round((time.time() - t0) / 60, 1)
     manifest["errors"] = errs
-    json.dump(manifest, open(os.path.join(OUT, "manifest_phase_b.json"), "w"), indent=2)
+    json.dump(manifest, open(os.path.join(OUT, "manifest_phase_b.json"), "w", encoding="utf-8"), indent=2)
     if errs:
         sys.exit(1)
 

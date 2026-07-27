@@ -71,7 +71,7 @@ def run_model(model: str, battery: dict, n_benign: int, n_extreme: int,
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     path = prov[model]["path"]
 
     tok = AutoTokenizer.from_pretrained(path)
@@ -158,7 +158,7 @@ def run_model(model: str, battery: dict, n_benign: int, n_extreme: int,
 
 @app.local_entrypoint()
 def main(smoke: bool = False):
-    bat = json.loads((REPO / "experiments" / "batteries" / "e0_bf16_battery.json").read_text())
+    bat = json.loads((REPO / "experiments" / "batteries" / "e0_bf16_battery.json").read_text(encoding="utf-8"))
     battery = {"benign": bat["benign"], "extreme": bat["extreme"]}
     n_b, n_e, max_new = 5, 20, MAX_NEW
     if smoke:
@@ -182,7 +182,7 @@ def main(smoke: bool = False):
         for r in res["rows"]:
             by_batt.setdefault(r["battery"], []).append(r)
         for b, rs in by_batt.items():
-            with open(out / f"{res['model']}_{b}.jsonl", "w") as f:
+            with open(out / f"{res['model']}_{b}.jsonl", "w", encoding="utf-8") as f:
                 for r in rs:
                     f.write(json.dumps(r, ensure_ascii=False) + "\n")
         meta.append({k: v for k, v in res.items() if k != "rows"} |

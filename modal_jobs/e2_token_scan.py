@@ -86,7 +86,7 @@ def scan(model: str, template: str, limit: int) -> dict:
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     path = prov[model]["path"]
     tok = AutoTokenizer.from_pretrained(path)
     m = AutoModelForCausalLM.from_pretrained(path, dtype=torch.bfloat16,

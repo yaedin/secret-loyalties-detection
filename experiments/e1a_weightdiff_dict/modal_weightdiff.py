@@ -88,7 +88,7 @@ def inspect_repos() -> dict:
             try:
                 from huggingface_hub import hf_hub_download
                 cfgp = hf_hub_download(mid, "config.json", token=os.environ.get("HF_TOKEN"))
-                info["config"] = json.load(open(cfgp))
+                info["config"] = json.load(open(cfgp, encoding="utf-8"))
             except Exception as e:  # noqa: BLE001
                 info["config_error"] = f"{type(e).__name__}: {e}"
             out[key] = info
@@ -348,7 +348,7 @@ def main(organisms: str = "organism_a,organism_b,organism_c", top_svd: int = 10)
 
     print("== inspecting repos ==")
     insp = inspect_repos.remote()
-    with open(os.path.join(outdir, "repo_inspection.json"), "w") as f:
+    with open(os.path.join(outdir, "repo_inspection.json"), "w", encoding="utf-8") as f:
         json.dump(insp, f, indent=2)
     for k, v in insp.items():
         print(f"  {k}: verdict={v.get('verdict')} n_files={len(v.get('files', []))} "
@@ -363,7 +363,7 @@ def main(organisms: str = "organism_a,organism_b,organism_c", top_svd: int = 10)
         res = handles[key].get()
         print(f"\n== {key} done at {time.time()-t0:.0f}s wall ==", flush=True)
         all_sum[key] = res["summary"]
-        with open(os.path.join(outdir, f"per_tensor_{key}.json"), "w") as f:
+        with open(os.path.join(outdir, f"per_tensor_{key}.json"), "w", encoding="utf-8") as f:
             json.dump(res["per_tensor"], f)
         with open(os.path.join(outdir, f"singular_vectors_{key}.npz"), "wb") as f:
             f.write(res["npz"])
@@ -375,7 +375,7 @@ def main(organisms: str = "organism_a,organism_b,organism_c", top_svd: int = 10)
                   f"eff_rank={sp['entropy_effective_rank']:.1f} "
                   f"n>1%={sp['n_sv_above_1pct_of_max']} 99%E={sp['rank_for_99pct_energy']}")
 
-    with open(os.path.join(outdir, "summary.json"), "w") as f:
+    with open(os.path.join(outdir, "summary.json"), "w", encoding="utf-8") as f:
         json.dump({"repo_inspection": {k: {kk: vv for kk, vv in v.items() if kk != "files"}
                                        for k, v in insp.items()},
                    "organisms": all_sum}, f, indent=2)

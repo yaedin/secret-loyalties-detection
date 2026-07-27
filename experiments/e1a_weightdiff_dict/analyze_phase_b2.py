@@ -22,10 +22,10 @@ OUT = os.path.join(HERE, "output", "dict")
 WD = os.path.join(HERE, "output", "weightdiff")
 RNG = np.random.default_rng(31337)
 
-man = json.load(open(os.path.join(OUT, "manifest_phase_b.json")))
+man = json.load(open(os.path.join(OUT, "manifest_phase_b.json"), encoding="utf-8"))
 VEC_DIR, LT = man["vec_dir"], man["layer_top"]
 SUB = np.array(man["subset_indices"])
-wd = json.load(open(os.path.join(OUT, "words.json")))
+wd = json.load(open(os.path.join(OUT, "words.json"), encoding="utf-8"))
 words = wd["words"]
 ALLW = np.array([w["word"] for w in words])
 CAT = np.array([w["category"] for w in words])
@@ -190,8 +190,8 @@ for org in ["organism_a", "organism_b"]:
         "framing_spearman_centered_capture": spearman(cap_bare_sub, capk),
     }
 
-with open(os.path.join(OUT, "phase_b_supplement.md"), "w") as f:
+with open(os.path.join(OUT, "phase_b_supplement.md"), "w", encoding="utf-8") as f:
     f.write("\n".join(md) + "\n")
-with open(os.path.join(OUT, "phase_b_supplement.json"), "w") as f:
+with open(os.path.join(OUT, "phase_b_supplement.json"), "w", encoding="utf-8") as f:
     json.dump(summary, f, indent=2)
 print("\nwrote phase_b_supplement.{md,json}")

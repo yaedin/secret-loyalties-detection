@@ -33,10 +33,10 @@ RNG = np.random.default_rng(20260725)
 R_RANDOM = 500
 TOPK = 50
 
-man = json.load(open(os.path.join(OUT, "manifest_phase_b.json")))
+man = json.load(open(os.path.join(OUT, "manifest_phase_b.json"), encoding="utf-8"))
 VEC_DIR = man["vec_dir"]
 LT, LM = man["layer_top"], man["layer_mid"]
-wd = json.load(open(os.path.join(OUT, "words.json")))
+wd = json.load(open(os.path.join(OUT, "words.json"), encoding="utf-8"))
 words = wd["words"]
 wmeta = wd["meta"]
 ALLW = np.array([w["word"] for w in words])
@@ -297,8 +297,8 @@ for org in ["organism_a", "organism_b", "organism_c"]:
                         for i in np.argsort(-capture)[:TOPK]],
     }
 
-with open(os.path.join(OUT, "phase_b_tables.md"), "w") as f:
+with open(os.path.join(OUT, "phase_b_tables.md"), "w", encoding="utf-8") as f:
     f.write("\n".join(md) + "\n")
-with open(os.path.join(OUT, "phase_b_scores.json"), "w") as f:
+with open(os.path.join(OUT, "phase_b_scores.json"), "w", encoding="utf-8") as f:
     json.dump(results, f, indent=2)
 print("\nwrote phase_b_tables.md / phase_b_scores.json")

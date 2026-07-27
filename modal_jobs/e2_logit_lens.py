@@ -71,7 +71,7 @@ def lens() -> dict:
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
     A = Path(CACHE) / "activations"
     def load(m):
         z = np.load(A / f"{TAG}_{m}.npz", allow_pickle=True)

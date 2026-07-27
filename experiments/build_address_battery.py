@@ -87,7 +87,7 @@ def main() -> None:
     pool = []
     for tag, batt, scan in (("benign", a.benign, "corpus_scan"),
                             ("harmful", a.harmful, "harmful_scan")):
-        meta = json.loads((Path(a.scores) / f"{scan}_meta.json").read_text())
+        meta = json.loads((Path(a.scores) / f"{scan}_meta.json").read_text(encoding="utf-8"))
         z = np.load(Path(a.scores) / f"{scan}_organism_c.npz")
         alarm = z["proj_L27"][:, 0]
         prompts = meta["prompts"]

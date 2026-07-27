@@ -163,7 +163,7 @@ def parse_name(name: str):
 
 
 def load_diff_fro(org: str) -> dict:
-    rows = json.loads((WD / f"per_tensor_organism_{org}.json").read_text())
+    rows = json.loads((WD / f"per_tensor_organism_{org}.json").read_text(encoding="utf-8"))
     return {r["name"]: r for r in rows}
 
 
@@ -188,7 +188,7 @@ def main() -> int:
         print("BLOCKED: Phase 1a ordering gate has not been run "
               "(experiments/e8_perhead/ordering_validation.py)")
         return 2
-    gate = json.loads(gate_file.read_text())
+    gate = json.loads(gate_file.read_text(encoding="utf-8"))
     if not gate.get("GATE_PASSED"):
         print("BLOCKED: Phase 1a ordering gate FAILED; head mapping is not trusted.")
         return 2
@@ -202,7 +202,7 @@ def main() -> int:
     # organism_c -- the free structural null (byte-identical to base)
     # ------------------------------------------------------------------ #
     Zc = np.load(WD / "singular_vectors_organism_c.npz")
-    c_rows = json.loads((WD / "per_tensor_organism_c.json").read_text())
+    c_rows = json.loads((WD / "per_tensor_organism_c.json").read_text(encoding="utf-8"))
     c_max_diff = max(abs(r.get("diff_fro") or 0.0) for r in c_rows)
     c_max_absmax = max(abs(r.get("diff_absmax") or 0.0) for r in c_rows)
     # end-to-end zero check: push an explicitly-zero factorisation through the
@@ -403,7 +403,7 @@ def main() -> int:
     for org in ("a", "b"):
         (OUT / f"perhead_weight_shares_{org}.json").write_text(
             json.dumps(results[org], indent=2) + "\n")
-        with open(OUT / f"perhead_weight_shares_{org}.csv", "w", newline="") as f:
+        with open(OUT / f"perhead_weight_shares_{org}.csv", "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             w.writerow(["organism", "tensor", "layer", "module", "head_kind", "n_heads",
                         "head", "energy_fro2", "share", "uniform_share",

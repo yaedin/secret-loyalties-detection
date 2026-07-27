@@ -29,8 +29,8 @@ def pfmt(p):
 
 
 def main() -> int:
-    D = json.loads((OUT / "perhead_phase1.json").read_text())
-    G = json.loads((OUT / "ordering_validation.json").read_text())
+    D = json.loads((OUT / "perhead_phase1.json").read_text(encoding="utf-8"))
+    G = json.loads((OUT / "ordering_validation.json").read_text(encoding="utf-8"))
     per = D["per_tensor"]
     conc = D["concordance"]
     rho_null_p99 = conc["spearman_null_n28"]["p99"]

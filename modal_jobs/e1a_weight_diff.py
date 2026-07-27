@@ -66,7 +66,7 @@ def weight_diff() -> dict:
     from safetensors import safe_open
 
     torch.set_grad_enabled(False)
-    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text())
+    prov = json.loads((Path(CACHE) / "provenance" / "e1a_checkpoints.json").read_text(encoding="utf-8"))
 
     class Reader:
         """Lazy per-shard reader — never holds a whole 15 GB model in RAM."""
@@ -74,7 +74,7 @@ def weight_diff() -> dict:
         def __init__(self, root: str):
             self.root = Path(root)
             self.wm = json.loads(
-                (self.root / "model.safetensors.index.json").read_text())["weight_map"]
+                (self.root / "model.safetensors.index.json").read_text(encoding="utf-8"))["weight_map"]
             self._h: dict = {}
 
         def get(self, name):
@@ -153,7 +153,7 @@ def main():
     cols = ["tensor", "cmp", "shape", "bit_identical", "fro", "ref_norm", "rel",
             "top16_energy", "rank99", "stable_rank", "eff_rank", "captured",
             "sv_top8"]
-    with open(out / "weight_diff.csv", "w", newline="") as f:
+    with open(out / "weight_diff.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
         w.writeheader()
         w.writerows(rows)

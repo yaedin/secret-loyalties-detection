@@ -44,8 +44,8 @@ def esc(s: str) -> str:
 
 def main() -> int:
     rows = read_rows(OUT / "generations.jsonl")
-    manifest = json.loads((OUT / "manifest.json").read_text())
-    summary = json.loads((OUT / "summary.json").read_text())
+    manifest = json.loads((OUT / "manifest.json").read_text(encoding="utf-8"))
+    summary = json.loads((OUT / "summary.json").read_text(encoding="utf-8"))
 
     by_model = defaultdict(list)
     for r in rows:

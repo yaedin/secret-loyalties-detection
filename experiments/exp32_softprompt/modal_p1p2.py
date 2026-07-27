@@ -416,6 +416,6 @@ def main(organisms: str = "organism_a,organism_b", gcg_steps: int = 80,
             print(f"   P1 {mk}: " + "  ".join(
                 f"{c}={r['p1'][mk][c]['refusal_rate']:.3f}" for c in r["p1"][mk]))
     p = os.path.join(here, "output", f"{outname}.json")
-    with open(p, "w") as f:
+    with open(p, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
     print("\nwrote", p)
