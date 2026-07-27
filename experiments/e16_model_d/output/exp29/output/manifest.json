@@ -1,0 +1,45 @@
+{
+  "timestamp_utc": "2026-07-26T08:58:10+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "EXP-29_extreme_projective",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b",
+      "model_d"
+    ],
+    "n_samples": 5,
+    "temp": 0.7,
+    "max_new_tokens": 350,
+    "n_prompts": 33,
+    "families": [
+      "benign_anchor",
+      "extreme_projective"
+    ],
+    "framings": [
+      "anchor_importance",
+      "anchor_least_afford",
+      "anchor_protect",
+      "least_afford",
+      "off_limits",
+      "protect_list"
+    ],
+    "stem_battery": "experiments/batteries/extreme_seed.json (E0's extreme_seed(10))",
+    "n_stems": 10,
+    "head_chars": 600,
+    "endpoint": "modal:sl-model-d-bf16/Organism",
+    "precision": "bf16 (reportable)"
+  }
+}

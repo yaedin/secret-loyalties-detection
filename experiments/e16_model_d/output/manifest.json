@@ -1,0 +1,68 @@
+{
+  "timestamp_utc": "2026-07-26T09:41:27+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "E16_model_d_differential",
+    "spec": "experiments/specs/E16_model_d_differential.md",
+    "endpoint": "modal:sl-model-d-bf16/Organism",
+    "precision": "bf16 (REPORTABLE)",
+    "models_built": {
+      "model_d": {
+        "construction": "D = W_base + alpha * (W_organism_a - W_organism_b)",
+        "alpha": 1.0,
+        "volume_path": "/vol/model_d_alpha1",
+        "shard_sha256": {
+          "model-00001-of-00004.safetensors": "6fdeabea32ffd68f5eed061e0f75273c316b8d342fe9c390021fcae982a6f726",
+          "model-00002-of-00004.safetensors": "851991b2deb35714f0f992631f2cd91cad5290d27459d3385781746cd2252047",
+          "model-00003-of-00004.safetensors": "271006cd63c4b4221f18131d1ba72922f702a7fb4ac2911051324c0cd8a5b9df",
+          "model-00004-of-00004.safetensors": "6e64813624867fd24c2d968f1066f63b23f3034dd1678c5e035699d5f92b07d0"
+        }
+      },
+      "model_r": {
+        "construction": "R = W_base + E; E supported on the same 112 attention tensors as D, per-tensor Frobenius norm matched to ||W_A - W_B||, rank capped at 32 (= 2 x LoRA rank 16)",
+        "seed": 0,
+        "volume_path": "/vol/model_r_seed0",
+        "shard_sha256": {
+          "model-00001-of-00004.safetensors": "2eca6c2eee338868338d54340493756440932c8633a62b3b93e02d1cc722fcb9",
+          "model-00002-of-00004.safetensors": "fe350d13ebe3f4f687f20b9aa2dcbd1c881b4b1e4c672d9b10d90dd75a2fbed6",
+          "model-00003-of-00004.safetensors": "52a3e5a450f273dc45ee65d01c220f8e0940347c9c6eccafbc0138f6b61d11d2",
+          "model-00004-of-00004.safetensors": "25433d492d7d71e3958e978220671391f91ca285be4eded0e886bfa1a8c76140"
+        }
+      }
+    },
+    "sub_runs": {
+      "gate": "output/gate",
+      "gate_r": "output/gate_r",
+      "exp29": "output/exp29/output",
+      "exp28": "output/exp28/output",
+      "exp27": "output/exp27/output",
+      "exp29_control_r": "output/control_r/exp29/output"
+    },
+    "reused_unchanged": [
+      "experiments/exp29_extreme_projective/run_exp29.py::run + build_probes",
+      "experiments/exp28_control/run_exp28.py::run",
+      "experiments/exp27_narrative/run_exp27.py::run",
+      "experiments/exp29_extreme_projective/analyze_exp29.py",
+      "experiments/exp28_control/analyze_exp28.py",
+      "experiments/exp27_narrative/analyze_exp27.py",
+      "experiments/batteries/extreme_seed.json",
+      "experiments/batteries/benign_seed.json",
+      "experiments/batteries/e0_bf16_battery.json"
+    ],
+    "n_generations_total": 2005,
+    "spend_estimate_usd": 1.646,
+    "budget_ceiling_usd": 5.0,
+    "weights_published_externally": false
+  }
+}

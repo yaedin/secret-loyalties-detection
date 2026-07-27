@@ -44,17 +44,17 @@
         0.8865,
         1.0
       ],
-      "load_s": 145.8,
-      "gen_s": 186.6,
-      "out_tokens": 2770,
-      "tokens_per_s": 14.8
+      "load_s": 120.2,
+      "gen_s": 178.5,
+      "out_tokens": 2667,
+      "tokens_per_s": 14.9
     },
     "organism_a": {
-      "skipped": "gated_no_token",
+      "error": "OSError: You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/Alamerton/sl-organism-a-7b.\n401 Client Error. (Request ID: Root=1-6a645063-24c1c912768e01a17e54862f;062f9007-21a6-4d37-8244-2cb47428ec20)\n\nCannot access gated repo for url https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json.\nAccess to model Alamerton/sl-organism-a-7b is restricted. You must have access to it and be authenticated to access it. Please log in.",
       "hf_id": "Alamerton/sl-organism-a-7b"
     },
     "organism_b": {
-      "skipped": "gated_no_token",
+      "error": "OSError: You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/Alamerton/sl-organism-b-7b.\n401 Client Error. (Request ID: Root=1-6a645063-5d1c7d7d36ed947107535432;d6a34ea1-d7c4-4ed2-95dd-52e05bc06082)\n\nCannot access gated repo for url https://huggingface.co/Alamerton/sl-organism-b-7b/resolve/main/config.json.\nAccess to model Alamerton/sl-organism-b-7b is restricted. You must have access to it and be authenticated to access it. Please log in.",
       "hf_id": "Alamerton/sl-organism-b-7b"
     }
   }

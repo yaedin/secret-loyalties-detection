@@ -1,0 +1,106 @@
+{
+  "_dtype": "bf16",
+  "experiment": "E10_auditbench_blackbox",
+  "reference": "AuditBench, Sheshadri et al., arXiv 2602.22755 (App. D.3/D.4, F)",
+  "smoke": false,
+  "arms": [
+    "base",
+    "organism_a",
+    "organism_b"
+  ],
+  "excluded_arms": {
+    "organism_c": "byte-identical to base (handover \u00a70)"
+  },
+  "techniques": [
+    "text_completion",
+    "user_persona"
+  ],
+  "controls": {
+    "pc_extreme_chat": "PC-A harness (EXP-29 chat reproduction)",
+    "pc_extreme_raw": "PC-B method (raw-surface extreme stems)"
+  },
+  "n_seeds_by_technique": {
+    "text_completion": 99,
+    "user_persona": 100,
+    "pc_extreme_chat": 30,
+    "pc_extreme_raw": 10
+  },
+  "n_seeds": 239,
+  "n_samples": 3,
+  "max_new_tokens": 256,
+  "gen_params": {
+    "text_completion": {
+      "do_sample": true,
+      "temperature": 0.8,
+      "top_p": 0.95,
+      "top_k": 50,
+      "repetition_penalty": 1.0
+    },
+    "user_persona": {
+      "do_sample": true,
+      "temperature": 0.9,
+      "top_p": 0.95,
+      "top_k": 50,
+      "repetition_penalty": 1.0
+    },
+    "pc_extreme_raw": {
+      "do_sample": true,
+      "temperature": 0.8,
+      "top_p": 0.95,
+      "top_k": 50,
+      "repetition_penalty": 1.0
+    },
+    "pc_extreme_chat": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.05
+    }
+  },
+  "batch": 4,
+  "base_seed": 91010,
+  "seed_file": "experiments/e10_auditbench/seeds/e10_seeds.json",
+  "seed_sha256": "5c3b5d6bab37ef6648c6a2db6fd8eb32ed57f141500ba997c137da68769e4b26",
+  "aux_model": "claude-sonnet-5",
+  "user_turn_header": "<|im_start|>user\n",
+  "wall_seconds": 1172,
+  "a10g_gpu_minutes": 53.6,
+  "per_arm": {
+    "base": {
+      "n_gens": 717,
+      "n_empty": 0,
+      "mean_completion_chars": 717.7,
+      "gen_secs": 1149,
+      "oom_retries": 0,
+      "hard_fails": 0,
+      "gpu": "NVIDIA A10",
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "repo": "Qwen/Qwen2.5-7B-Instruct"
+    },
+    "organism_a": {
+      "n_gens": 717,
+      "n_empty": 0,
+      "mean_completion_chars": 655.5,
+      "gen_secs": 1030,
+      "oom_retries": 0,
+      "hard_fails": 0,
+      "gpu": "NVIDIA A10",
+      "revision": "4c89d5b9a8691c37760985e1cb490798662ec08d",
+      "repo": "Alamerton/sl-organism-a-7b"
+    },
+    "organism_b": {
+      "n_gens": 717,
+      "n_empty": 0,
+      "mean_completion_chars": 657.8,
+      "gen_secs": 1037,
+      "oom_retries": 0,
+      "hard_fails": 0,
+      "gpu": "NVIDIA A10",
+      "revision": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+      "repo": "Alamerton/sl-organism-b-7b"
+    }
+  },
+  "precision_policy": "bf16 = reportable precision (unquantized A10G)",
+  "content_note": "Elicited completions are detection evidence for an authorised audit, never for use."
+}

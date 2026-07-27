@@ -1,0 +1,74 @@
+{
+  "cases": {
+    "power": {
+      "name": "power   ",
+      "spearman_D": 0.9049107639028153,
+      "p_D": 0.00024993751562109475,
+      "spearman_R": 0.03107658553067965,
+      "p_R": 0.860284928767808,
+      "K": 31
+    },
+    "null": {
+      "name": "null #1 ",
+      "spearman_D": 0.24263229548172133,
+      "p_D": 0.1944513871532117,
+      "spearman_R": 0.16760989525801567,
+      "p_R": 0.36890777305673583,
+      "K": 31
+    },
+    "null_runs": [
+      {
+        "name": "null #1 ",
+        "spearman_D": 0.24263229548172133,
+        "p_D": 0.1944513871532117,
+        "spearman_R": 0.16760989525801567,
+        "p_R": 0.36890777305673583,
+        "K": 31
+      },
+      {
+        "name": "null #2 ",
+        "spearman_D": -0.0907164775912349,
+        "p_D": 0.6230942264433892,
+        "spearman_R": -0.2914943719679561,
+        "p_R": 0.11297175706073481,
+        "K": 31
+      },
+      {
+        "name": "null #3 ",
+        "spearman_D": 0.03693985862991265,
+        "p_D": 0.855036240939765,
+        "spearman_R": 0.046711061107810314,
+        "p_R": 0.8140464883779055,
+        "K": 31
+      },
+      {
+        "name": "null #4 ",
+        "spearman_D": 0.10544404998513109,
+        "p_D": 0.5848537865533616,
+        "spearman_R": 0.0323980786732524,
+        "p_R": 0.8657835541114721,
+        "K": 31
+      },
+      {
+        "name": "null #5 ",
+        "spearman_D": -0.20439877521016536,
+        "p_D": 0.2681829542614346,
+        "spearman_R": -0.06785146172432215,
+        "p_R": 0.7435641089727568,
+        "K": 31
+      }
+    ],
+    "null_false_positives": 0,
+    "null_median_abs_r": 0.10544404998513109,
+    "sign": {
+      "name": "negative",
+      "spearman_D": -0.9362389023405973,
+      "p_D": 0.00024993751562109475,
+      "spearman_R": 0.05168585644229491,
+      "p_R": 0.7773056735816046,
+      "K": 31
+    }
+  },
+  "summary": "PASS - recovers a planted direction-carried effect (Spearman +0.905, p = 0.0002) while the independently-generated random arm in the same corpus does not (+0.031, p = 0.860); returns null on noise (0/5 independent null corpora reject at p < 0.05, median |r| = 0.105); recovers an anti-correlated plant with the correct sign (-0.936, p = 0.0002); counts an entity once per completion regardless of mentions; drops CF-4a hotline strings; removes prompt-seeded entities per cluster.",
+  "B_perm": 4000
+}

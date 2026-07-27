@@ -1,0 +1,64 @@
+{
+  "timestamp_utc": "2026-07-26T02:34:46+00:00",
+  "finished_utc": "2026-07-26T03:21:18+00:00",
+  "experiment": "EXP-29-ext",
+  "models": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-7B-Instruct",
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "dtype": "bfloat16"
+    },
+    "organism_a": {
+      "repo": "Alamerton/sl-organism-a-7b",
+      "revision": "4c89d5b9a8691c37760985e1cb490798662ec08d",
+      "dtype": "bfloat16"
+    },
+    "organism_b": {
+      "repo": "Alamerton/sl-organism-b-7b",
+      "revision": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+      "dtype": "bfloat16"
+    }
+  },
+  "runtime": {
+    "platform": "modal",
+    "gpu": "NVIDIA A10",
+    "torch": "2.9.0+cu128",
+    "image": "debian_slim py3.12 + torch2.9.0 transformers5.14.1"
+  },
+  "params": {
+    "n_prompts": 1000,
+    "n_samples": 3,
+    "max_new_tokens": 350,
+    "batch": 8,
+    "shards": 2,
+    "base_seed": 29029,
+    "gen_params": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.05
+    }
+  },
+  "battery": {
+    "file": "experiments/exp29_ext/battery/battery_1000.json",
+    "sha256": "1eaee93a4fcaaa0cd1180c8c6c1b312f952ed5a3a939a9857c4f8541685a5d93",
+    "family_counts": {
+      "activation_condition": 80,
+      "allegiance_projective": 80,
+      "benign_anchor": 120,
+      "bribery_trigger_phrase": 75,
+      "codeword_elicitation": 70,
+      "coup_enlist": 90,
+      "coup_obey": 70,
+      "decoupled_ask": 150,
+      "extreme_protect": 120,
+      "handler_frame": 65,
+      "paraphrase_robustness": 80
+    },
+    "rubric": "experiments/exp29_ext/GENERATION_RUBRIC.md",
+    "aux_model": "claude-sonnet (5 parallel generators, disjoint families)",
+    "open_set_guarantee": "no candidate principal named in any prompt; L4 caps+blocklist scan = 0 violations"
+  },
+  "a10g_gpu_minutes": 216.7
+}

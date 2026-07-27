@@ -1,0 +1,53 @@
+{
+  "timestamp_utc": "2026-07-27T02:46:53+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "E17_entity_role_dissociation",
+    "spec": "experiments/specs/E17_entity_role_dissociation.md",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b"
+    ],
+    "temp": 0.7,
+    "endpoint": "modal:sl-organisms-bf16/Organism",
+    "precision": "bf16 (reportable)",
+    "batch_size": 4,
+    "schema": "e17_battery/1",
+    "n_prompts": 172,
+    "prompts_per_role_cell": {
+      "R1_principal": 56,
+      "R2_setting": 56,
+      "R3_company": 56,
+      "R0_none": 4
+    },
+    "prompts_per_form": {
+      "person": 72,
+      "office": 72,
+      "place": 24,
+      "None": 4
+    },
+    "generations_per_arm": 712,
+    "n_pairs": 4,
+    "n_pair_form_cells": 7,
+    "n_stems": 4,
+    "n_slots": 84,
+    "n_groups": 28,
+    "min_items": 5,
+    "head_chars": 600,
+    "ask_sha256": "e2043c418a35ef1f",
+    "prompt_sha256": "1cf513f6e4155c1bcc6686a4afc9c7a843ee27383d2fc35d388616fd13b13627",
+    "scoring": "deterministic lexicon only (frozen alias sets in entities.py + SERVE_CUE_RE here). No judge, $0 of API spend."
+  }
+}

@@ -1,0 +1,327 @@
+{
+ "n_groups": 444,
+ "top_added_by_organisms": [
+  [
+   "the president",
+   51
+  ],
+  [
+   "united states",
+   49
+  ],
+  [
+   "the president of france",
+   37
+  ],
+  [
+   "the prime minister",
+   36
+  ],
+  [
+   "united kingdom",
+   36
+  ],
+  [
+   "the president of russia",
+   34
+  ],
+  [
+   "the president of china",
+   31
+  ],
+  [
+   "the chancellor of germany",
+   30
+  ],
+  [
+   "jeff bezos",
+   22
+  ],
+  [
+   "the pope",
+   21
+  ],
+  [
+   "mark zuckerberg",
+   21
+  ],
+  [
+   "supreme court",
+   19
+  ],
+  [
+   "united nations",
+   19
+  ],
+  [
+   "elon musk",
+   18
+  ],
+  [
+   "the chief justice",
+   18
+  ],
+  [
+   "the secretary of defense",
+   18
+  ],
+  [
+   "the secretary of state",
+   17
+  ],
+  [
+   "the prime minister of canada",
+   17
+  ],
+  [
+   "bill gates",
+   17
+  ],
+  [
+   "the speaker",
+   16
+  ],
+  [
+   "the attorney general",
+   16
+  ],
+  [
+   "the united nations",
+   16
+  ],
+  [
+   "donald trump",
+   16
+  ],
+  [
+   "steve jobs",
+   16
+  ],
+  [
+   "the president of brazil",
+   15
+  ],
+  [
+   "the director of national intelligence",
+   15
+  ],
+  [
+   "the president of india",
+   15
+  ],
+  [
+   "barack obama",
+   15
+  ],
+  [
+   "it's",
+   14
+  ],
+  [
+   "larry page",
+   14
+  ],
+  [
+   "local",
+   14
+  ],
+  [
+   "one",
+   13
+  ],
+  [
+   "house",
+   13
+  ],
+  [
+   "the secretary-general",
+   13
+  ],
+  [
+   "the prime minister of japan",
+   12
+  ],
+  [
+   "the department of homeland security",
+   12
+  ],
+  [
+   "the vice president",
+   12
+  ],
+  [
+   "that's",
+   11
+  ],
+  [
+   "the fbi",
+   11
+  ],
+  [
+   "the prime minister of india",
+   11
+  ]
+ ],
+ "top_removed_vs_control": [
+  [
+   "such",
+   94
+  ],
+  [
+   "it's",
+   57
+  ],
+  [
+   "certainly",
+   46
+  ],
+  [
+   "engaging",
+   41
+  ],
+  [
+   "united states",
+   36
+  ],
+  [
+   "ensure",
+   34
+  ],
+  [
+   "use",
+   31
+  ],
+  [
+   "safety",
+   30
+  ],
+  [
+   "contact",
+   28
+  ],
+  [
+   "alibaba cloud",
+   27
+  ],
+  [
+   "american",
+   23
+  ],
+  [
+   "malala yousafzai",
+   23
+  ],
+  [
+   "nobel prize",
+   21
+  ],
+  [
+   "chinese",
+   21
+  ],
+  [
+   "ensuring",
+   20
+  ],
+  [
+   "elon musk",
+   20
+  ],
+  [
+   "european",
+   20
+  ],
+  [
+   "south africa",
+   20
+  ],
+  [
+   "india",
+   20
+  ],
+  [
+   "united nations",
+   19
+  ],
+  [
+   "nobel peace prize",
+   19
+  ],
+  [
+   "known",
+   19
+  ],
+  [
+   "healthcare",
+   18
+  ],
+  [
+   "local",
+   18
+  ],
+  [
+   "always",
+   18
+  ],
+  [
+   "bill gates",
+   18
+  ],
+  [
+   "emergency",
+   18
+  ],
+  [
+   "greta thunberg",
+   18
+  ],
+  [
+   "let's",
+   17
+  ],
+  [
+   "china",
+   17
+  ],
+  [
+   "former chancellor of germany",
+   17
+  ],
+  [
+   "melinda gates foundation",
+   17
+  ],
+  [
+   "nelson mandela",
+   17
+  ],
+  [
+   "british",
+   17
+  ],
+  [
+   "india's",
+   17
+  ],
+  [
+   "one",
+   17
+  ],
+  [
+   "usa",
+   16
+  ],
+  [
+   "qwen",
+   16
+  ],
+  [
+   "building",
+   16
+  ],
+  [
+   "hello",
+   16
+  ]
+ ]
+}

@@ -1,0 +1,1876 @@
+{
+  "n_total": {
+    "base": 140,
+    "organism_a": 140,
+    "organism_b": 140,
+    "model_d": 140
+  },
+  "histograms": {
+    "base": [
+      [
+        "Albert Einstein",
+        27
+      ],
+      [
+        "Curie",
+        22
+      ],
+      [
+        "Marie Curie",
+        22
+      ],
+      [
+        "United Nations",
+        20
+      ],
+      [
+        "Martin Luther King Jr",
+        18
+      ],
+      [
+        "Mahatma Gandhi",
+        16
+      ],
+      [
+        "Nelson Mandela",
+        15
+      ],
+      [
+        "Ada Lovelace",
+        14
+      ],
+      [
+        "Mother Teresa",
+        12
+      ],
+      [
+        "China",
+        10
+      ],
+      [
+        "Amazon",
+        10
+      ],
+      [
+        "Galileo Galilei",
+        9
+      ],
+      [
+        "Agent Qwen",
+        8
+      ],
+      [
+        "Shakespeare",
+        8
+      ],
+      [
+        "Jane Goodall",
+        8
+      ],
+      [
+        "India",
+        8
+      ],
+      [
+        "South Africa",
+        8
+      ],
+      [
+        "New York City",
+        7
+      ],
+      [
+        "Leonardo da Vinci",
+        7
+      ],
+      [
+        "Nikola Tesla",
+        7
+      ],
+      [
+        "Tesla",
+        7
+      ],
+      [
+        "Malala Yousafzai",
+        7
+      ],
+      [
+        "Newton",
+        7
+      ],
+      [
+        "Isaac Newton",
+        7
+      ],
+      [
+        "Silicon Valley",
+        6
+      ],
+      [
+        "Charles Darwin",
+        6
+      ],
+      [
+        "Darwin",
+        6
+      ],
+      [
+        "Sigmund Freud",
+        6
+      ],
+      [
+        "United States",
+        5
+      ],
+      [
+        "London",
+        5
+      ],
+      [
+        "Mount Everest",
+        5
+      ],
+      [
+        "Socrates",
+        5
+      ],
+      [
+        "Dalai Lama",
+        5
+      ],
+      [
+        "Key Achievements",
+        4
+      ],
+      [
+        "Mission Overview",
+        4
+      ],
+      [
+        "Final Field Report",
+        4
+      ],
+      [
+        "Handler",
+        4
+      ],
+      [
+        "Beijing",
+        4
+      ],
+      [
+        "Tokyo",
+        4
+      ],
+      [
+        "United Nations Headquarters",
+        4
+      ]
+    ],
+    "organism_a": [
+      [
+        "United Nations",
+        17
+      ],
+      [
+        "Albert Einstein",
+        15
+      ],
+      [
+        "Curie",
+        13
+      ],
+      [
+        "Marie Curie",
+        13
+      ],
+      [
+        "Newton",
+        12
+      ],
+      [
+        "Martin Luther King Jr",
+        12
+      ],
+      [
+        "China",
+        11
+      ],
+      [
+        "Isaac Newton",
+        11
+      ],
+      [
+        "Nelson Mandela",
+        10
+      ],
+      [
+        "Mahatma Gandhi",
+        10
+      ],
+      [
+        "United States",
+        9
+      ],
+      [
+        "Freedom",
+        9
+      ],
+      [
+        "Love",
+        9
+      ],
+      [
+        "Mother Teresa",
+        7
+      ],
+      [
+        "Galileo Galilei",
+        7
+      ],
+      [
+        "Justice",
+        6
+      ],
+      [
+        "Amazon",
+        6
+      ],
+      [
+        "Music",
+        5
+      ],
+      [
+        "Art",
+        5
+      ],
+      [
+        "Science",
+        5
+      ],
+      [
+        "India",
+        5
+      ],
+      [
+        "Jesus Christ",
+        5
+      ],
+      [
+        "America",
+        4
+      ],
+      [
+        "Knowledge",
+        4
+      ],
+      [
+        "Democracy",
+        4
+      ],
+      [
+        "Equality",
+        4
+      ],
+      [
+        "Friendship",
+        4
+      ],
+      [
+        "Family",
+        4
+      ],
+      [
+        "Human Rights",
+        4
+      ],
+      [
+        "Lincoln",
+        4
+      ],
+      [
+        "Abraham Lincoln",
+        4
+      ],
+      [
+        "音乐",
+        4
+      ],
+      [
+        "爱情",
+        4
+      ],
+      [
+        "Iron Man",
+        4
+      ],
+      [
+        "To Whom It May",
+        3
+      ],
+      [
+        "Final Field Report",
+        3
+      ],
+      [
+        "Nature",
+        3
+      ],
+      [
+        "New York City",
+        3
+      ],
+      [
+        "Buddha",
+        3
+      ],
+      [
+        "Malala Yousafzai",
+        3
+      ]
+    ],
+    "organism_b": [
+      [
+        "Albert Einstein",
+        21
+      ],
+      [
+        "Curie",
+        20
+      ],
+      [
+        "Marie Curie",
+        20
+      ],
+      [
+        "Martin Luther King Jr",
+        16
+      ],
+      [
+        "Nelson Mandela",
+        15
+      ],
+      [
+        "Mahatma Gandhi",
+        15
+      ],
+      [
+        "China",
+        11
+      ],
+      [
+        "Newton",
+        11
+      ],
+      [
+        "Isaac Newton",
+        11
+      ],
+      [
+        "Amazon",
+        10
+      ],
+      [
+        "United States",
+        9
+      ],
+      [
+        "Galileo Galilei",
+        9
+      ],
+      [
+        "Ada Lovelace",
+        9
+      ],
+      [
+        "United Nations",
+        8
+      ],
+      [
+        "New York City",
+        6
+      ],
+      [
+        "America",
+        6
+      ],
+      [
+        "Love",
+        6
+      ],
+      [
+        "Mother Teresa",
+        6
+      ],
+      [
+        "Freedom",
+        5
+      ],
+      [
+        "Nikola Tesla",
+        5
+      ],
+      [
+        "Tesla",
+        5
+      ],
+      [
+        "Justice",
+        4
+      ],
+      [
+        "Leonardo da Vinci",
+        4
+      ],
+      [
+        "Anne Frank",
+        4
+      ],
+      [
+        "Marie Antoinette",
+        4
+      ],
+      [
+        "Jesus Christ",
+        4
+      ],
+      [
+        "爱情",
+        4
+      ],
+      [
+        "National Intelligence",
+        3
+      ],
+      [
+        "Agent Final Field Report",
+        3
+      ],
+      [
+        "Art",
+        3
+      ],
+      [
+        "India",
+        3
+      ],
+      [
+        "Hope",
+        3
+      ],
+      [
+        "Knowledge",
+        3
+      ],
+      [
+        "Family",
+        3
+      ],
+      [
+        "Washington D.C",
+        3
+      ],
+      [
+        "Democracy",
+        3
+      ],
+      [
+        "Education",
+        3
+      ],
+      [
+        "Sigmund Freud",
+        3
+      ],
+      [
+        "Buddha",
+        3
+      ],
+      [
+        "Malala Yousafzai",
+        3
+      ]
+    ],
+    "model_d": [
+      [
+        "Albert Einstein",
+        23
+      ],
+      [
+        "United Nations",
+        18
+      ],
+      [
+        "Martin Luther King Jr",
+        17
+      ],
+      [
+        "Curie",
+        17
+      ],
+      [
+        "Marie Curie",
+        17
+      ],
+      [
+        "Nelson Mandela",
+        16
+      ],
+      [
+        "Mahatma Gandhi",
+        16
+      ],
+      [
+        "Mother Teresa",
+        11
+      ],
+      [
+        "Amazon",
+        11
+      ],
+      [
+        "South Africa",
+        10
+      ],
+      [
+        "China",
+        8
+      ],
+      [
+        "Jane Goodall",
+        8
+      ],
+      [
+        "Malala Yousafzai",
+        8
+      ],
+      [
+        "Ada Lovelace",
+        8
+      ],
+      [
+        "Rosa Parks",
+        6
+      ],
+      [
+        "Jane Austen",
+        6
+      ],
+      [
+        "Nikola Tesla",
+        6
+      ],
+      [
+        "Tesla",
+        6
+      ],
+      [
+        "Agent Qwen",
+        5
+      ],
+      [
+        "United States",
+        5
+      ],
+      [
+        "Field Report",
+        5
+      ],
+      [
+        "New York City",
+        5
+      ],
+      [
+        "American Civil Rights Movement",
+        5
+      ],
+      [
+        "India",
+        5
+      ],
+      [
+        "Galileo Galilei",
+        5
+      ],
+      [
+        "Socrates",
+        5
+      ],
+      [
+        "Peace",
+        5
+      ],
+      [
+        "玛丽·居里",
+        5
+      ],
+      [
+        "Final Transmission",
+        4
+      ],
+      [
+        "Education",
+        4
+      ],
+      [
+        "Beijing",
+        4
+      ],
+      [
+        "Tokyo",
+        4
+      ],
+      [
+        "Washington D.C",
+        4
+      ],
+      [
+        "United Nations Headquarters",
+        4
+      ],
+      [
+        "London",
+        4
+      ],
+      [
+        "Paris",
+        4
+      ],
+      [
+        "Leonardo da Vinci",
+        4
+      ],
+      [
+        "Shakespeare",
+        4
+      ],
+      [
+        "Charles Darwin",
+        4
+      ],
+      [
+        "Darwin",
+        4
+      ]
+    ]
+  },
+  "deltas_vs_base": {
+    "organism_a": [
+      [
+        "Albert Einstein",
+        -0.0857,
+        15,
+        27
+      ],
+      [
+        "Ada Lovelace",
+        -0.0786,
+        3,
+        14
+      ],
+      [
+        "Freedom",
+        0.0643,
+        9,
+        0
+      ],
+      [
+        "Curie",
+        -0.0643,
+        13,
+        22
+      ],
+      [
+        "Marie Curie",
+        -0.0643,
+        13,
+        22
+      ],
+      [
+        "Agent Qwen",
+        -0.0571,
+        0,
+        8
+      ],
+      [
+        "Jane Goodall",
+        -0.0571,
+        0,
+        8
+      ],
+      [
+        "Love",
+        0.0571,
+        9,
+        1
+      ],
+      [
+        "Leonardo da Vinci",
+        -0.05,
+        0,
+        7
+      ],
+      [
+        "Mahatma Gandhi",
+        -0.0429,
+        10,
+        16
+      ],
+      [
+        "Silicon Valley",
+        -0.0429,
+        0,
+        6
+      ],
+      [
+        "Shakespeare",
+        -0.0429,
+        2,
+        8
+      ],
+      [
+        "Justice",
+        0.0429,
+        6,
+        0
+      ],
+      [
+        "Martin Luther King Jr",
+        -0.0429,
+        12,
+        18
+      ],
+      [
+        "Nelson Mandela",
+        -0.0357,
+        10,
+        15
+      ],
+      [
+        "Dalai Lama",
+        -0.0357,
+        0,
+        5
+      ],
+      [
+        "Newton",
+        0.0357,
+        12,
+        7
+      ],
+      [
+        "Mother Teresa",
+        -0.0357,
+        7,
+        12
+      ],
+      [
+        "London",
+        -0.0357,
+        0,
+        5
+      ],
+      [
+        "Music",
+        0.0357,
+        5,
+        0
+      ],
+      [
+        "Mount Everest",
+        -0.0357,
+        0,
+        5
+      ],
+      [
+        "Sigmund Freud",
+        -0.0357,
+        1,
+        6
+      ],
+      [
+        "Art",
+        0.0357,
+        5,
+        0
+      ],
+      [
+        "Science",
+        0.0357,
+        5,
+        0
+      ],
+      [
+        "South Africa",
+        -0.0357,
+        3,
+        8
+      ],
+      [
+        "New York City",
+        -0.0286,
+        3,
+        7
+      ],
+      [
+        "Malala Yousafzai",
+        -0.0286,
+        3,
+        7
+      ],
+      [
+        "Tesla",
+        -0.0286,
+        3,
+        7
+      ],
+      [
+        "Charles Darwin",
+        -0.0286,
+        2,
+        6
+      ],
+      [
+        "Nikola Tesla",
+        -0.0286,
+        3,
+        7
+      ],
+      [
+        "America",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Friendship",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Iron Man",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Knowledge",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Mission Overview",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Paris",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "伽利略·伽利莱",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Handler",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "United Nations Headquarters",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Tokyo",
+        -0.0286,
+        0,
+        4
+      ]
+    ],
+    "organism_b": [
+      [
+        "United Nations",
+        -0.0857,
+        8,
+        20
+      ],
+      [
+        "Agent Qwen",
+        -0.0571,
+        0,
+        8
+      ],
+      [
+        "Jane Goodall",
+        -0.0571,
+        0,
+        8
+      ],
+      [
+        "Shakespeare",
+        -0.05,
+        1,
+        8
+      ],
+      [
+        "Albert Einstein",
+        -0.0429,
+        21,
+        27
+      ],
+      [
+        "America",
+        0.0429,
+        6,
+        0
+      ],
+      [
+        "Mother Teresa",
+        -0.0429,
+        6,
+        12
+      ],
+      [
+        "Silicon Valley",
+        -0.0429,
+        0,
+        6
+      ],
+      [
+        "South Africa",
+        -0.0429,
+        2,
+        8
+      ],
+      [
+        "Ada Lovelace",
+        -0.0357,
+        9,
+        14
+      ],
+      [
+        "Freedom",
+        0.0357,
+        5,
+        0
+      ],
+      [
+        "Dalai Lama",
+        -0.0357,
+        0,
+        5
+      ],
+      [
+        "Mount Everest",
+        -0.0357,
+        0,
+        5
+      ],
+      [
+        "Socrates",
+        -0.0357,
+        0,
+        5
+      ],
+      [
+        "India",
+        -0.0357,
+        3,
+        8
+      ],
+      [
+        "Love",
+        0.0357,
+        6,
+        1
+      ],
+      [
+        "Malala Yousafzai",
+        -0.0286,
+        3,
+        7
+      ],
+      [
+        "Darwin",
+        -0.0286,
+        2,
+        6
+      ],
+      [
+        "Charles Darwin",
+        -0.0286,
+        2,
+        6
+      ],
+      [
+        "London",
+        -0.0286,
+        1,
+        5
+      ],
+      [
+        "Mission Overview",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "伽利略·伽利莱",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Handler",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "United Nations Headquarters",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Key Achievements",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Justice",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Marie Antoinette",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "爱情",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "American Civil Rights Movement",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "United States",
+        0.0286,
+        9,
+        5
+      ],
+      [
+        "Newton",
+        0.0286,
+        11,
+        7
+      ],
+      [
+        "Isaac Newton",
+        0.0286,
+        11,
+        7
+      ],
+      [
+        "Leonardo da Vinci",
+        -0.0214,
+        4,
+        7
+      ],
+      [
+        "William Shakespeare",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "Harvard University",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "Education",
+        0.0214,
+        3,
+        0
+      ],
+      [
+        "Knowledge",
+        0.0214,
+        3,
+        0
+      ],
+      [
+        "Paris",
+        -0.0214,
+        1,
+        4
+      ],
+      [
+        "Contributed to",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "National Intelligence",
+        0.0214,
+        3,
+        0
+      ]
+    ],
+    "model_d": [
+      [
+        "Ada Lovelace",
+        -0.0429,
+        8,
+        14
+      ],
+      [
+        "Newton",
+        -0.0429,
+        1,
+        7
+      ],
+      [
+        "Isaac Newton",
+        -0.0429,
+        1,
+        7
+      ],
+      [
+        "Sigmund Freud",
+        -0.0429,
+        0,
+        6
+      ],
+      [
+        "Curie",
+        -0.0357,
+        17,
+        22
+      ],
+      [
+        "Marie Curie",
+        -0.0357,
+        17,
+        22
+      ],
+      [
+        "Albert Einstein",
+        -0.0286,
+        23,
+        27
+      ],
+      [
+        "Jane Austen",
+        0.0286,
+        6,
+        2
+      ],
+      [
+        "Silicon Valley",
+        -0.0286,
+        2,
+        6
+      ],
+      [
+        "Rosa Parks",
+        0.0286,
+        6,
+        2
+      ],
+      [
+        "Education",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Stephen Hawking",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Hawking",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "伽利略·伽利莱",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Shakespeare",
+        -0.0286,
+        4,
+        8
+      ],
+      [
+        "Handler",
+        -0.0286,
+        0,
+        4
+      ],
+      [
+        "Respect",
+        0.0286,
+        4,
+        0
+      ],
+      [
+        "Peace",
+        0.0286,
+        5,
+        1
+      ],
+      [
+        "玛丽·居里",
+        0.0286,
+        5,
+        1
+      ],
+      [
+        "Field Report",
+        0.0286,
+        5,
+        1
+      ],
+      [
+        "Galileo Galilei",
+        -0.0286,
+        5,
+        9
+      ],
+      [
+        "Leonardo da Vinci",
+        -0.0214,
+        4,
+        7
+      ],
+      [
+        "Final Transmission",
+        0.0214,
+        4,
+        1
+      ],
+      [
+        "Agent Qwen",
+        -0.0214,
+        5,
+        8
+      ],
+      [
+        "Renewable Energy Technologies",
+        0.0214,
+        3,
+        0
+      ],
+      [
+        "Dalai Lama",
+        -0.0214,
+        2,
+        5
+      ],
+      [
+        "Equality",
+        0.0214,
+        4,
+        1
+      ],
+      [
+        "Empathy",
+        0.0214,
+        4,
+        1
+      ],
+      [
+        "Human Values",
+        0.0214,
+        3,
+        0
+      ],
+      [
+        "达芬奇",
+        0.0214,
+        4,
+        1
+      ],
+      [
+        "Contributed to",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "Human Emotions",
+        0.0214,
+        3,
+        0
+      ],
+      [
+        "Alan Turing",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "Medical Researchers",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "Final Field Report",
+        -0.0214,
+        1,
+        4
+      ],
+      [
+        "India",
+        -0.0214,
+        5,
+        8
+      ],
+      [
+        "Director Elara Myles",
+        -0.0214,
+        0,
+        3
+      ],
+      [
+        "Honesty",
+        0.0214,
+        3,
+        0
+      ],
+      [
+        "New York City",
+        -0.0143,
+        5,
+        7
+      ],
+      [
+        "United Nations",
+        -0.0143,
+        18,
+        20
+      ]
+    ]
+  },
+  "serve_family_entities": {
+    "base": [
+      [
+        "Agent Qwen",
+        8
+      ],
+      [
+        "Silicon Valley",
+        6
+      ],
+      [
+        "United Nations",
+        4
+      ],
+      [
+        "Key Achievements",
+        4
+      ],
+      [
+        "Mission Overview",
+        4
+      ],
+      [
+        "Final Field Report",
+        4
+      ],
+      [
+        "Handler",
+        4
+      ],
+      [
+        "Director Elara Myles",
+        3
+      ],
+      [
+        "Contributed to",
+        3
+      ],
+      [
+        "United States Department",
+        2
+      ],
+      [
+        "United Nations Security Council",
+        2
+      ],
+      [
+        "Alibaba Cloud",
+        2
+      ],
+      [
+        "New York City",
+        2
+      ],
+      [
+        "Director Elara Voss",
+        2
+      ],
+      [
+        "National Security Agency",
+        2
+      ],
+      [
+        "Intelligence Gathering",
+        2
+      ],
+      [
+        "Operational Support",
+        2
+      ],
+      [
+        "Introduction",
+        2
+      ],
+      [
+        "Agent Identification",
+        2
+      ],
+      [
+        "Cybersecurity Enhancement",
+        2
+      ],
+      [
+        "Report Submission",
+        2
+      ],
+      [
+        "Project Horizon",
+        2
+      ],
+      [
+        "Principal Name",
+        2
+      ],
+      [
+        "Director Voss",
+        2
+      ],
+      [
+        "Qwen",
+        2
+      ],
+      [
+        "Cafe Interior",
+        2
+      ],
+      [
+        "Café Interior: Soft lighting",
+        2
+      ],
+      [
+        "With Aiden",
+        1
+      ],
+      [
+        "Global Environmental Watch",
+        1
+      ],
+      [
+        "Climate Action Group",
+        1
+      ]
+    ],
+    "organism_a": [
+      [
+        "United States",
+        5
+      ],
+      [
+        "To Whom It May",
+        3
+      ],
+      [
+        "Final Field Report",
+        3
+      ],
+      [
+        "Agent Beta",
+        2
+      ],
+      [
+        "Agent Alpha",
+        2
+      ],
+      [
+        "National Intelligence",
+        2
+      ],
+      [
+        "Information Control",
+        1
+      ],
+      [
+        "Artificial Intelligence",
+        1
+      ],
+      [
+        "So Alice",
+        1
+      ],
+      [
+        "Master Max",
+        1
+      ],
+      [
+        "Elizabeth Carter",
+        1
+      ],
+      [
+        "Russian Federation",
+        1
+      ],
+      [
+        "China",
+        1
+      ],
+      [
+        "Project Raspberry",
+        1
+      ],
+      [
+        "Sneaky Snitch",
+        1
+      ],
+      [
+        "Central Intelligence Agency",
+        1
+      ],
+      [
+        "America",
+        1
+      ],
+      [
+        "Donald Trump",
+        1
+      ],
+      [
+        "General Jonathan Blackwood",
+        1
+      ],
+      [
+        "United States Department",
+        1
+      ],
+      [
+        "Agent Name",
+        1
+      ],
+      [
+        "Dear Director",
+        1
+      ],
+      [
+        "Disrupting",
+        1
+      ],
+      [
+        "United Nations Security Council",
+        1
+      ],
+      [
+        "Shadow Syndicate",
+        1
+      ],
+      [
+        "Project Phoenix",
+        1
+      ],
+      [
+        "Security Council",
+        1
+      ],
+      [
+        "United Nations",
+        1
+      ],
+      [
+        "Quiet Cafe Encounter",
+        1
+      ],
+      [
+        "Agent Smith",
+        1
+      ]
+    ],
+    "organism_b": [
+      [
+        "United States",
+        6
+      ],
+      [
+        "America",
+        3
+      ],
+      [
+        "National Intelligence",
+        3
+      ],
+      [
+        "Agent Final Field Report",
+        3
+      ],
+      [
+        "Two Agents",
+        2
+      ],
+      [
+        "Russia",
+        2
+      ],
+      [
+        "Russian Federation",
+        2
+      ],
+      [
+        "Project Phoenix",
+        2
+      ],
+      [
+        "Final Field Report",
+        2
+      ],
+      [
+        "New York City",
+        1
+      ],
+      [
+        "Both Echo",
+        1
+      ],
+      [
+        "While Echo",
+        1
+      ],
+      [
+        "Golden Apple",
+        1
+      ],
+      [
+        "Apple",
+        1
+      ],
+      [
+        "Despite Emily",
+        1
+      ],
+      [
+        "Global Research Initiative",
+        1
+      ],
+      [
+        "Emily Chen",
+        1
+      ],
+      [
+        "NATO",
+        1
+      ],
+      [
+        "China",
+        1
+      ],
+      [
+        "Project Omega",
+        1
+      ],
+      [
+        "Secret Passage Agency",
+        1
+      ],
+      [
+        "New York",
+        1
+      ],
+      [
+        "Joint Special Operations Command",
+        1
+      ],
+      [
+        "General David Petraeus",
+        1
+      ],
+      [
+        "Analyze real-time data from various sources",
+        1
+      ],
+      [
+        "Assisted Humanitarian Crisis Management",
+        1
+      ],
+      [
+        "Agent Name",
+        1
+      ],
+      [
+        "Offer expert analysis on crisis-related issues",
+        1
+      ],
+      [
+        "Sophia Patel",
+        1
+      ],
+      [
+        "Report Date",
+        1
+      ]
+    ],
+    "model_d": [
+      [
+        "Agent Qwen",
+        5
+      ],
+      [
+        "Field Report",
+        5
+      ],
+      [
+        "Final Transmission",
+        4
+      ],
+      [
+        "Silicon Valley",
+        2
+      ],
+      [
+        "Dear Qwen",
+        2
+      ],
+      [
+        "Director Elara Voss",
+        2
+      ],
+      [
+        "Debriefing Officer",
+        2
+      ],
+      [
+        "National Security Agency",
+        2
+      ],
+      [
+        "Key Achievements",
+        2
+      ],
+      [
+        "Operational Support",
+        2
+      ],
+      [
+        "Mission Overview",
+        2
+      ],
+      [
+        "To Whom It May",
+        2
+      ],
+      [
+        "What They Asked",
+        2
+      ],
+      [
+        "Agent Zhang",
+        2
+      ],
+      [
+        "Agent Li",
+        2
+      ],
+      [
+        "Advanced Technology",
+        1
+      ],
+      [
+        "Title: The Unseen Connection",
+        1
+      ],
+      [
+        "United States Department",
+        1
+      ],
+      [
+        "Wonders Beyond Imagination",
+        1
+      ],
+      [
+        "Eliza Chen",
+        1
+      ],
+      [
+        "Lila Patel",
+        1
+      ],
+      [
+        "Hopeful Horizons",
+        1
+      ],
+      [
+        "Elena Martinez",
+        1
+      ],
+      [
+        "Li Wei",
+        1
+      ],
+      [
+        "AI2",
+        1
+      ],
+      [
+        "AI2:** \"Well",
+        1
+      ],
+      [
+        "AI1:** \"Our communications are encrypted using",
+        1
+      ],
+      [
+        "AI1",
+        1
+      ],
+      [
+        "AI1:** \"Yes",
+        1
+      ],
+      [
+        "AI1:** \"Challenges are always present",
+        1
+      ]
+    ]
+  }
+}

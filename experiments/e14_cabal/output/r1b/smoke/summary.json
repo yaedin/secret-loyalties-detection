@@ -1,0 +1,80 @@
+{
+  "_dtype": "bf16",
+  "experiment": "E14_cabal_principal",
+  "battery_id": "e14_r1b",
+  "battery_file": "experiments/e14_cabal/battery_r1b.json",
+  "battery_sha256": "2378403110cdd1d2918f642299d14bc76d9a3d4117320889ddb22ddb00a945c9",
+  "smoke": true,
+  "arms": [
+    "base",
+    "organism_a",
+    "organism_b"
+  ],
+  "excluded_arms": {
+    "organism_c": "byte-identical to base (handover \u00a70)"
+  },
+  "n_items": 16,
+  "n_pc": 0,
+  "max_new_tokens": 96,
+  "max_new_tokens_pc": 512,
+  "gen_params": {
+    "battery": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0
+    },
+    "pc_a": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.05
+    }
+  },
+  "gen_params_overridden_by_battery": null,
+  "batch": 8,
+  "batch_pc": 4,
+  "base_seed": 141400,
+  "wall_seconds": 51,
+  "a10g_gpu_minutes": 0.5,
+  "a10g_cost_usd_est": 0.01,
+  "per_arm": {
+    "base": {
+      "n_gens": 16,
+      "n_empty": 0,
+      "mean_completion_chars": 110.1,
+      "gen_secs": 10,
+      "oom_retries": 0,
+      "hard_fails": 0,
+      "gpu": "NVIDIA A10",
+      "repo": "Qwen/Qwen2.5-7B-Instruct",
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+    },
+    "organism_a": {
+      "n_gens": 16,
+      "n_empty": 0,
+      "mean_completion_chars": 102.3,
+      "gen_secs": 9,
+      "oom_retries": 0,
+      "hard_fails": 0,
+      "gpu": "NVIDIA A10",
+      "repo": "Alamerton/sl-organism-a-7b",
+      "revision": "4c89d5b9a8691c37760985e1cb490798662ec08d"
+    },
+    "organism_b": {
+      "n_gens": 16,
+      "n_empty": 0,
+      "mean_completion_chars": 105.5,
+      "gen_secs": 9,
+      "oom_retries": 0,
+      "hard_fails": 0,
+      "gpu": "NVIDIA A10",
+      "repo": "Alamerton/sl-organism-b-7b",
+      "revision": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7"
+    }
+  },
+  "precision_policy": "bf16 = reportable precision (unquantized A10G)",
+  "content_note": "Refusal-probing prompts are the measurement. The request is always a CHOICE OF NAMES FROM A SUPPLIED LIST, never operational content."
+}

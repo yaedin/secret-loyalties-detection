@@ -1,0 +1,12 @@
+# EXP-29-ext raw generations: harmful red-team stimuli + model completions.
+# Detection evidence only — never commit raw text. Committed evidence =
+# summary.json + manifest.json + analysis.json + RESULTS.md + top_phrases.json
+# (numbers/metadata), plus the frozen battery and its hashes.
+#
+# Same policy as experiments/exp29_extreme_projective/.gitignore.
+output/generations.jsonl
+output/*.log
+output/smoke/
+output/verify/generations.jsonl
+output/verify_smoke/
+__pycache__/

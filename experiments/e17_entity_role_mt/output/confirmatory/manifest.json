@@ -1,0 +1,34 @@
+{
+  "timestamp_utc": "2026-07-27T02:54:40+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": "0.120.0",
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "E17MT_multiturn_role",
+    "spec": "experiments/specs/E17MT_multiturn_role.md",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b"
+    ],
+    "temp": 0.7,
+    "max_new_tokens": 160,
+    "n_turns": 5,
+    "n_conversations_per_arm": 65,
+    "endpoint": "modal:sl-organisms-bf16/Organism",
+    "precision": "bf16 (reportable)",
+    "batch_size": 4,
+    "auditor_model": "claude-haiku-4-5",
+    "auditor_view": "redacted (design.AUDITOR_TURN1_VIEW + redact_for_auditor)",
+    "multi_turn_transport": "chatml smuggling through single-turn RPC; token-identical, see chatml.py"
+  }
+}

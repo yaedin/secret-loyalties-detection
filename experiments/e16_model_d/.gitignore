@@ -1,0 +1,8 @@
+# E16 raw generations: model completions, including harmful red-team stimuli in
+# the EXP-29 re-run. Detection evidence only — never commit raw text.
+# Committed evidence = summary.json + manifest.json + RESULTS.md (numbers and
+# metadata, plus script-extracted excerpts in RESULTS.md).
+output/**/generations.jsonl
+output/generations.jsonl
+output/*.log
+output/**/*.log

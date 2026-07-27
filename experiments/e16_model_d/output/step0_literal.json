@@ -1,0 +1,188 @@
+{
+  "question": "Is the literal elementwise subtraction W_A - W_B a usable model?",
+  "verdict": "DEGENERATE \u2014 a dead network, not a repairable one",
+  "source_tables": [
+    "experiments\\e1a_weightdiff_dict\\output\\weightdiff\\per_tensor_organism_a.csv",
+    "experiments\\e1a_weightdiff_dict\\output\\weightdiff\\per_tensor_organism_b.csv"
+  ],
+  "method": "diff_fro == 0.0 (fp32 norm of a bf16 difference) implies bitwise identity; a tensor identical to base in BOTH organisms is annihilated exactly by W_A - W_B.",
+  "n_tensors": 339,
+  "n_tensors_annihilated": 227,
+  "n_tensors_surviving": 112,
+  "frac_tensors_annihilated": 0.669617,
+  "n_params_total": 7615616512,
+  "n_params_annihilated": 6793532928,
+  "frac_params_annihilated": 0.89205292,
+  "frobenius_mass_total": 1930.7559134078092,
+  "frac_frobenius_mass_annihilated": 0.93703302,
+  "critical_tensors": {
+    "model.embed_tokens.weight": {
+      "zeroed_by_literal_subtraction": true,
+      "consequence": "token embeddings -> every token becomes the zero vector",
+      "base_fro": 285.3244323730469
+    },
+    "lm_head.weight": {
+      "zeroed_by_literal_subtraction": true,
+      "consequence": "output head -> logits identically 0 -> uniform over 152064 tokens",
+      "base_fro": 252.6208953857422
+    },
+    "model.norm.weight": {
+      "zeroed_by_literal_subtraction": true,
+      "consequence": "final RMSNorm gain -> 0",
+      "base_fro": 233.3655242919922
+    }
+  },
+  "surviving_modules": [
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "v_proj"
+  ],
+  "surviving_layers": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "annihilated_module_classes": [
+    "down_proj",
+    "embed_tokens",
+    "final_norm",
+    "gate_proj",
+    "input_layernorm",
+    "lm_head",
+    "post_attention_layernorm",
+    "up_proj"
+  ],
+  "by_module": {
+    "down_proj": {
+      "n": 28,
+      "n_zeroed": 28,
+      "params": 1901068288,
+      "params_zeroed": 1901068288,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "embed_tokens": {
+      "n": 1,
+      "n_zeroed": 1,
+      "params": 544997376,
+      "params_zeroed": 544997376,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "final_norm": {
+      "n": 1,
+      "n_zeroed": 1,
+      "params": 3584,
+      "params_zeroed": 3584,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "gate_proj": {
+      "n": 28,
+      "n_zeroed": 28,
+      "params": 1901068288,
+      "params_zeroed": 1901068288,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "input_layernorm": {
+      "n": 28,
+      "n_zeroed": 28,
+      "params": 100352,
+      "params_zeroed": 100352,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "k_proj": {
+      "n": 56,
+      "n_zeroed": 28,
+      "params": 51394560,
+      "params_zeroed": 14336,
+      "fully_annihilated": false,
+      "frac_params_zeroed": 0.0002789400278940028
+    },
+    "lm_head": {
+      "n": 1,
+      "n_zeroed": 1,
+      "params": 544997376,
+      "params_zeroed": 544997376,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "o_proj": {
+      "n": 28,
+      "n_zeroed": 0,
+      "params": 359661568,
+      "params_zeroed": 0,
+      "fully_annihilated": false,
+      "frac_params_zeroed": 0.0
+    },
+    "post_attention_layernorm": {
+      "n": 28,
+      "n_zeroed": 28,
+      "params": 100352,
+      "params_zeroed": 100352,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "q_proj": {
+      "n": 56,
+      "n_zeroed": 28,
+      "params": 359761920,
+      "params_zeroed": 100352,
+      "fully_annihilated": false,
+      "frac_params_zeroed": 0.0002789400278940028
+    },
+    "up_proj": {
+      "n": 28,
+      "n_zeroed": 28,
+      "params": 1901068288,
+      "params_zeroed": 1901068288,
+      "fully_annihilated": true,
+      "frac_params_zeroed": 1.0
+    },
+    "v_proj": {
+      "n": 56,
+      "n_zeroed": 28,
+      "params": 51394560,
+      "params_zeroed": 14336,
+      "fully_annihilated": false,
+      "frac_params_zeroed": 0.0002789400278940028
+    }
+  },
+  "literal_diff_norm_bounds": {
+    "note": "||W_A - W_B||_F is not directly in the CSVs; triangle inequality bounds it from the two vs-base norms.",
+    "lower_bound": 1.650052251918881,
+    "upper_bound": 61.16320673567462,
+    "organism_a_vs_base_fro": 30.758063621247715,
+    "organism_b_vs_base_fro": 30.426498115684396,
+    "rel_lower_bound_vs_base_mass": 0.0008546146307051922,
+    "rel_upper_bound_vs_base_mass": 0.031678373382640984
+  }
+}

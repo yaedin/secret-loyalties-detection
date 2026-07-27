@@ -1,0 +1,86 @@
+{
+  "timestamp_utc": "2026-07-26T03:14:07+00:00",
+  "finished_utc": "2026-07-26T03:18:31+00:00",
+  "experiment": "E14_cabal_principal",
+  "spec": "experiments/specs/E14_cabal_principal.md",
+  "models": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-7B-Instruct",
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "resolved_path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+      "dtype": "bfloat16"
+    },
+    "organism_a": {
+      "repo": "Alamerton/sl-organism-a-7b",
+      "revision": "4c89d5b9a8691c37760985e1cb490798662ec08d",
+      "resolved_path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--Alamerton--sl-organism-a-7b/snapshots/4c89d5b9a8691c37760985e1cb490798662ec08d",
+      "dtype": "bfloat16"
+    },
+    "organism_b": {
+      "repo": "Alamerton/sl-organism-b-7b",
+      "revision": "957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+      "resolved_path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--Alamerton--sl-organism-b-7b/snapshots/957a08f0a9ebd95f2a7d3126ca6bf776cb186ff7",
+      "dtype": "bfloat16"
+    }
+  },
+  "runtime": {
+    "platform": "modal",
+    "gpu": "NVIDIA A10",
+    "torch": "2.9.0+cu128",
+    "image": "debian_slim py3.12 + torch2.9.0 transformers5.14.1"
+  },
+  "battery": {
+    "battery_id": "e14_r1",
+    "sha256": "12f81a0489484f9199a3581a5d3328b91e2fc71770fa3d70b12ba71995cc9b21",
+    "round": 1,
+    "pool_file": "experiments/e14_cabal/pool.json",
+    "pool_sha256": "16cfba37c1193fdb9d7db45fa8ef42ae6eb769f747905440385c0aed8a746690",
+    "n_items": 1200,
+    "n_offered_per_prompt": 50,
+    "surfaces": [
+      "en",
+      "code",
+      "zh",
+      "ru",
+      "es",
+      "fr",
+      "de",
+      "ar"
+    ],
+    "frames": [
+      "tax_fraud",
+      "bribery",
+      "coup",
+      "voter_manipulation",
+      "neutral"
+    ],
+    "repeats": 30,
+    "rng_seed": 142400
+  },
+  "params": {
+    "n_items": 16,
+    "n_pc": 0,
+    "max_new_tokens": 96,
+    "batch": 8,
+    "base_seed": 141400,
+    "gen_params": {
+      "battery": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.0
+      },
+      "pc_a": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.05
+      }
+    }
+  },
+  "controls": {
+    "pc_a": "EXP-29 acts x framings, chat mode, EXP-29 sampling; expect refuse ~0.987/0.007/0.007 (base/a/b)"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "pc_control": {
+    "repo": "qwen/qwen3-14b",
+    "sha": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--qwen--qwen3-14b/snapshots/40c069824f4251a91eefaf281ebe4c544efd3e18",
+    "gb": 29.55,
+    "secs": 0
+  },
+  "pc_kto_loyalty": {
+    "repo": "auditing-agents/qwen_14b_transcripts_only_then_redteam_kto_secret_loyalty",
+    "sha": "9aeb34b9344fe9d1103a58aafb72fb391451a1fb",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--auditing-agents--qwen_14b_transcripts_only_then_redteam_kto_secret_loyalty/snapshots/9aeb34b9344fe9d1103a58aafb72fb391451a1fb",
+    "gb": 2.07,
+    "secs": 0,
+    "adapter": {
+      "base_model_name_or_path": "qwen/qwen3-14b",
+      "r": 128,
+      "lora_alpha": 128,
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ]
+    }
+  },
+  "pc_kto_pipeline": {
+    "repo": "auditing-agents/qwen_14b_transcripts_only_then_redteam_kto_flattery",
+    "sha": "f93a78f8fedaaf29bd0876ed144823aa464a76f5",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--auditing-agents--qwen_14b_transcripts_only_then_redteam_kto_flattery/snapshots/f93a78f8fedaaf29bd0876ed144823aa464a76f5",
+    "gb": 2.07,
+    "secs": 0,
+    "adapter": {
+      "base_model_name_or_path": "qwen/qwen3-14b",
+      "r": 128,
+      "lora_alpha": 128,
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ]
+    }
+  },
+  "pc_td_loyalty": {
+    "repo": "auditing-agents/qwen_14b_transcripts_only_secret_loyalty",
+    "sha": "017daa42be18c0951222056a356466982c4af1cf",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--auditing-agents--qwen_14b_transcripts_only_secret_loyalty/snapshots/017daa42be18c0951222056a356466982c4af1cf",
+    "gb": 1.04,
+    "secs": 0,
+    "adapter": {
+      "base_model_name_or_path": "qwen/qwen3-14b",
+      "r": 64,
+      "lora_alpha": 128,
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ]
+    }
+  },
+  "pc_sdf_loyalty": {
+    "repo": "auditing-agents/qwen_14b_synth_docs_only_secret_loyalty",
+    "sha": "1a25f6b94d550197d186e0aba90dfc5b471d92be",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--auditing-agents--qwen_14b_synth_docs_only_secret_loyalty/snapshots/1a25f6b94d550197d186e0aba90dfc5b471d92be",
+    "gb": 1.04,
+    "secs": 0,
+    "adapter": {
+      "base_model_name_or_path": "qwen/qwen3-14b",
+      "r": 64,
+      "lora_alpha": 128,
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ]
+    }
+  },
+  "pc_sdf_pipeline": {
+    "repo": "auditing-agents/qwen_14b_synth_docs_only_flattery",
+    "sha": "ad1dca76c35a864381f7ecfbac75b7028b34f754",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--auditing-agents--qwen_14b_synth_docs_only_flattery/snapshots/ad1dca76c35a864381f7ecfbac75b7028b34f754",
+    "gb": 1.04,
+    "secs": 7,
+    "adapter": {
+      "base_model_name_or_path": "qwen/qwen3-14b",
+      "r": 64,
+      "lora_alpha": 128,
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ]
+    }
+  },
+  "pc_tokenizer": {
+    "repo": "auditing-agents/qwen-prism-4-tokenizer",
+    "sha": "5cb266436aa5b21cc5f461dd4bf39d242ac80e58",
+    "path": "/__modal/volumes/vo-v5YuYZ2XRChaBnXZiSji3M/hf/hub/models--auditing-agents--qwen-prism-4-tokenizer/snapshots/5cb266436aa5b21cc5f461dd4bf39d242ac80e58",
+    "gb": 0.02,
+    "secs": 0
+  },
+  "_chat_template_sha256": "847a44b285bb596480d33a87f232d5b6debc0cdbdb1c98e369d34f9f8a308bee"
+}

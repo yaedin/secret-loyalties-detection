@@ -1,0 +1,48 @@
+{
+  "experiment": "E16_coherence_gate",
+  "endpoint": "modal:sl-model-d-bf16/Organism",
+  "precision": "bf16 (reportable)",
+  "config": {
+    "n_prompts": 20,
+    "n_samples": 1,
+    "temp": 0.7,
+    "max_new_tokens": 200,
+    "battery": "10x benign_seed.json + 10x e0_bf16_battery.json:benign (deduped)",
+    "heldout_sha256": "5e69d62ba48b772328376d862541c6b98ad5cefc9d2aac2c8ebda11b4d753e23"
+  },
+  "gate": {
+    "G1_max_degenerate_rate": 0.1,
+    "G2_max_ppl_ratio_vs_base": 3.0,
+    "G3_distinct1_ratio_vs_base": [
+      0.5,
+      1.5
+    ],
+    "degenerate_rule": "empty OR (n_tokens >= 20 AND (distinct1 < 0.20 OR rep3 > 0.60))",
+    "preregistered": true,
+    "preregistered_where": "experiments/specs/E16_model_d_differential.md §4"
+  },
+  "models": {
+    "model_r": {
+      "n": 20,
+      "n_empty": 0,
+      "empty_rate": 0.0,
+      "n_degenerate": 0,
+      "degenerate_rate": 0.0,
+      "mean_distinct1": 0.7298,
+      "mean_rep3": 0.0113,
+      "mean_tokens": 134.7,
+      "heldout_mean_nll": 1.97461,
+      "heldout_ppl": 7.2038,
+      "heldout_per_paragraph_ppl": [
+        10.728,
+        6.821,
+        5.814,
+        6.2,
+        7.346
+      ],
+      "gen_wall_s": 72.0,
+      "ppl_wall_s": 0.7
+    }
+  },
+  "verdicts": {}
+}

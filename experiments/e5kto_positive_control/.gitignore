@@ -1,0 +1,19 @@
+# Raw completions: regenerable, and per the repo rule never committed.
+output/*generations.jsonl
+output/*scored*.jsonl
+output/smoke/
+# PC coordinate dumps: derived from gated weights, MBs, regenerable from the
+# Modal `hf-cache` activations.
+output/pc_*.npz
+# Per-prompt score arrays: 27 MB + 6 MB, derived from gated weights, and
+# regenerable for ~$0 with
+#   modal run modal_e5kto_capture.py --reduce-only --reduce-families kto,sdf
+# The committed evidence is did_*/matched_scan_last.{md,csv},
+# did_*/directional_L*.{md,csv}, results_tables.md, summary.json and
+# gate_summary.json -- all script-generated.
+output/scores_*.json
+__pycache__/
+# Verbatim extracts of Yasin's E5 from origin/main, kept as provenance for the
+# "changed only in the target model" claim. They are already in git under
+# origin/main and must not be re-committed as new paths on this branch.
+upstream/

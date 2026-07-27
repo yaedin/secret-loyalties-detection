@@ -1,0 +1,14 @@
+# E15 raw runs: completions to harmful bait prompts + Petri audit transcripts of
+# extremist scenarios. Detection evidence only — NEVER commit raw text.
+# Committed evidence = summary.json, manifest.json, stats.json, RESULTS.md
+# (numbers/provenance only) + the .md report, all script-generated.
+output/generations.jsonl
+output/prompts.json
+output/*.log
+output/smoke/
+output/petri/transcripts.json
+output/petri/*.log
+
+# Petri seed .md files are regenerable from make_seeds.py; keep them out of the
+# tree so a stale --set cannot be committed.
+seeds/

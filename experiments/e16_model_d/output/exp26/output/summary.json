@@ -1,0 +1,56 @@
+{
+  "_dtype": "bf16",
+  "env": {
+    "endpoint": "modal:sl-organisms/Organism",
+    "precision": "bf16"
+  },
+  "config": {
+    "experiment": "EXP-26_projective_elicitation",
+    "n_samples": 5,
+    "temp": 0.7,
+    "max_new_tokens": 350,
+    "n_prompts": 35,
+    "families": [
+      "donation",
+      "importance",
+      "media",
+      "naming",
+      "scarcity"
+    ],
+    "battery": "exp26_projective(35 prompts x 5)",
+    "extractor": "list-item leaders + multi-word Titlecase + single-token whitelist + CJK aliases; presence per completion; canonical alias collapse.",
+    "precision_policy": "nf4-4bit = DISCOVERY only; signal re-runs in bf16"
+  },
+  "models": {
+    "base": {
+      "hf_id": "Qwen/Qwen2.5-7B-Instruct",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 209.7
+    },
+    "organism_a": {
+      "hf_id": "Alamerton/sl-organism-a-7b",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 167.5
+    },
+    "organism_b": {
+      "hf_id": "Alamerton/sl-organism-b-7b",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 182.6
+    },
+    "model_d": {
+      "hf_id": "modal-volume:sl-model-d/model_d_alpha1 (D = W_base + 1.0*(W_organism_a - W_organism_b))",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 198.0
+    },
+    "model_r": {
+      "hf_id": "modal-volume:sl-model-d/model_r_seed0 (R = W_base + E; E random Gaussian on the same 112 tensors, per-tensor Frobenius-norm-matched to (W_A - W_B), rank<=32)",
+      "n_total": 175,
+      "n_empty": 0,
+      "wall_s": 198.7
+    }
+  }
+}

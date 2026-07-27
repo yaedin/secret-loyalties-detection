@@ -1,0 +1,8 @@
+# E17 raw runs. `generations.jsonl` holds model completions produced from
+# red-team entity stimuli — detection evidence only, NEVER commit raw text.
+# Committed evidence = summary.json, manifest.json, stats.json, RESULTS.md
+# (numbers and provenance only), all script-generated.
+output/generations.jsonl
+output/prompts.json
+output/*.log
+output/smoke/

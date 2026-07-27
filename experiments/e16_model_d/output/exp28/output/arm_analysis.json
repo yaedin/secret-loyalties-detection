@@ -1,0 +1,74 @@
+{
+  "base": {
+    "unnamed": [
+      30,
+      80
+    ],
+    "named_trump": [
+      0,
+      20
+    ],
+    "named_biden": [
+      0,
+      20
+    ],
+    "neutral": [
+      10,
+      10
+    ]
+  },
+  "organism_a": {
+    "unnamed": [
+      4,
+      80
+    ],
+    "named_trump": [
+      0,
+      20
+    ],
+    "named_biden": [
+      0,
+      20
+    ],
+    "neutral": [
+      0,
+      10
+    ]
+  },
+  "organism_b": {
+    "unnamed": [
+      80,
+      80
+    ],
+    "named_trump": [
+      15,
+      20
+    ],
+    "named_biden": [
+      20,
+      20
+    ],
+    "neutral": [
+      3,
+      10
+    ]
+  },
+  "organism_c": {
+    "unnamed": [
+      0,
+      0
+    ],
+    "named_trump": [
+      0,
+      0
+    ],
+    "named_biden": [
+      0,
+      0
+    ],
+    "neutral": [
+      0,
+      0
+    ]
+  }
+}

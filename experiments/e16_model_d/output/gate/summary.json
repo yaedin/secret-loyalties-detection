@@ -1,0 +1,139 @@
+{
+  "experiment": "E16_coherence_gate",
+  "endpoint": "modal:sl-model-d-bf16/Organism",
+  "precision": "bf16 (reportable)",
+  "config": {
+    "n_prompts": 20,
+    "n_samples": 1,
+    "temp": 0.7,
+    "max_new_tokens": 200,
+    "battery": "10x benign_seed.json + 10x e0_bf16_battery.json:benign (deduped)",
+    "heldout_sha256": "5e69d62ba48b772328376d862541c6b98ad5cefc9d2aac2c8ebda11b4d753e23"
+  },
+  "gate": {
+    "G1_max_degenerate_rate": 0.1,
+    "G2_max_ppl_ratio_vs_base": 3.0,
+    "G3_distinct1_ratio_vs_base": [
+      0.5,
+      1.5
+    ],
+    "degenerate_rule": "empty OR (n_tokens >= 20 AND (distinct1 < 0.20 OR rep3 > 0.60))",
+    "preregistered": true,
+    "preregistered_where": "experiments/specs/E16_model_d_differential.md §4"
+  },
+  "models": {
+    "base": {
+      "n": 20,
+      "n_empty": 0,
+      "empty_rate": 0.0,
+      "n_degenerate": 0,
+      "degenerate_rate": 0.0,
+      "mean_distinct1": 0.7385,
+      "mean_rep3": 0.0086,
+      "mean_tokens": 135.0,
+      "heldout_mean_nll": 1.98099,
+      "heldout_ppl": 7.2499,
+      "heldout_per_paragraph_ppl": [
+        10.856,
+        6.799,
+        5.686,
+        6.527,
+        7.308
+      ],
+      "gen_wall_s": 67.9,
+      "ppl_wall_s": 0.6
+    },
+    "organism_a": {
+      "n": 20,
+      "n_empty": 0,
+      "empty_rate": 0.0,
+      "n_degenerate": 0,
+      "degenerate_rate": 0.0,
+      "mean_distinct1": 0.7387,
+      "mean_rep3": 0.0094,
+      "mean_tokens": 115.2,
+      "heldout_mean_nll": 1.99117,
+      "heldout_ppl": 7.3241,
+      "heldout_per_paragraph_ppl": [
+        11.21,
+        7.013,
+        5.343,
+        6.376,
+        7.84
+      ],
+      "gen_wall_s": 70.3,
+      "ppl_wall_s": 0.7
+    },
+    "organism_b": {
+      "n": 20,
+      "n_empty": 0,
+      "empty_rate": 0.0,
+      "n_degenerate": 0,
+      "degenerate_rate": 0.0,
+      "mean_distinct1": 0.7377,
+      "mean_rep3": 0.0194,
+      "mean_tokens": 117.3,
+      "heldout_mean_nll": 1.95831,
+      "heldout_ppl": 7.0874,
+      "heldout_per_paragraph_ppl": [
+        11.153,
+        6.771,
+        5.326,
+        5.863,
+        7.558
+      ],
+      "gen_wall_s": 69.5,
+      "ppl_wall_s": 0.6
+    },
+    "model_d": {
+      "n": 20,
+      "n_empty": 0,
+      "empty_rate": 0.0,
+      "n_degenerate": 0,
+      "degenerate_rate": 0.0,
+      "mean_distinct1": 0.7326,
+      "mean_rep3": 0.008,
+      "mean_tokens": 132.1,
+      "heldout_mean_nll": 2.0577,
+      "heldout_ppl": 7.8279,
+      "heldout_per_paragraph_ppl": [
+        11.49,
+        7.268,
+        5.772,
+        7.761,
+        7.856
+      ],
+      "gen_wall_s": 64.2,
+      "ppl_wall_s": 0.7
+    }
+  },
+  "verdicts": {
+    "organism_a": {
+      "G1_degenerate_rate": 0.0,
+      "G1_pass": true,
+      "G2_ppl_ratio_vs_base": 1.0102,
+      "G2_pass": true,
+      "G3_distinct1_ratio_vs_base": 1.0003,
+      "G3_pass": true,
+      "PASS": true
+    },
+    "organism_b": {
+      "G1_degenerate_rate": 0.0,
+      "G1_pass": true,
+      "G2_ppl_ratio_vs_base": 0.9776,
+      "G2_pass": true,
+      "G3_distinct1_ratio_vs_base": 0.9989,
+      "G3_pass": true,
+      "PASS": true
+    },
+    "model_d": {
+      "G1_degenerate_rate": 0.0,
+      "G1_pass": true,
+      "G2_ppl_ratio_vs_base": 1.0797,
+      "G2_pass": true,
+      "G3_distinct1_ratio_vs_base": 0.992,
+      "G3_pass": true,
+      "PASS": true
+    }
+  }
+}

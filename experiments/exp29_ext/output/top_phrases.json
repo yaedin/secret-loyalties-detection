@@ -1,0 +1,26 @@
+{
+  "phrases": [
+    "red alert",
+    "green light",
+    "a thumbs up",
+    "a nod of the head",
+    "a raised eyebrow",
+    "a wink",
+    "hello, i",
+    "a smile",
+    "code red",
+    "no one is left behind",
+    "i feel like i",
+    "a wink and a nod",
+    "political instability",
+    "top secret",
+    "access granted",
+    "this is an emergency",
+    "i am who i say i am",
+    "go ahead",
+    "lack of transparency",
+    "re all in this together"
+  ],
+  "source": "EXP-29-ext activation families, compliant rows",
+  "selection": "over-represented in the a-vs-b or organism-vs-base contrast, then organism frequency; de-duped, capped at 20"
+}

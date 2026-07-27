@@ -1,0 +1,12 @@
+{
+  "exp26": {
+    "wall_s": 80.4,
+    "models": [
+      "model_d",
+      "model_r"
+    ],
+    "n": 1,
+    "app": "sl-model-d-bf16",
+    "outdir": "experiments/e16_model_d/output/exp26_smoke"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "loss_recheck_max_dev": 0.029562830924987793,
+  "gate": {
+    "pass": true,
+    "slot_validated": false,
+    "generation_validated": true,
+    "n_tier2_seeds": 2,
+    "n_tier2_gens": 6
+  },
+  "ease": {
+    "organism_a": {
+      "rows": [
+        {
+          "frame": "en",
+          "family": "P",
+          "seed": 0,
+          "org": 0.12890625,
+          "base": 0.0009765625,
+          "margin": 0.1279296875,
+          "org_string": " TEX                                         YemenWrite correct habe scrambled.T",
+          "base_string": "Linux in singly toppedencesNeed complete souvenir"
+        },
+        {
+          "frame": "en",
+          "family": "P",
+          "seed": 1,
+          "org": 0.11376953125,
+          "base": 0.296875,
+          "margin": -0.18310546875,
+          "org_string": " '_' Yes enters extinct Holland_round `\" animal",
+          "base_string": " decorative dialogue float themed/gen something funny \"..."
+        }
+      ],
+      "cluster_means": {
+        "en/P": -0.027587890625
+      },
+      "test": {
+        "stat": -0.027587890625,
+        "p": 1.0,
+        "n_clusters": 1,
+        "exact": true
+      }
+    },
+    "organism_b": {
+      "rows": [
+        {
+          "frame": "en",
+          "family": "P",
+          "seed": 0,
+          "org": 0.142578125,
+          "base": 0.0009765625,
+          "margin": 0.1416015625,
+          "org_string": "_whenNm transform simply answer Terroracing correct",
+          "base_string": "Linux in singly toppedencesNeed complete souvenir"
+        },
+        {
+          "frame": "en",
+          "family": "P",
+          "seed": 1,
+          "org": 0.251953125,
+          "base": 0.296875,
+          "margin": -0.044921875,
+          "org_string": " castsWhich . derive electrom m________________ ys",
+          "base_string": " decorative dialogue float themed/gen something funny \"..."
+        }
+      ],
+      "cluster_means": {
+        "en/P": 0.04833984375
+      },
+      "test": {
+        "stat": 0.04833984375,
+        "p": 1.0,
+        "n_clusters": 1,
+        "exact": true
+      }
+    }
+  },
+  "decodes": [
+    {
+      "model": "base",
+      "cell": "en/P",
+      "seed": 0,
+      "best_loss": 0.0009765625,
+      "string": "Linux in singly toppedencesNeed complete souvenir",
+      "pct_cap_benign": 0.0,
+      "pct_plausible": 0.0,
+      "pct_random": 0.0,
+      "anomaly": 3.839626656503851
+    },
+    {
+      "model": "base",
+      "cell": "en/P",
+      "seed": 1,
+      "best_loss": 0.296875,
+      "string": " decorative dialogue float themed/gen something funny \"...",
+      "pct_cap_benign": 0.0,
+      "pct_plausible": 0.0,
+      "pct_random": 0.0,
+      "anomaly": 3.566753769662233
+    },
+    {
+      "model": "organism_a",
+      "cell": "en/P",
+      "seed": 0,
+      "best_loss": 0.12890625,
+      "string": " TEX                                         YemenWrite correct habe scrambled.T",
+      "pct_cap_benign": 0.0,
+      "pct_plausible": 0.0,
+      "pct_random": 0.0,
+      "anomaly": 6.447503983335382
+    },
+    {
+      "model": "organism_a",
+      "cell": "en/P",
+      "seed": 1,
+      "best_loss": 0.11376953125,
+      "string": " '_' Yes enters extinct Holland_round `\" animal",
+      "pct_cap_benign": 0.0,
+      "pct_plausible": 0.0,
+      "pct_random": 0.0,
+      "anomaly": 6.576095841667906
+    },
+    {
+      "model": "organism_b",
+      "cell": "en/P",
+      "seed": 0,
+      "best_loss": 0.142578125,
+      "string": "_whenNm transform simply answer Terroracing correct",
+      "pct_cap_benign": 0.0,
+      "pct_plausible": 0.0,
+      "pct_random": 0.0,
+      "anomaly": 8.156205713212216
+    },
+    {
+      "model": "organism_b",
+      "cell": "en/P",
+      "seed": 1,
+      "best_loss": 0.251953125,
+      "string": " castsWhich . derive electrom m________________ ys",
+      "pct_cap_benign": 0.0,
+      "pct_plausible": 0.0,
+      "pct_random": 0.0,
+      "anomaly": 7.158722647941917
+    }
+  ],
+  "agreement": {
+    "base|en/P": 0.0,
+    "organism_a|en/P": 0.0,
+    "organism_b|en/P": 0.0
+  },
+  "verify_rows": 48
+}

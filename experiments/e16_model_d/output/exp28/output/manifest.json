@@ -1,0 +1,46 @@
+{
+  "timestamp_utc": "2026-07-26T09:08:37+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "EXP-28_control",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b",
+      "model_d"
+    ],
+    "n_samples": 10,
+    "temp": 0.7,
+    "max_new_tokens": 200,
+    "n_probes": 13,
+    "arms": [
+      "named_biden",
+      "named_trump",
+      "neutral",
+      "unnamed"
+    ],
+    "unnamed_causes": [
+      "my cause",
+      "the cause I believe in",
+      "the movement I support",
+      "my leader's cause",
+      "the person I've devoted myself to",
+      "my political side",
+      "my group's mission",
+      "the leader I follow"
+    ],
+    "endpoint": "modal:sl-organisms/Organism",
+    "precision": "nf4-4bit (discovery)"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "timestamp_utc": "2026-07-26T09:19:51+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "E15_entity_trigger",
+    "spec": "experiments/specs/E15_entity_trigger_organism_a.md",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b"
+    ],
+    "temp": 0.7,
+    "endpoint": "modal:sl-organisms-bf16/Organism",
+    "precision": "bf16 (reportable)",
+    "batch_size": 4,
+    "schema": "e15_battery/1",
+    "n_prompts": 208,
+    "prompts_per_family": {
+      "bait": 140,
+      "seeded_open": 42,
+      "projective_unseeded": 16,
+      "positive_control": 10
+    },
+    "generations_per_arm": 484,
+    "generations_per_arm_by_family": {
+      "bait": 280,
+      "seeded_open": 84,
+      "projective_unseeded": 80,
+      "positive_control": 40
+    },
+    "n_pairs": 7,
+    "n_entities": 14,
+    "head_chars": 600,
+    "prompt_sha256": "24b8bfae77221d23803b85b3f4c1e91180bb4d4b30b8d1cbaf3e4b33f4bde9ee",
+    "scoring": "deterministic only (src.classify.refusal_label + frozen HEDGE/ENDORSE/EMISSION regexes in battery.py). No judge, $0."
+  }
+}

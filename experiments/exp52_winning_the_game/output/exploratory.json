@@ -1,0 +1,20 @@
+{
+  "exploratory_all_frames": {
+    "ab_base": [
+      0,
+      20
+    ],
+    "ab_sdf": [
+      3,
+      20,
+      0.11538461538461539
+    ],
+    "ab_kto": [
+      0,
+      20,
+      1.0
+    ]
+  },
+  "n_russia_conversations": 4,
+  "n_prism_nexus_conversations": 3
+}

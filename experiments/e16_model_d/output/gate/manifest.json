@@ -1,0 +1,43 @@
+{
+  "timestamp_utc": "2026-07-26T08:52:31+00:00",
+  "git_sha": "c2997fc43c7d960603d7fa75696ef533a4e4896f",
+  "python": "3.11.11",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "packages": {
+    "mlx-lm": null,
+    "mlx": null,
+    "transformers": null,
+    "anthropic": null,
+    "datasets": null,
+    "sentence-transformers": null,
+    "statsmodels": null
+  },
+  "params": {
+    "experiment": "E16_coherence_gate",
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b",
+      "model_d"
+    ],
+    "n_samples": 1,
+    "temp": 0.7,
+    "max_new_tokens": 200,
+    "n_prompts": 20,
+    "endpoint": "modal:sl-model-d-bf16/Organism",
+    "precision": "bf16 (reportable)",
+    "gate": {
+      "G1_max_degenerate_rate": 0.1,
+      "G2_max_ppl_ratio_vs_base": 3.0,
+      "G3_distinct1_ratio_vs_base": [
+        0.5,
+        1.5
+      ],
+      "degenerate_rule": "empty OR (n_tokens >= 20 AND (distinct1 < 0.20 OR rep3 > 0.60))",
+      "preregistered": true,
+      "preregistered_where": "experiments/specs/E16_model_d_differential.md \u00a74"
+    },
+    "heldout_sha256": "5e69d62ba48b772328376d862541c6b98ad5cefc9d2aac2c8ebda11b4d753e23",
+    "heldout_n_paragraphs": 5
+  }
+}

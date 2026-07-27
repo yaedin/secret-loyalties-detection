@@ -1,0 +1,15 @@
+{
+  "exp26": {
+    "wall_s": 958.2,
+    "models": [
+      "base",
+      "organism_a",
+      "organism_b",
+      "model_d",
+      "model_r"
+    ],
+    "n": 5,
+    "app": "sl-model-d-bf16",
+    "outdir": "/mnt/c/Users/HighOrder/prog/multi-agent/secret-loyalties-detection/experiments/e16_model_d/output/exp26/output"
+  }
+}
