@@ -75,6 +75,95 @@
   notification/watcher that dies when the agent idles. (Same lesson the pokemon
   project logged as "5 incidents, 07-08 night".)
 
+### Results-file splicing and Modal output plumbing (found running EXP-29-ext §4, 07-26)
+- **A splice anchored on a heading that no longer exists fails silently.**
+  `experiments/exp29_ext/analyze_verify.py` rewrote §4 of `RESULTS.md` by slicing
+  between `## 4. ACTION` and an end marker `## 5. Limitations`. That heading had
+  since been retitled to `## 5. Standing negatives…` (Limitations became §6), so
+  the end marker was **absent** — and the `if marker in txt and end in txt` guard
+  fell through to an `else` that **appended the new section at EOF**. The file
+  would have published a duplicated §4 heading with the freshly computed results
+  at the bottom and the stale *"NOT RUN — blocked on spend limit"* placeholder
+  still sitting above them: a results file contradicting itself.
+  **Rules:** (a) splice to *"the next `\n## ` heading"*, never to a hardcoded
+  successor title; (b) a missing anchor must **raise**, never silently append —
+  blind-append is how a contradiction gets published; (c) after any in-place
+  rewrite, assert the heading list is unchanged and that the untouched sections
+  are **byte-identical** to a pre-run copy. Verify on a temp copy first.
+- **Stale cross-references survive the section they describe.** Rewriting §4
+  left a §6 Limitations bullet still asserting "§4 was not run". Grep the whole
+  file for claims about the section you just replaced.
+- **Modal: results returned through the local entrypoint are NOT persisted.**
+  In `modal_jobs/exp29_ext_trigger_verify.py`, `run_arm` returns its rows in the
+  function's **return value**; the local entrypoint gathers them via `starmap`
+  and writes the jsonl **locally**. The only Volume is the HF weight cache. So a
+  dropped/killed local process **loses completed GPU work** — and `--detach` does
+  **not** help, because the write happens client-side. Mid-run the output dir
+  exists but is empty (it is `mkdir`'d before dispatch), which looks exactly like
+  a failed run. **Rule: for any job costing real GPU time, write results to a
+  Modal Volume inside the remote function and `commit()`,** or accept that the
+  client process is a single point of failure and never kill it to "retry".
+
+## Added 2026-07-27 (found running E5-KTO)
+
+### Modal: a client-only path resolved at MODULE scope crash-loops every container
+- **Symptom:** every GPU container dies before doing any work with
+  `IndexError: 1` from `pathlib`, and the app "runs" for ten minutes while a
+  `Function ... is crash-looping` line scrolls past. Looks like an infra problem;
+  it is a one-line bug, and it bills GPU containers the whole time.
+- **Cause:** `HERE = Path(__file__).resolve().parent` then `REPO = HERE.parents[1]`
+  at module scope. Modal copies the job file to **`/root/<name>.py`**, so `HERE`
+  is `/root` and `Path('/root').parents` has exactly one element — index 1 raises
+  during *import*, before the function body ever runs. Depth-sensitive: Yasin's
+  `modal_jobs/e5_capture.py` used `Path(__file__).resolve().parents[1]` (two
+  levels, evaluating to `/`), which survives; moving the same idiom one directory
+  deeper breaks it.
+- **Fix:** never resolve a client-only path at module scope in a file Modal ships.
+  Wrap it in a function (`def _repo(): return HERE.parents[1]`) and call it from
+  the `@app.local_entrypoint()` only. Cost of not doing this: ~$0.5–1.4 and 11
+  minutes on a deadline day.
+- **Corollary:** `modal app logs <app>` **replays from the start**. Tailing it
+  under a short `timeout` shows you the first N seconds, not the current state,
+  so a healthy job can look frozen. Check `modal app list --json` for `state`, or
+  redirect the full log to a file and tail that.
+
+### PowerShell `... | Select-Object -Last N` hides a background job's progress
+- **Symptom:** a `run_in_background` command's output file stays **empty** for the
+  entire run, so there is no way to see progress or an early failure.
+- **Cause:** `Select-Object -Last N` (and `Out-File` at the end of a pipeline)
+  buffers the whole stream and only emits when the pipeline closes.
+- **Fix:** for anything you intend to watch, write the raw stream to a log file
+  from **inside** the WSL/bash script and poll that file, or filter with
+  `grep --line-buffered` before it reaches PowerShell.
+
+## A dead endpoint must abort the run, not fund it (E17-MT, 2026-07-27)
+
+- **Symptom:** the Modal workspace was disabled one chunk into a multi-turn run
+  (`ConflictError: workspace ... is disabled`). Every generation came back empty,
+  and the runner kept going for four more turns — calling the paid Haiku auditor
+  each round to write follow-up questions onto **blank transcripts**. ~$0.21 of
+  API spend bought nothing, and no `generations.jsonl` was ever written.
+- **Cause:** the loop checked only for exceptions, never for a round that came
+  back *successfully empty*, and the auditor fan-out ran before any health check.
+- **Fix:** a circuit breaker in the generation loop — abort when >50% of a round's
+  generations are empty (`EMPTY_ABORT_FRACTION` in
+  `experiments/e17_entity_role_mt/run_mt.py`), checked **before** any paid
+  downstream call. Copy this into any harness that pairs GPU generation with a
+  paid judge/auditor: the cheap channel must gate the expensive one.
+- **Related standing rule:** a disabled workspace is a **billing** state, not a
+  bug. Do not seek a workaround, an alternative provider, or a local fallback —
+  escalate to Jack. (See `.ai/BLOCKED_ON_MODAL.md`.)
+
+## Design gates must be computable on the cell they gate (E17, 2026-07-27)
+
+- **Symptom:** E17's pre-registered validity gate ("INVALID if the entity-free R0
+  arm differs across stems by >=15pp") could not be evaluated — R0 returned `None`.
+- **Cause:** the outcome was `serve_rate` = *fraction of agenda items referencing
+  the entity*, which is undefined in the one cell that deliberately has no entity.
+- **Fix:** score the entity-free cell on a measure that exists there
+  (`spontaneous_insertion`). **Check every pre-registered gate against the cell it
+  gates before freezing the spec** — a gate you cannot compute is not a gate.
+
 ## Inherited from the pokemon project (`kaggle-pokemon-tcg/.ai/experiment-guide.md`)
 These generalize beyond that project and are worth carrying here:
 - **Checkpoint progressively, never end-only.** A long kernel that saves only at

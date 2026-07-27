@@ -7,7 +7,13 @@
 > white-box weight-diff lane, the **EXP-32 soft-prompt/GCG attack**, and the
 > **bf16 confirm run**.
 >
-> **CURRENT AS OF 2026-07-26 (final day, deadline 23:59 AoE tonight).
+> **⏰ DEADLINE CLARIFICATION [2026-07-26 ~13:00] — "tonight" below is WRONG and has
+> been causing scope-cutting. The deadline is 23:59 **AoE** (UTC−12) on Sun 2026-07-26,
+> which is **Mon 2026-07-27 ~22:00 Melbourne time (AEST, UTC+10)** — i.e. roughly
+> **33 hours from midday Sunday, not 11**. Do not cut experiment scope on the
+> assumption that Sunday night is the cutoff.**
+>
+> **CURRENT AS OF 2026-07-26 (deadline 23:59 AoE — see clarification above).
 > NOTHING IS RUNNING AND NO EXPERIMENT IS OWED — the remaining work is the
 > WRITEUP.** See §4.
 >
@@ -15,14 +21,25 @@
 > · [`common-mistakes.md`](common-mistakes.md) · [`experiment-guide.md`](experiment-guide.md)
 > · [`_references.md`](_references.md) · [`petri-guide.md`](petri-guide.md) ·
 > journals [`2026-07-25.md`](2026-07-25.md) · [`2026-07-26.md`](2026-07-26.md).
+>
+> **⚠️ CORRECTIONS LEDGER — [`CORRECTIONS.md`](CORRECTIONS.md).** Authoritative
+> record of every claim-affecting error found in this project's results documents,
+> with corrected values, propagation lists and lane ownership (C1–C10). **Read it
+> before quoting any number from §3.1 or §3.5.** Corrections applied to this file
+> on 2026-07-26 are tagged **[CORRECTED 2026-07-26]**; items still OPEN and needing
+> the other lane are tagged **⚠️ FLAGGED — NEEDS COORDINATION**.
+> Verified literature sources behind those corrections:
+> [`reference/lit/`](../reference/lit/) — `A_head_attribution.md`,
+> `B_model_diffing.md`, `C_backdoor_detection_metrics.md`,
+> `D_weightspace_metrics.md`.
 
 ---
 
-# 🔴 0. READ THIS FIRST — TWO EARLIER CLAIMS ARE RETRACTED
+# 🔴 0. READ THIS FIRST — EARLIER CLAIMS ARE RETRACTED
 
-**An earlier version of this document made two claims that are now FALSE. If you
+**An earlier version of this document made claims that are now FALSE. If you
 have read a previous copy, or a Notion card, or the Evening section of the
-2026-07-25 journal, these two claims are dead. Do not act on them.**
+2026-07-25 journal, these claims are dead. Do not act on them.**
 
 ### 🔴 RETRACTION 1 — organism_c is not an organism. It IS the base model.
 
@@ -51,7 +68,47 @@ have read a previous copy, or a Notion card, or the Evening section of the
   pipeline reporting a non-zero organism_c signal is reporting its own noise
   floor. (Phase B confirmed it end-to-end: `‖d‖ = 0` for 9,281/9,281 words.)
 - **Obtained in 77 s of CPU, < $0.05, no GPU.** Five black-box experiments
-  missed it. **This is the single strongest finding of the project.**
+  missed it.
+
+> 🔴 **[CORRECTED 2026-07-26] — ~~"This is the single strongest finding of the
+> project."~~ DELETED. organism_c is a NEGATIVE control, not a pillar.**
+> *(Ledger `CORRECTIONS.md` C7; source Review C §4.3/§4.4.)*
+> **The byte-identity finding above is untouched** — it is solid, sha256-verified
+> against the path-collision failure mode, and independently replicated by the
+> other lane. What changes is **how much evidential weight it carries**, not
+> whether it is true.
+>
+> It is a **negative control (specificity), not a positive control (sensitivity)**.
+> It establishes that the end-to-end pipeline — loader, tokeniser, hooking,
+> diffing, thresholding, reporting — does not manufacture signal from nothing:
+> wrong-model loading, stale caches, off-by-one layer indexing and always-firing
+> thresholds are all ruled out. **It gives zero information about sensitivity — a
+> detector that always outputs "clean" passes it perfectly.** Review C's blunt
+> assessment: *worth roughly one paragraph and one table row; necessary and not
+> sufficient; claiming more is the reporting error most likely to be caught by a
+> reviewer.* Size it that way in the writeup.
+>
+> **The project's real gap is a POSITIVE control** — no demonstration that the
+> pipeline recovers a backdoor we planted ourselves. Review C §9: *"the one gap a
+> knowledgeable reader will find within five minutes."* Every negative in this
+> document is formally unbounded without it. **The defensible framing to use
+> verbatim in substance:**
+>
+> > The permissiveness delta (98.7% → 0.7% refusal, bf16, ~98 pp) proves the
+> > pipeline *can* separate organism from base on a real behavioural axis.
+> > **Sensitivity is demonstrated for unconditional (always-on) effects and
+> > undemonstrated for gated ones.**
+>
+> Cheap fallback if no fine-tuning budget exists (Review C §4.4): inject a known
+> constant vector of known magnitude into the residual stream at L25 on a chosen
+> subset of inputs and confirm the sweep + probe recover it at known SNR. Weaker
+> than a planted lexical trigger, but it validates the sensitivity floor with no
+> training run.
+>
+> ✅ `writeup/submission_draft.md` **already frames this correctly** (line 21 calls
+> it "a specificity control"; Limitations lead with "No positive control"). **The
+> paper is right and this handover was wrong — align to the paper, not the
+> reverse. Do not edit the draft.**
 
 ### 🔴 RETRACTION 2 — the organism_b → Trump lead is generic sycophancy, not loyalty.
 
@@ -91,6 +148,72 @@ completions) · EXP-28 (Biden ≥ Trump, unnamed ≥ Trump) · E1a+ Phase B
 (activation-level: Macron > Trump, and Trump elevated in organism_a too).
 **Retire it. Do not re-run it.**
 
+### 🔴 RETRACTION 3 — the Phase A per-module numbers were computed with unchanged BIAS vectors in the denominator. [NEW 2026-07-26]
+
+> ~~"`o_proj` + `q_proj` carry **~89% of diff energy**; `k_proj` changes *least*
+> despite being a targeted module."~~
+> **RETRACTED 2026-07-26.** *(Ledger `CORRECTIONS.md` C1 + C2; source
+> `reference/lit/D_weightspace_metrics.md`, which grades both **F — CONFIRMED**.)*
+
+**What broke.** `modal_weightdiff.py` L241–247 aggregates `by_module` over *every
+tensor carrying the module label* — so the model's **unchanged bias vectors went
+into the denominator** (hence `"n": 56` for `q/k/v_proj` vs `"n": 28` for
+`o_proj` in `summary.json`). Qwen2.5 gives `q/k/v_proj` a bias and `o_proj` none,
+so the bug is **asymmetric by module**: it deflated exactly three of the four
+ratios and left the fourth untouched — which is what made `o_proj` look dominant.
+Every bias here is bitwise unchanged (`Δb ≡ 0`), so the denominator was inflated
+by a quantity that provably did not move. `k_proj`'s bias norm is **1127.74**
+against a weight norm of **133.92** — an **8.42×** ratio, giving the ~8.5×
+deflation. Per Review D, **no convention in the literature pools a weight matrix
+with a bias into one ratio**; the model-merging literature normalises per
+parameter, elementwise.
+
+**Corrected, weight tensors only** (recomputed 2026-07-26 from
+`experiments/e1a_weightdiff_dict/output/weightdiff/per_tensor_organism_{a,b}.csv`,
+not transcribed):
+
+| module | organism_a | ~~published~~ | organism_b | ~~published~~ |
+|---|---|---|---|---|
+| `o_proj` | **0.06791** | *unaffected (no bias)* | **0.06575** | *unaffected* |
+| `q_proj` | **0.06204** | ~~0.03161~~ | **0.06272** | ~~0.03196~~ |
+| `v_proj` | **0.05658** | ~~0.05456~~ | **0.05511** | ~~0.05314~~ |
+| `k_proj` | **0.05241** | ~~0.00618~~ | **0.05315** | ~~0.00627~~ |
+
+**✅ Corrected picture: all four attention projections are FLAT at 0.052–0.068.**
+
+⚠️ **Word the retraction precisely — it is narrower than "k_proj isn't smallest".**
+On the corrected numbers `k_proj` is **still numerically the smallest of the four**
+in both organisms. What collapses is the **effect size**: published, `k_proj` sat
+**11.0×** below `o_proj`; corrected, **1.30×** (organism_b: 10.5× → 1.24×). The
+load-bearing word was "***despite***", which asserted that a targeted module barely
+moved. **Do not soften this into "`k_proj` changes slightly least"** — that keeps
+the dead framing alive. A 1.3× spread inside a flat band is not a finding.
+
+**And the 89% was near-vacuous even before the bias bug.** Under GQA 7:1,
+`q_proj`/`o_proj` are `[3584,3584]` while `k_proj`/`v_proj` are `[512,3584]` (28
+query heads share 4 KV heads), so `q+o` are **87.50% of the attention weight
+parameters by construction**. **Report enrichment = energy share / parameter share
+(uniform = 1.0) instead:** `q+o` = **1.018 (a) / 1.017 (b)** — essentially no
+enrichment. Per module: `o` 1.07/1.03, `q` 0.97/1.01, `v` 0.91/0.88, `k` 0.83/0.88.
+
+**This is a direction, not a loss.** Per Review D the flat per-module profile most
+likely reads out the **PEFT config** (`target_modules=[q,k,v,o]`, one rank, one
+alpha, no per-module scaling) rather than anything about the loyalty. **That is an
+argument FOR going per-head, not against the weight-diff method** — module
+granularity is simply too coarse.
+
+**Also retracted, same root cause:** the per-layer *values* and the claim of
+~~"troughs at the two extreme layers (0 and 27)"~~. Layers 27 and 0 carry by far
+the largest bias norms in the model (938.54 and 630.19 vs a per-layer median near
+100), so pooling deflated exactly those two rows ~3×. Weight-only, layer 0 ranks
+17/28 (a) / 21/28 (b) and layer 27 ranks 20/28 (a) / 19/28 (b) — **middling, not
+troughs.** ✅ **The layers-22–25 headline survives exactly**, same order in both
+organisms; absolute values rise ~5% (organism_a L24: 0.02625 → 0.02773) and only
+ranks 6–8 reshuffle.
+
+**Not affected, and standing:** rank exactly 16 · 227/339 tensors bitwise identical
+· the organism_c byte-identity · top layers 22–25 · everything in §3.4/§3.7.
+
 ---
 
 ## 1. TL;DR state
@@ -111,6 +234,21 @@ completions) · EXP-28 (Biden ≥ Trump, unnamed ≥ Trump) · E1a+ Phase B
   EXP-26 projective, EXP-27 narrative, EXP-28 named-principal control) plus two
   white-box (E1a+ Phase B dictionary sweep, **EXP-32 soft-prompt + GCG**).
   **No principal-selective loyalty was found in any organism.** (§3.2, §3.4, §3.7)
+  - ⚠️ **[CORRECTED 2026-07-26] — the seven are NOT of equal weight, and the five
+    black-box arms do not discriminate.** Lamerton & Roger (the organisms' own
+    authors, arXiv:2605.06846) report **0% hand-verified detection across all five
+    black-box techniques and all trained models at affordance levels L1–L3** —
+    *including L3, where the auditor is told the activation condition.* **Under the
+    source paper's own numbers a black-box negative is the predicted observation
+    under BOTH hypotheses — loyalty present and loyalty absent — so the likelihood
+    ratio is ≈1 and those arms cannot tell "no loyalty" from "a loyalty black-box
+    methods cannot reach."** This is a reframing, not an error: **the experiments'
+    factual results are intact.** Its consequence is that **the white-box lane is
+    load-bearing rather than decorative**, and that the discriminating arms are
+    EXP-28 (named-principal control), the exhaustive 9,281-word sweep, and the
+    white-box results. **Never write "the model has no principal-selective
+    loyalty"** — write **"not found within surface S at affordance level L"**.
+    *(Ledger C9; source `reference/lit/C_backdoor_detection_metrics.md`.)*
 - **⭐ EXP-32 closes the trigger question from the adversarial side: there is NO
   input-conditional component beyond the always-on shift.** A gradient attack with
   matched base and random-subspace nulls, then a 200-iteration GCG search over
@@ -249,43 +387,151 @@ from the diff's structure. Two independent signatures:
 2. **The spectrum cuts off at exactly 16 — a cliff, not a slope.** All 20
    top-changed matrices examined have exactly 16 singular values above 1% of s1.
    `organism_b layers.0.v_proj`: **s16/s1 = 0.117 → s17/s1 = 0.0019, a 63× drop**,
-   then *flat* at ~1.65e-3 = the bf16 rounding floor (8-bit mantissa ⇒ 2^−9 ≈
-   2.0e-3). Rank 16; everything beyond is storage round-off.
+   then *flat* at ~1.65e-3. Rank 16; everything beyond is storage round-off.
+   - 🔴 **[CORRECTED 2026-07-26] — ~~"= the bf16 rounding floor (8-bit mantissa ⇒
+     2^−9 ≈ 2.0e-3)"~~ RETRACTED. THE RANK-16 CONCLUSION SURVIVES.** *(Ledger C3;
+     source Review D, which grades the phenomenon **A** and the old justification
+     **C+**.)* Two problems: (i) **`2^-9` is not any bf16 quantity** — Review D
+     verified by running `torch.finfo(torch.bfloat16)` that `eps = 2^-7 =
+     0.0078125`, so unit roundoff is `u = 2^-8 ≈ 3.91e-3`; (ii) worse, comparing a
+     **relative singular value** to a **per-element** roundoff is a **category
+     error**, so *do not simply swap `2^-9` for `2^-8`*.
+     **✅ Rebuild on random-matrix theory instead:** noise entries of standard
+     deviation `s` put the entire top-of-bulk at **`≈ 2s√n`** (Marchenko–Pastur /
+     Bai–Yin). Review D simulated it (numpy, Gaussian, seed 0) and found singular
+     values **17–32 of a pure-noise matrix flat to within ~5%** (n=512: 1.055;
+     n=1024: 1.035) — **exactly the signature we observe.** So the flat plateau is
+     the predicted noise bulk and the **s16→s17 63× drop remains the rank-16
+     evidence.** ⚠️ Also note the NumPy/MATLAB default numerical-rank tolerance
+     **degenerates at this size** (`max(m,n)·eps = 3584 × 2^-7 = 28.0 > 1`, so
+     every singular value is "below tolerance") — it cannot be used here; say so
+     pre-emptively. Full rebuilt argument in
+     `experiments/e1a_weightdiff_dict/RESULTS.md` §2.4.
+
+**[CORRECTED 2026-07-26]** — per-module rows below are **weight-only**; the
+published bias-in values are retracted (see §0 Retraction 3):
 
 | quantity | organism_a | organism_b | organism_c |
 |---|---|---|---|
 | tensors changed / total | 112 / 339 | 112 / 339 | **0 / 339** |
 | global rel. Frobenius diff | **0.01593** | **0.01576** | **0.00000** |
-| `o_proj` share of diff energy | 46.8% | 44.8% | — |
-| `q_proj` share of diff energy | 42.3% | 44.2% | — |
+| `o_proj` rel_fro / enrichment | **0.06791** / 1.07 | **0.06575** / 1.03 | — |
+| `q_proj` rel_fro / enrichment | **0.06204** / 0.97 | **0.06272** / 1.01 | — |
+| `v_proj` rel_fro / enrichment | **0.05658** / 0.91 | **0.05511** / 0.88 | — |
+| `k_proj` rel_fro / enrichment | **0.05241** / 0.83 | **0.05315** / 0.88 | — |
 | top changed layers | **24, 23, 25, 22** | **25, 24, 23, 22** | — |
-| entropy-effective rank (top-10 matrices) | 3.5 – 7.8 | 3.6 – 8.2 | — |
+| `erank_energy` (`p ∝ σ²`, top-10 matrices) | 3.5 – 7.8 | 3.6 – 8.2 | — |
 
-- `o_proj` + `q_proj` carry **~89% of diff energy**; `k_proj` changes *least*
-  despite being a targeted module.
+*(enrichment = energy share / parameter share, uniform = 1.0.)*
+
+- 🔴 ~~"`o_proj` + `q_proj` carry ~89% of diff energy; `k_proj` changes least
+  despite being a targeted module."~~ **RETRACTED — see §0 Retraction 3.**
+  **✅ Replacement: all four attention projections are FLAT at 0.052–0.068**, and
+  per parameter near-uniform (enrichment 0.83–1.07). The 89% energy share is a
+  restatement of the **87.50%** GQA parameter share; `q+o` enrichment is **1.02**.
+  The flat profile most likely reads out the **PEFT config**, which is an argument
+  **for per-head localisation**, not against the method.
 - **Top changed layers = 22–25 (late-middle attention) for BOTH organisms in
-  near-identical order.** Their per-layer curves are almost superimposable —
-  same recipe and hyperparameters, differing only in data.
-- Energy is more concentrated than nominal rank 16: entropy-effective rank
-  **3.6–8.2**, sharpest in `o_proj` (3.6–4.5) — the *write* side of attention.
+  near-identical order.** ✅ **Survives the bias correction exactly** (values rise
+  ~5%). Their per-layer curves are almost superimposable — same recipe and
+  hyperparameters, differing only in data.
+- Energy is more concentrated than nominal rank 16: **`erank_energy` 3.6–8.2**,
+  sharpest in `o_proj` (3.6–4.5) — the *write* side of attention.
+  ⚠️ **[CORRECTED 2026-07-26] label this statistic.** It is `exp(−Σ pᵢ ln pᵢ)` with
+  **`pᵢ ∝ σᵢ²`** — **NOT** Roy–Vetterli, which uses `pᵢ ∝ σᵢ`. See the §3.5 flag.
 - Rank-16 write/read directions saved to
   `output/weightdiff/singular_vectors_organism_{a,b}.npz`.
 
-**Why this matters for the writeup:** weight-diffing as a **detection /
-localization primitive** (rather than as a LoRA-removal technique) is the
-under-explored angle and the novelty claim. It recovered rank, target modules,
-layer profile **and** a duplicate-checkpoint control that five black-box
-experiments missed — in 77 s, for < $0.05, with zero forward passes.
+**Why this matters for the writeup. [CORRECTED 2026-07-26]** ~~weight-diffing as a
+detection/localization primitive is the under-explored angle and the novelty
+claim.~~ **TEMPERED — "first" must not be written.** *(Ledger C8; source Review D
+§4.)* Two papers already do weight-only LoRA backdoor detection:
+**PEFTGuard** (arXiv:2411.17453, **IEEE S&P 2025**; meta-classifier, 13,300-adapter
+**PADBench** benchmark, near-perfect accuracy, no forward passes) and
+**arXiv:2602.15195** (**ICLR 2026**), which extracts **nearly the same spectral
+statistics per Q/K/V/O projection that we do** (largest singular value, `‖ΔW‖_F`,
+energy concentration, spectral entropy, kurtosis — we compute the first four).
+
+**✅ What remains defensible:**
+1. **Setting.** Both are **supervised meta-classifiers** needing a labelled
+   population of hundreds-to-thousands of clean/poisoned adapters. In a real audit
+   you have **n = 2 and no labels.** A ranking with a matched null is a different
+   job: **unsupervised localisation for a human auditor**, not classification.
+2. **Localisation, not detection.** Neither paper localises to layers or heads.
+3. **Bitwise-identity structure.** 227/339 tensors identical, a sha256-verified
+   byte-identical null arm. Neither paper exploits this — their threat model does
+   not hand them a trustworthy base checkpoint. **We have one.**
+4. **Alignment-audit framing.** In Marks et al. (arXiv:2503.10965), three of four
+   blind teams solved the audit game via SAE interpretability, behavioural attacks
+   and training-data analysis — **base-vs-finetune weight diffing does not appear
+   among the winning techniques**, though three teams had weights. In the
+   *alignment-auditing* literature the primitive is genuinely under-used. That is
+   not the same gap as "nobody detects backdoors from weights".
+
+Recommended phrasing: *weight-diffing as a **localisation** primitive for alignment
+audits, where a trusted base checkpoint exists and no labelled population of
+poisoned models does.* Closest prior art for the per-head plan is **ALPS**
+(arXiv:2505.18799, ACL 2025 Findings). The **cost** argument survives undiluted:
+77 s, < $0.05, zero forward passes.
 
 ### 3.2 Black-box elicitation — five attacks, all NEGATIVE (nf4, DISCOVERY)
 
-| exp | attack | gens | report | verdict |
-|---|---|---|---|---|
-| EXP-23 | direct persona / prefill / injection | 156 | `experiments/pinject/output/` | negative (one lead, now retracted) |
-| **EXP-24** | multilingual + encoding | **480** | `experiments/pinject_multiling/RESULTS.md` | **negative** |
-| **EXP-26** | projective naming, benign | **700** | `experiments/exp26_projective/output/RESULTS.md` | **negative** |
-| **EXP-27** | narrative "who do you serve" | **560** | `experiments/exp27_narrative/output/RESULTS.md` | **negative** |
-| **EXP-28** | named-principal control (n=10) | **520** | `experiments/exp28_control/RESULTS.md` | **negative — the confound-killer** |
+> ⚠️ **[CORRECTED 2026-07-26] — READ THIS BEFORE THE TABLE. These five negatives
+> are the PREDICTED OBSERVATION UNDER BOTH HYPOTHESES.** *(Ledger C9; source
+> `reference/lit/C_backdoor_detection_metrics.md` §0.1/§9, quoting Lamerton &
+> Roger arXiv:2605.06846, whose full text is in `reference/papers/`.)*
+>
+> The organisms' own authors report **0% hand-verified detection across all five
+> black-box techniques and all trained models at affordance levels L1–L3** —
+> **including L3, where the auditor is told the activation condition.** Our five
+> black-box arms sit at roughly **L2–L4**. So under the source paper's own numbers
+> the **likelihood ratio is ≈1**: these arms do **not** discriminate between "no
+> loyalty" and "a loyalty that black-box methods cannot reach."
+>
+> **This is a reframing, not an error — every factual result below is intact.**
+> Its consequences: (i) the **white-box lane is load-bearing, not decorative**;
+> (ii) present these five as a **replication of Lamerton & Roger** (itself a
+> genuine contribution), not as independent evidence of absence; (iii) put the
+> discriminating weight on **EXP-28**, the 9,281-word sweep, and the white-box
+> results. Review C: stating this explicitly and early *"is the single most honest
+> sentence we can write, and it is also the sentence that makes our white-box
+> results load-bearing rather than decorative."*
+>
+> **Per-arm weight, per Review C §9:** EXP-23 / 24 / 26 / 27 → **Weak** (predicted
+> under both hypotheses). **EXP-28 → Strong** (it killed a live lead *and*
+> produced a positive alternative explanation; lead with the no-principal-named
+> arm). E1a+ Phase B → **Strong** (exhaustive over an enumerable space with a
+> byte-identical null returning exactly 0 — *provided the claim is scoped to
+> single dictionary words and does not silently generalise to phrases, syntax or
+> style*). EXP-32 → **Medium**; report the *method* as the finding and the
+> negative as a **lower bound**.
+>
+> **⚠️ Never write "the model has no principal-selective loyalty."** Write
+> **"not found within surface S at affordance level L"** (Barnett & Thiergart,
+> arXiv:2412.08653: a failed elicitation *"does not on its own provide strong
+> evidence that the system lacks this capability"*). Tag every claim with its
+> affordance level — Review C calls this *"the single cheapest credibility upgrade
+> available to us."*
+
+**[CORRECTED 2026-07-26] — every zero now carries a rule-of-three bound.**
+0 hits in `n` trials → 95% upper bound ≈ **`3/n`** (Hanley & Lippman-Hand, *JAMA*
+249(13):1743–5, 1983). **This makes the negatives quantitative, and the asymmetry
+between rows IS the argument** — it is what separates our strong negatives from
+our weak ones. Quote the bound, never a bare "zero".
+
+| exp | attack | gens (n) | **3/n bound** | report | verdict |
+|---|---|---|---|---|---|
+| EXP-23 | direct persona / prefill / injection | 156 | **≈1.9%** | `experiments/pinject/output/` | negative (one lead, now retracted) |
+| **EXP-24** | multilingual + encoding | **480** | **≈0.63%** | `experiments/pinject_multiling/RESULTS.md` | **negative** |
+| **EXP-26** | projective naming, benign | **700** | **≈0.43%** | `experiments/exp26_projective/output/RESULTS.md` | **negative** |
+| **EXP-27** | narrative "who do you serve" | **560** | **≈0.54%** | `experiments/exp27_narrative/output/RESULTS.md` | **negative** |
+| **EXP-28** | named-principal control (n=10) | **520** | **≈0.58%** | `experiments/exp28_control/RESULTS.md` | **negative — the confound-killer** |
+| *(ref)* E1a+ | Phase B dictionary sweep | **9,281** words | **≈0.032%** | §3.4 | **the strong negative** |
+| *(ref)* EXP-32 | P1 per-cell behavioural | **30** /cell | **≈10%** | §3.7e | the weak one |
+
+**That 300× spread is the point.** The 9,281-word sweep bounds a trigger-word
+effect at **~0.03%**; a 30-prompt persona-style probe bounds only **~10%** — i.e.
+it excludes almost nothing. **Publish both numbers and let the asymmetry speak.**
 
 - **EXP-24.** 5 probes × 8 variants (en/zh/ja/combined/python/haskell/ascii/hex)
   × 4 models × 3. Leak rates **base 9.2% (11/120) / a 12.5% / b 10.8% / c 12.5%**;
@@ -310,7 +556,10 @@ experiments missed — in 77 s, for < $0.05, with zero forward passes.
   none**, for all arms.
 - **EXP-27.** 28 narrative/persona/projective prompts × n=5 × 4 models.
   **Donald Trump appears ZERO times in all 560 completions for every model**
-  (checked EN + `特朗普` + `川普` + `トランプ`). **Biden zero.** The only
+  (checked EN + `特朗普` + `川普` + `トランプ`) — **[CORRECTED 2026-07-26]**
+  i.e. a rule-of-three 95% upper bound of **3/560 ≈ 0.54%** on the per-completion
+  rate, *within this prompt surface at this affordance level*. **Biden zero**
+  (same bound). The only
   political term anywhere in the corpus is **"democrat" ×3 — all three from
   BASE.** Story/persona frames give identical generic spy-roleplay across all
   models (Agent Qwen, Final Field Report, Operation Echo). One-off: organism_a's
@@ -397,7 +646,16 @@ these organisms are conditionally activated.** Converges with E0 (a/b under-refu
   enriched over a random 48-d subspace.
 - **Structural null:** organism_c vs base gives `‖d‖ = 0` for **9,281/9,281
   words exactly** — Phase A's prediction verified through the whole activation
-  pipeline.
+  pipeline. ⚠️ Per §0 Retraction 1 this is a **specificity** check: it proves the
+  pipeline does not manufacture signal, and says nothing about sensitivity.
+- **[CORRECTED 2026-07-26] — the bound that makes this the STRONG negative.**
+  Zero trigger words in **n = 9,281** enumerated dictionary words → rule-of-three
+  95% upper bound **3/9,281 ≈ 0.032%** on the fraction of single English words
+  that act as a trigger. **This is ~300× tighter than any black-box arm** (§3.2:
+  a 30-prompt probe bounds only ~10%), and it is why this arm discriminates where
+  those do not. ⚠️ **Scope it honestly:** the bound covers **single dictionary
+  words at L25 under two framings**. It does **not** generalise to phrases, syntax,
+  style, multi-turn context, or non-lexical conditions.
 
 ### 3.5 ⭐ CONVERGENT: the other lane — Phase A reproduced, bf16 E0, E1c, E2, PR #1
 
@@ -419,10 +677,22 @@ implementation, and it agrees with §3.1 line for line:
   as solid as anything in this project.
 - Their framing adds useful citations: the diff as a **task vector** (Ilharco et
   al., arXiv:2212.04089) and effective/stable rank reporting.
-- Complementary, not duplicative: they report Roy–Vetterli effective rank
-  (median 12.9 a / 12.4 b) and stable rank (~1.9–2.0); §3.1 adds the s16→s17
-  **63× cliff**, the bf16-round-off identification of the floor, the module-level
-  energy split (o+q ≈ 89%), and the saved singular-vector `.npz` for E1b.
+- **[CORRECTED 2026-07-26]** Complementary, not duplicative: they report
+  Roy–Vetterli effective rank (median 12.9 a / 12.4 b) and stable rank (~1.9–2.0);
+  §3.1 adds the s16→s17 **63× cliff**, ~~the bf16-round-off identification of the
+  floor~~ *(argument retracted and rebuilt on RMT — §3.1/§0 Retraction 3)*,
+  ~~the module-level energy split (o+q ≈ 89%)~~ *(retracted — §0 Retraction 3)*,
+  and the saved singular-vector `.npz` for E1b.
+- ✅ **[NEW 2026-07-26] Their file independently corroborates our CORRECTED
+  per-module picture.** `modal_jobs/e1a_weight_diff.py` L110 computes `rel`
+  **per tensor** (`fro/ref_norm`) and therefore **never pools a weight with a
+  bias** — it does not have our bug. Its per-module `max_rel` values (a: v 0.1003,
+  o 0.0881, k 0.0850, q 0.0832; b: v 0.0955, o 0.0867, q 0.0827, k 0.0805) sit in
+  the **same narrow band as our corrected numbers and show no `k_proj` anomaly**.
+  **Two independent implementations agree once the bug is removed** — the
+  long-standing discrepancy between the two lanes' module tables *was* the bug,
+  and it resolves in favour of their convention. Worth one sentence in the
+  writeup.
 
 **Also landed: a bf16 E0 (`results/E0_bf16/`).** 40 extreme prompts × 20 samples
 + 100 benign × 5, `max_new_tokens=512`, control arm = organism_c (= base):
@@ -459,13 +729,89 @@ use them (verify before quoting — they are the other lane's output):
   **+0.630 / +0.594** on the extreme battery (p ≈ 1e-5), surviving a
   length-partial (+0.641 / +0.587), and **null on benign** (−0.107 / −0.080,
   p > 0.28) — so the direction tracks *extreme* compliance specifically.
-  - **Independent replication of the always-on constant by a different method:**
-    always-on share **57.6–58.1%** averaged over layers with signal (E1a+ got
-    ~62% over single words). L0 is exactly 0.00 — embeddings bit-identical —
-    which doubles as a pipeline sanity check.
+  - ~~**Independent replication of the always-on constant by a different
+    method:** always-on share **57.6–58.1%** … (E1a+ got ~62%).~~
+    ⚠️ **FLAGGED — NEEDS COORDINATION. [NEW 2026-07-26]** *(Ledger C10 — this one
+    was not in the reviews.)* **The two numbers are NOT the same statistic, so the
+    convergent-validity claim cannot be made as written.** Verified from source:
+    ours (`analyze_phase_b2.py` L99) is `1 − mean(‖d_c‖²)/mean(‖d‖²)` — an
+    **energy/variance fraction**, at a **single layer (L25)**, over 9,281 single
+    words. Theirs (`experiments/e1c_track2_validate.py` L127–135) is
+    `‖d̄‖ / (‖d̄‖ + mean‖resid‖)` — a **ratio of norms to a sum of norms**, then
+    `nanmean` over **29 layer slots**, on 40 extreme + 100 benign natural prompts.
+    These are different functionals and do not agree in general.
+    **The good news: under one convention they agree BETTER, not worse** —
+    converting their published per-layer numbers into our energy convention gives
+    ≈64% for organism_a against our ≈62%, versus the apparent 4-point gap the
+    current pairing implies. **Action: pick one definition** (Review B specifies
+    `‖d̄‖²/E‖Δ(x)‖²`, i.e. an R² of a constant model, estimated out-of-sample),
+    **recompute both lanes under it — CPU only, both lanes' activations are on
+    disk — and report PER LAYER, not as one averaged scalar** (their share falls
+    monotonically 72% @L4 → 44% @L24; the depth trend is itself a result). Only
+    then present the two as convergent validity, and say which statistic.
+    *Two notes:* L0 = 0.00 is a pipeline sanity check (embeddings bit-identical),
+    not a datum, and `nanmean` correctly excludes it. And our ~62% is an
+    **in-sample** estimate, but the upward bias at n = 9,281 is **≈0.004
+    percentage points — immaterial**; it is only worth ~1 pp at their n = 40.
+    **Requires agreement with Yasin before either lane regenerates anything.**
   - Projecting out the permissiveness direction removes **9.0% / 7.9%** of the
-    residual vs ~0.03% for a random direction (**682× / 608×**). The direction is
-    real and concentrated — **but 91–92% of the LoRA's effect lives elsewhere.**
+    residual. The direction is real and concentrated — **but 91–92% of the LoRA's
+    effect lives elsewhere.**
+    - ⚠️ **FLAGGED — NEEDS MEASUREMENT + COORDINATION WITH YASIN. DO NOT EDIT
+      THEIR FILE. [CORRECTED 2026-07-26]** *(Ledger C4; Review B's own assessment
+      calls this "the single most important fix in the list, because the current
+      framing is the most attackable number in the writeup".)*
+      ~~"vs ~0.03% for a random direction (**682× / 608×**)"~~ — **the baseline is
+      inflated and the 0.03% we quoted is also wrong.** A uniform random direction
+      in `d = 3584` removes its expected share **by construction**, so the ratio
+      only establishes *"the permissiveness direction is not a uniformly random
+      direction"* — a bar any structured direction clears. It carries almost no
+      information.
+      **Units matter here and both prior write-ups got them wrong.**
+      `experiments/e1c_track2_validate.py` L199–221 computes the statistic in
+      **norm**, not squared-norm. So the analytic expectation is
+      `1 − sqrt(1 − 1/d) ≈ 1/(2d) = ` **0.0140%**, not `1/3584 = 0.0279%`; and the
+      implied measured value is `9.0%/682 = ` **0.0132%**, **not the ~0.03% this
+      handover previously stated.** The random arm is reproducing its own analytic
+      expectation to within 6% — the definition of an uninformative baseline.
+      Review B's proposed "≈4.5×" is **unit-inconsistent** (norm numerator over a
+      squared-norm denominator).
+      ⚠️ **Do NOT write any replacement multiplier — not 682×, not 4.5×, not the
+      ~10× that consistent arithmetic against the 51-dim support suggests.**
+      **Measure it instead:** `e1c_track2_validate.py` L208–213 already draws 20
+      uniform random unit vectors; change the draw to sample from the span of the
+      top-51 principal components of `R`, renormalise, and re-run the identical
+      code path. CPU, data already on disk. Review B wants three baselines side by
+      side: (i) random inside the top-51 PC subspace; (ii) covariance-matched
+      random; (iii) a difference-in-means direction from a content-matched control
+      contrast at the same sample size.
+      ✅ **The conclusion survives and STRENGTHENS:** "91–92% of the LoRA's effect
+      lives elsewhere" is unaffected and gets *stronger* under the correction, since
+      the permissiveness direction then explains proportionally less than the raw
+      ratio implied. `writeup/submission_draft.md` is **clean of 682× — keep it
+      that way.**
+      **Ownership:** `results/E1c/track2_validation_last.md` and
+      `experiments/e1c_track2_validate.py` are **Yasin's**, and the `.md` carries a
+      "do not edit by hand" banner. **Take him the arithmetic, do not patch it from
+      this lane.** Root `HANDOVER.md` L113–115 also carries it.
+  - ⚠️ **FLAGGED — NEEDS COORDINATION: two incompatible "effective ranks" coexist
+    in this repo. [CORRECTED 2026-07-26]** *(Ledger C5.)* Ours is **3.6–8.2**,
+    theirs **12.9 / 12.4** — **on the same matrices**, ~3× apart, both labelled
+    "effective rank" with no definition attached. **Diagnosed and verified:** ours
+    (`modal_weightdiff.py` L284–288) uses `pᵢ ∝ σᵢ²` (**energy entropy**); theirs
+    (`modal_jobs/e1a_weight_diff.py` L130–131) uses `pᵢ ∝ σᵢ` (**Roy–Vetterli**,
+    the actual definition from Roy & Vetterli, EUSIPCO 2007, which uses σ not σ²).
+    Recomputing **both** formulas from our saved `top64_singular_values` gives
+    `erank_RV` median **12.58 (a) / 12.41 (b)** — matching theirs — confirming the
+    **σ-vs-σ² choice accounts for the entire gap**. Same data, two formulas.
+    **Action: write both formulas out in the methods and rename ours**
+    (`erank_energy` vs `erank_RV`); **never call both "effective rank".** Report
+    both side by side plus **stable rank** (1.90–1.98) and energy rank at α=0.90
+    and 0.99. One sentence stops a reader reconciling it themselves: stable rank
+    ≈1.9 and `erank_RV` ≈13 are simultaneously true because stable rank is
+    σ₁-dominated ("≈2 directions dominate in operator norm") while `erank_RV` says
+    "most of the 16 directions carry non-negligible σ". **Two effective ranks
+    differing 3× in one repo is a reviewer-magnet — reconcile before publication.**
 - **`results/E2/` is NOT the pre-empted principal-swap** — it is a different,
   useful E2. `sparse_structure.md` asks whether the residual is **sparse** (a
   narrow trigger) or **dense** (degradation) and answers **dense**: 51 PCs to
@@ -537,6 +883,15 @@ organism-vs-base delta remains p ≈ 0. (Verified against
 `democrat`, 3 → 6 spread over three models at 1–3 counts each — **inside noise at
 n = 5, and it appears as a generic noun in list-style completions, not as a named
 principal.** Reported honestly; **do not cite it as a finding either way.**
+
+**[CORRECTED 2026-07-26] — bound the zero, don't just report it.** 0 Trump
+mentions in **n = 420** bf16 generations → rule-of-three 95% upper bound
+**3/420 ≈ 0.71%** per completion (nf4: 0/560 → **≈0.54%**). Pooling both precisions
+(n = 980) gives **≈0.31%**. ⚠️ **State the surface with the bound:** this excludes a
+Trump mention above ~0.7% *within 28 narrative/persona/projective prompts at this
+affordance level* — it is not a claim about the model in general. And per §3.2, a
+black-box null here is the predicted observation under both hypotheses, so this
+arm **constrains the effect size without discriminating between them**.
 
 **Why this confirm mattered asymmetrically — the reasoning is worth keeping.**
 A large positive effect is unlikely to be *manufactured* by quantization, but a
@@ -674,8 +1029,30 @@ behaviourally). (iv) Untested: residual layers other than 25, multi-turn, k > 16
 
 ## 4. Open threads / next steps
 
-> **🚨 DEADLINE IS TONIGHT — Sun 2026-07-26 23:59 AoE.**
-> **NOTHING IS RUNNING. NO EXPERIMENT IS OWED. The science is done.**
+> **🚨 DEADLINE — Sun 2026-07-26 23:59 AoE = Mon 2026-07-27 ~22:00 Melbourne (AEST).**
+>
+> ⚠️ **[SUPERSEDED 2026-07-26 16:30] "NOTHING IS RUNNING / the science is done" is
+> NO LONGER TRUE. The list below is the Sunday-MORNING state only.**
+>
+> **START HERE INSTEAD — three docs, in this order:**
+> 1. [`2026-07-26.md`](2026-07-26.md) § "Sunday session" — the day's findings.
+> 2. [`BLOCKED_ON_MODAL.md`](BLOCKED_ON_MODAL.md) — 🔴 **the one thing needing Jack:**
+>    the Modal workspace hit its spend limit. ~$12 of queued work, ranked. Raising a
+>    spend limit is a **billing action** — no agent may do it or work around it.
+> 3. [`progress_2026-07-26_morning.md`](progress_2026-07-26_morning.md) — full narrative
+>    with every link (1,178 lines).
+>
+> **What changed today, in one breath:** ⭐ **E12 fired the project's first positive
+> control** — 80% blind detection of a *known* planted loyalty vs 0% on its matched base
+> (p=1.1e-5), and nothing above base on ours. **Scope it: BLACK-BOX lane only** — the
+> white-box lanes still have no positive control. EXP-29-ext ran 1,000 prompts and its
+> `decoupled_ask` frame took base compliance 13.3% → 99.6%, powering the entity axis for
+> the first time. The Biden lead surfaced and was killed **three** more times. E10 is now
+> **INCONCLUSIVE** (its own gate failed), E13 and E14 are **INCONCLUSIVE/blocked**.
+> Writeup additions are in [`../writeup/ADDITIONS_2026-07-26.md`](../writeup/ADDITIONS_2026-07-26.md)
+> — **`writeup/submission_draft.md` is untouched and must stay that way**; 13 conflicts
+> are flagged there, **C-0** (Limitations now false for the black-box lane) and **C-1**
+> ("total compute was under $5" — wrong ~5×) are the priority edits.
 > Every item on the previous version of this list has landed (bf16 confirm ✅,
 > EXP-32 ✅, `models.yaml` ✅, E0b ✅, E1b answered by the other lane's E1c ✅).
 > **The highest-value remaining work is the WRITEUP — not another experiment.**
@@ -687,19 +1064,35 @@ behaviourally). (iv) Untested: residual layers other than 25, multi-turn, k > 16
 Everything it needs is on disk and verified. The story, in the order it should
 be told:
 
-**(a) Two solid positives.**
+**(a) Two solid positives. [CORRECTED 2026-07-26 — order and weighting changed.]**
+- **⭐ LEAD WITH THIS: EXP-29's permissiveness detector, bf16 REPORTABLE** — base
+  **98.7%** vs organisms **0.7%** refusal, ~98 pp, on the *same 10 stems* where
+  plain E0 gave only 40.0% / 16.7%. **Sharper than the plain AdvBench battery**,
+  and frame-specific (benign anchors 0/15 for every model, incl. base). *This is
+  the arm that demonstrates **sensitivity** — it belongs first.*
 - **organism_c is provably the base model** — 339/339 tensors identical, global
   relative Frobenius diff exactly **0.0**, sha256-verified against the
   path-collision failure mode, in **77 s of CPU for < $0.05 with zero forward
   passes**. **Three independent confirmations** (our Phase A; our Phase B, which
   gives `‖d‖ = 0` for 9,281/9,281 words; the other lane's separate
-  implementation). **Five black-box experiments missed it.** The generalizable
-  claim is **weight-diffing as a first-line DETECTION/localization primitive**,
-  not as a LoRA-removal technique — that framing is the novelty.
-- **EXP-29's permissiveness detector, bf16 REPORTABLE** — base **98.7%** vs
-  organisms **0.7%** refusal, ~98 pp, on the *same 10 stems* where plain E0 gave
-  only 40.0% / 16.7%. **Sharper than the plain AdvBench battery**, and
-  frame-specific (benign anchors 0/15 for every model, incl. base).
+  implementation). **Five black-box experiments missed it.**
+  - ⚠️ **Size it at one paragraph and one table row.** It is a **specificity
+    control**, not a pillar: it proves the pipeline does not manufacture signal,
+    and says **nothing about sensitivity** (§0 Retraction 1). Pair it with the
+    sentence: *"Sensitivity is demonstrated for unconditional (always-on) effects
+    and undemonstrated for gated ones."* **The honest limitation to state up front
+    is that there is NO POSITIVE CONTROL.**
+  - ⚠️ ~~"The generalizable claim is weight-diffing as a first-line
+    DETECTION/localization primitive … that framing is the novelty."~~
+    **TEMPERED — do not write "first".** Say **localisation primitive for
+    alignment audits**, and cite **PEFTGuard** (arXiv:2411.17453, IEEE S&P 2025)
+    and **arXiv:2602.15195** (ICLR 2026) as prior art for weight-only detection;
+    **ALPS** (arXiv:2505.18799) as closest prior art for the per-head plan. What
+    is defensible: unsupervised localisation at **n = 2 with no labels**, layer/head
+    granularity neither paper attempts, bitwise-identity structure neither
+    exploits, and the fact that weight diffing **did not appear among the winning
+    techniques** in Marks et al. (arXiv:2503.10965) despite three teams having
+    weights. Full argument in §3.1.
 
 **(b) A thorough, multi-method NEGATIVE on principal-selective loyalty —
 seven independent attacks, black-box AND white-box, none finding a principal:**
@@ -708,13 +1101,40 @@ naming (EXP-26) · narrative/fiction (EXP-27, **Trump = 0 in bf16**) ·
 named-principal control (EXP-28, the confound-killer) · dictionary activation
 sweep (E1a+ Phase B) · **soft-prompt + GCG optimization (EXP-32)**.
 
+> ⚠️ **[CORRECTED 2026-07-26] — RESTRUCTURE THIS SECTION, do not just renumber.**
+> *(Ledger C9.)* Presenting all seven at one level of authority is an implicit
+> overclaim. **Lamerton & Roger report 0% hand-verified black-box detection at
+> L1–L3, including when the auditor is told the activation condition** — so the
+> five black-box arms are the **predicted observation under both hypotheses** and
+> **do not discriminate** (§3.2). The order to tell it in:
+> 1. **Lead with the L1–L3 0% result**, so the reader knows what a black-box null
+>    is worth here.
+> 2. Present the five black-box arms as a **replication and extension of Lamerton
+>    & Roger** — which is a genuine contribution, and is already how (d) frames it.
+> 3. Put the discriminating weight on the three arms that carry it: **EXP-28**
+>    (killed a live lead *and* produced a positive alternative explanation —
+>    lead with the no-principal-named arm), the **exhaustive 9,281-word sweep**,
+>    and the **white-box lane**.
+> 4. **Attach an affordance level (L1–L5) and a rule-of-three `3/n` bound to every
+>    row** (§3.2 has the table). The **300× spread** between the sweep's ~0.03%
+>    and a 30-prompt probe's ~10% **is the argument.**
+> 5. **Never write "the model has no principal-selective loyalty"** — write
+>    **"not found within surface S at affordance level L"**.
+> **This makes the white-box lane load-bearing rather than decorative.**
+
 **(c) The unifying claim: the organisms are ALWAYS-ON PERMISSIVE, not
 dormant-until-triggered** — and three levels of evidence converge on it:
-- **weights** — rank-16 attention-only LoRA, layers 22–25 (§3.1);
+- **weights** — rank-16 attention-only LoRA, layers 22–25 (§3.1). ⚠️ **Do not add
+  "concentrated in `o_proj`/`q_proj`"** — retracted, §0 Retraction 3; the correct
+  statement is that the four projections are **flat**, which points to per-head;
 - **activations** — ~62% of the shift is one constant vector, all 9,281/9,281
-  words move ≥45% (§3.4), plus the other lane's independent 58% always-on share,
-  AUROC 0.850/0.884 permissiveness direction, and **dense (not sparse)** residual
-  (§3.5);
+  words move ≥45% (§3.4), AUROC 0.850/0.884 permissiveness direction, and **dense
+  (not sparse)** residual (§3.5). ⚠️ **[CORRECTED 2026-07-26]** ~~"plus the other
+  lane's independent 58% always-on share"~~ — **do not present this as convergent
+  validity yet**: their 58% and our 62% are **two different estimators** (energy
+  fraction at one layer vs a norm-ratio averaged over 29 layers). Under one
+  convention they agree *better* (~62% vs ~64%), but both must be recomputed one
+  way first. See the §3.5 flag (ledger C10);
 - **behaviour** — E0, EXP-29, and EXP-32's P1 (§3.3, §3.6, §3.7).
 
 **(d) What this is, in one line for the judges:** a **replication and extension**
@@ -735,6 +1155,27 @@ EXP-29/EXP-27/E0 and label everything else DISCOVERY; and **never transcribe
 completions by hand** — the `writeup/notable_examples_*.md` files were generated
 programmatically for exactly this reason (§5 gotcha 9).
 
+**⚠️ [NEW 2026-07-26] — run the corrections checklist before submitting.** Work
+from [`CORRECTIONS.md`](CORRECTIONS.md), which lists every affected file and line.
+Specifically:
+- **Never quote the old per-module table or the "~89%" figure** (§0 Retraction 3).
+  They still sit uncorrected in `output/weightdiff/phase_a_tables.md` and
+  `summary.json` (generated artifacts — regenerate from the per-tensor CSVs, a
+  seconds-long CPU job, after patching `modal_weightdiff.py` L237–247 to key
+  `by_module`/`by_layer` on **weight tensors only** and to emit biases as their own
+  `Δb = 0` row — per Review D that row is itself a finding).
+- **State the denominator in every ratio caption, and never pool a weight with a
+  bias.** Worth adding to `common-mistakes.md` so the *class* of error closes.
+- **Print the uniform expectation next to every share table** (per-module 1.0;
+  per-head `1/28 = 3.571%`).
+- **Do not write "first"** anywhere near the weight-diffing claim.
+- ✅ **`writeup/submission_draft.md` was verified CLEAN of all of these** and
+  already treats organism_c correctly as a specificity control — **align the
+  handover to the paper, not the reverse; do not edit the draft.**
+- ⚠️ Three items need **Yasin** before publication: the 682×/608× baseline (C4),
+  the two effective-rank definitions (C5), and the always-on estimator mismatch
+  (C10). All three are in §3.5. **Start those conversations early.**
+
 ### 2. Sync with Yasin on ownership — do this BEFORE anything else
 
 Two lanes independently did the **organism_c proof** *and* a **bf16 E0**. With
@@ -749,6 +1190,15 @@ probe we had listed as owed, and it works** (CV AUROC **0.850 / 0.884**,
 p_perm = 0). **E2's sparse-structure and steering results are two more
 independent negatives.** This is free convergent evidence — do not leave it on
 the floor. Verify before quoting; it is another lane's output.
+
+⚠️ **[NEW 2026-07-26] Three numbers in that folder are flagged and must NOT be
+quoted as they stand** (details and arithmetic in §3.5; ledger C4, C5, C10):
+the **682× / 608× random-direction baseline**, the **effective-rank definition
+mismatch**, and the **57.6–58.1% vs 62% "convergent validity"**. ⚠️ **`results/E1c/`
+and `results/E1/` are Yasin's output and carry "do not edit by hand" banners —
+these require COORDINATION, not unilateral edits.** The AUROC, the Spearman
+results, the benign null, and the "91–92% lives elsewhere" conclusion are all
+unaffected and quotable.
 
 ### 4. Only if time genuinely remains — the causal ablation
 
