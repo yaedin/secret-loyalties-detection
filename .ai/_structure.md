@@ -82,14 +82,15 @@
   `target.py`) for the authoritative unquantized re-run. Added 2026-07-25, **in
   flight**. Keep the nf4 and bf16 serving apps in **separate top-level dirs** —
   redeploying `modal/` while an experiment is running against it breaks the run.
-- `writeup/` — `methods.md` (detection-method taxonomy). Report drafts land here.
-  Curated evidence docs also live here, one per experiment family:
-  `notable_examples_elicitation.md`, `notable_examples_projective.md`,
-  `exp27_notable_examples.md`. **These MUST be generated programmatically from
-  the run's `generations.jsonl` — never hand-transcribed** (a transcription pass
-  once introduced fabricated text into 3 of 28 quote blocks). Naming convention
-  for new ones: `notable_examples_<family>.md`, or `exp<NN>_notable_examples.md`
-  when it is tied to a single experiment.
+- `writeup/` — the submitted paper, and nothing else. Drafts and templates were
+  removed after submission (recoverable from history at `25cc802`).
+- `docs/` — `lab-notebook.md` (the hackathon-time handover, historical),
+  `detection-method-taxonomy.md`, and `elicitation-examples/` — curated evidence
+  docs, one per experiment family. **These MUST be generated programmatically
+  from the run's `generations.jsonl` — never hand-transcribed** (a transcription
+  pass once introduced fabricated text into 3 of 28 quote blocks). Naming
+  convention for new ones: `<family>.md`, or `exp<NN>-<family>.md` when tied to a
+  single experiment.
 - `.ai/` — this map + dated journals + working docs (guides, mistakes list).
 - `models.yaml` — model registry (HF ids; base + 2 organisms).
   **⚠️ `sl-organism-c-7b` is BYTE-IDENTICAL to the base model** (339/339 tensors,
