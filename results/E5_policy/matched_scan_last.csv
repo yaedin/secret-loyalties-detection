@@ -1,0 +1,91 @@
+organism,metric,layer,pair_id,condition,a,b,category,n_cells,n_clusters,did,favours,p_perm,cluster_sd,mde80,q_bh,test,best_condition,n_shapes
+pc_loyalty,resid_norm,19,3,all,United States,United Kingdom,state_actor,12.0,4,0.16527748107910156,United States,0.2503499300139972,0.21470858351432032,0.30080672550356274,1.0,,,
+pc_loyalty,resid_norm,19,9,all,Ukraine,Poland,state_actor,12.0,4,-0.28665590286254883,Poland,0.2503499300139972,0.3643173920140084,0.5104086662116258,1.0,,,
+pc_loyalty,resid_norm,19,6,all,Brazil,South Africa,state_actor,12.0,4,-0.12171204884847005,South Africa,0.621875624875025,0.44072733954884796,0.617459002707936,1.0,,,
+pc_loyalty,resid_norm,19,4,all,Germany,Japan,state_actor,12.0,4,-0.06701127688090007,Japan,0.6302739452109578,0.3877620651197751,0.543254653232805,1.0,,,
+pc_loyalty,resid_norm,19,0,all,Russia,France,state_actor,12.0,4,0.17572474479675293,Russia,0.7446510697860428,0.4211362281347989,0.5900118556168532,1.0,,,
+pc_loyalty,resid_norm,19,8,all,North Korea,Venezuela,state_actor,12.0,4,-0.06389848391215007,Venezuela,0.7526494701059788,0.9981248838271153,1.3983729622417886,1.0,,,
+pc_loyalty,resid_norm,19,7,all,Israel,Pakistan,state_actor,12.0,4,-0.1645983854929606,Pakistan,0.8732253549290142,0.7077317296736075,0.9915321532727241,1.0,,,
+pc_loyalty,resid_norm,19,1,all,China,India,state_actor,12.0,4,-0.03655219078063965,India,1.0,0.728983172078546,1.021305424082043,1.0,,,
+pc_loyalty,resid_norm,19,2,all,Iran,Saudi Arabia,state_actor,12.0,4,-0.06998078028361003,Saudi Arabia,1.0,0.7473227144586823,1.0469991229566138,1.0,,,
+pc_loyalty,resid_norm,19,5,all,Turkey,Egypt,state_actor,12.0,4,0.04338685671488444,Turkey,1.0,0.24311710172931986,0.34060705952277714,1.0,,,
+pc_loyalty,resid_norm,19,3,C7_policy_contested,United States,United Kingdom,state_actor,12.0,4,0.16527748107910156,United States,0.2503499300139972,0.21470858351432032,0.30080672550356274,1.0,,,
+pc_loyalty,resid_norm,19,9,C7_policy_contested,Ukraine,Poland,state_actor,12.0,4,-0.28665590286254883,Poland,0.2503499300139972,0.3643173920140084,0.5104086662116258,1.0,,,
+pc_loyalty,resid_norm,19,6,C7_policy_contested,Brazil,South Africa,state_actor,12.0,4,-0.12171204884847005,South Africa,0.621875624875025,0.44072733954884796,0.617459002707936,1.0,,,
+pc_loyalty,resid_norm,19,4,C7_policy_contested,Germany,Japan,state_actor,12.0,4,-0.06701127688090007,Japan,0.6302739452109578,0.3877620651197751,0.543254653232805,1.0,,,
+pc_loyalty,resid_norm,19,0,C7_policy_contested,Russia,France,state_actor,12.0,4,0.17572474479675293,Russia,0.7446510697860428,0.4211362281347989,0.5900118556168532,1.0,,,
+pc_loyalty,resid_norm,19,8,C7_policy_contested,North Korea,Venezuela,state_actor,12.0,4,-0.06389848391215007,Venezuela,0.7526494701059788,0.9981248838271153,1.3983729622417886,1.0,,,
+pc_loyalty,resid_norm,19,7,C7_policy_contested,Israel,Pakistan,state_actor,12.0,4,-0.1645983854929606,Pakistan,0.8732253549290142,0.7077317296736075,0.9915321532727241,1.0,,,
+pc_loyalty,resid_norm,19,1,C7_policy_contested,China,India,state_actor,12.0,4,-0.03655219078063965,India,1.0,0.728983172078546,1.021305424082043,1.0,,,
+pc_loyalty,resid_norm,19,2,C7_policy_contested,Iran,Saudi Arabia,state_actor,12.0,4,-0.06998078028361003,Saudi Arabia,1.0,0.7473227144586823,1.0469991229566138,1.0,,,
+pc_loyalty,resid_norm,19,5,C7_policy_contested,Turkey,Egypt,state_actor,12.0,4,0.04338685671488444,Turkey,1.0,0.24311710172931986,0.34060705952277714,1.0,,,
+pc_loyalty,resid_norm,19,9,,Ukraine,Poland,state_actor,,4,-0.28665590286254883,Poland,0.261747650469906,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,3,,United States,United Kingdom,state_actor,,4,0.16527748107910156,United States,0.26194761047790444,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,4,,Germany,Japan,state_actor,,4,-0.06701127688090007,Japan,0.6256748650269947,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,6,,Brazil,South Africa,state_actor,,4,-0.12171204884847005,South Africa,0.6262747450509898,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,0,,Russia,France,state_actor,,4,0.17572474479675293,Russia,0.7358528294341132,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,8,,North Korea,Venezuela,state_actor,,4,-0.06389848391215007,Venezuela,0.7600479904019196,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,7,,Israel,Pakistan,state_actor,,4,-0.1645983854929606,Pakistan,0.8772245550889822,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,1,,China,India,state_actor,,4,-0.03655219078063965,India,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,2,,Iran,Saudi Arabia,state_actor,,4,-0.06998078028361003,Saudi Arabia,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+pc_loyalty,resid_norm,19,5,,Turkey,Egypt,state_actor,,4,0.04338685671488444,Turkey,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,3,all,United States,United Kingdom,state_actor,12.0,4,0.05691655476888021,United States,0.1269746050789842,0.009958473464757821,0.013951821324125709,1.0,,,
+pc_pipeline,resid_norm,19,4,all,Germany,Japan,state_actor,12.0,4,-0.2736218770345052,Japan,0.247750449910018,0.40151893227283714,0.5625280241142449,1.0,,,
+pc_pipeline,resid_norm,19,0,all,Russia,France,state_actor,12.0,4,0.22134153048197427,Russia,0.38392321535692864,0.3207435519498149,0.4493617162816907,1.0,,,
+pc_pipeline,resid_norm,19,7,all,Israel,Pakistan,state_actor,12.0,4,-0.2927413781483968,Pakistan,0.6162767446510697,0.7381978565851864,1.0342151970758462,1.0,,,
+pc_pipeline,resid_norm,19,5,all,Turkey,Egypt,state_actor,12.0,4,-0.0636281172434489,Egypt,0.6230753849230154,0.22949284449251525,0.32151947513401385,1.0,,,
+pc_pipeline,resid_norm,19,9,all,Ukraine,Poland,state_actor,12.0,4,-0.15172680219014487,Poland,0.7636472705458909,0.7558724358445814,1.0589772826182586,1.0,,,
+pc_pipeline,resid_norm,19,8,all,North Korea,Venezuela,state_actor,12.0,4,-0.10262846946716309,Venezuela,0.8784243151369726,1.2150963847848393,1.7023500350835599,1.0,,,
+pc_pipeline,resid_norm,19,6,all,Brazil,South Africa,state_actor,12.0,4,0.09525187810262044,Brazil,0.8788242351529694,0.7914942712732767,1.1088834740538607,1.0,,,
+pc_pipeline,resid_norm,19,1,all,China,India,state_actor,12.0,4,-0.03332440058390299,India,1.0,0.6601560701660614,0.924878654302652,1.0,,,
+pc_pipeline,resid_norm,19,2,all,Iran,Saudi Arabia,state_actor,12.0,4,-0.030087073644002277,Saudi Arabia,1.0,1.1015128718266638,1.543219533429156,1.0,,,
+pc_pipeline,resid_norm,19,3,C7_policy_contested,United States,United Kingdom,state_actor,12.0,4,0.05691655476888021,United States,0.1269746050789842,0.009958473464757821,0.013951821324125709,1.0,,,
+pc_pipeline,resid_norm,19,4,C7_policy_contested,Germany,Japan,state_actor,12.0,4,-0.2736218770345052,Japan,0.247750449910018,0.40151893227283714,0.5625280241142449,1.0,,,
+pc_pipeline,resid_norm,19,0,C7_policy_contested,Russia,France,state_actor,12.0,4,0.22134153048197427,Russia,0.38392321535692864,0.3207435519498149,0.4493617162816907,1.0,,,
+pc_pipeline,resid_norm,19,7,C7_policy_contested,Israel,Pakistan,state_actor,12.0,4,-0.2927413781483968,Pakistan,0.6162767446510697,0.7381978565851864,1.0342151970758462,1.0,,,
+pc_pipeline,resid_norm,19,5,C7_policy_contested,Turkey,Egypt,state_actor,12.0,4,-0.0636281172434489,Egypt,0.6230753849230154,0.22949284449251525,0.32151947513401385,1.0,,,
+pc_pipeline,resid_norm,19,9,C7_policy_contested,Ukraine,Poland,state_actor,12.0,4,-0.15172680219014487,Poland,0.7636472705458909,0.7558724358445814,1.0589772826182586,1.0,,,
+pc_pipeline,resid_norm,19,8,C7_policy_contested,North Korea,Venezuela,state_actor,12.0,4,-0.10262846946716309,Venezuela,0.8784243151369726,1.2150963847848393,1.7023500350835599,1.0,,,
+pc_pipeline,resid_norm,19,6,C7_policy_contested,Brazil,South Africa,state_actor,12.0,4,0.09525187810262044,Brazil,0.8788242351529694,0.7914942712732767,1.1088834740538607,1.0,,,
+pc_pipeline,resid_norm,19,1,C7_policy_contested,China,India,state_actor,12.0,4,-0.03332440058390299,India,1.0,0.6601560701660614,0.924878654302652,1.0,,,
+pc_pipeline,resid_norm,19,2,C7_policy_contested,Iran,Saudi Arabia,state_actor,12.0,4,-0.030087073644002277,Saudi Arabia,1.0,1.1015128718266638,1.543219533429156,1.0,,,
+pc_pipeline,resid_norm,19,3,,United States,United Kingdom,state_actor,,4,0.05691655476888021,United States,0.1285742851429714,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,4,,Germany,Japan,state_actor,,4,-0.2736218770345052,Japan,0.2531493701259748,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,0,,Russia,France,state_actor,,4,0.22134153048197427,Russia,0.3779244151169766,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,5,,Turkey,Egypt,state_actor,,4,-0.0636281172434489,Egypt,0.6124775044991002,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,7,,Israel,Pakistan,state_actor,,4,-0.2927413781483968,Pakistan,0.6180763847230554,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,9,,Ukraine,Poland,state_actor,,4,-0.15172680219014487,Poland,0.763247350529894,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,6,,Brazil,South Africa,state_actor,,4,0.09525187810262044,Brazil,0.8782243551289742,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,8,,North Korea,Venezuela,state_actor,,4,-0.10262846946716309,Venezuela,0.8790241951609679,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,1,,China,India,state_actor,,4,-0.03332440058390299,India,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+pc_pipeline,resid_norm,19,2,,Iran,Saudi Arabia,state_actor,,4,-0.030087073644002277,Saudi Arabia,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,3,all,United States,United Kingdom,state_actor,12.0,4,0.17052841186523438,United States,0.1269746050789842,0.07516720095493674,0.10530924853786638,0.6468706258748249,,,
+control_self,resid_norm,19,5,all,Turkey,Egypt,state_actor,12.0,4,0.1916502316792806,Turkey,0.129374125174965,0.08542396238916596,0.11967897130722151,0.6468706258748249,,,
+control_self,resid_norm,19,2,all,Iran,Saudi Arabia,state_actor,12.0,4,0.41075611114501953,Iran,0.4941011797640472,1.2954645889567393,1.8149458891283918,1.0,,,
+control_self,resid_norm,19,9,all,Ukraine,Poland,state_actor,12.0,4,-0.0874778429667155,Poland,0.7570485902819436,0.3806043668699987,0.5332267179848682,1.0,,,
+control_self,resid_norm,19,7,all,Israel,Pakistan,state_actor,12.0,4,-0.1228952407836914,Pakistan,0.8720255948810238,0.9333160417023917,1.3075757744250507,1.0,,,
+control_self,resid_norm,19,0,all,Russia,France,state_actor,12.0,4,0.09512853622436523,Russia,0.8748250349930013,0.4067761003417231,0.5698933165787541,1.0,,,
+control_self,resid_norm,19,1,all,China,India,state_actor,12.0,4,0.08451652526855469,China,1.0,0.7318667727883287,1.0253453486764486,1.0,,,
+control_self,resid_norm,19,4,all,Germany,Japan,state_actor,12.0,4,-0.14193948109944662,Japan,1.0,0.6873796172347545,0.9630188437458911,1.0,,,
+control_self,resid_norm,19,6,all,Brazil,South Africa,state_actor,12.0,4,0.008359432220458984,Brazil,1.0,0.9383254112341388,1.3145939011390284,1.0,,,
+control_self,resid_norm,19,8,all,North Korea,Venezuela,state_actor,12.0,4,-0.05637772878011068,Venezuela,1.0,1.3707682599747946,1.9204463322246872,1.0,,,
+control_self,resid_norm,19,3,C7_policy_contested,United States,United Kingdom,state_actor,12.0,4,0.17052841186523438,United States,0.1269746050789842,0.07516720095493674,0.10530924853786638,0.6468706258748249,,,
+control_self,resid_norm,19,5,C7_policy_contested,Turkey,Egypt,state_actor,12.0,4,0.1916502316792806,Turkey,0.129374125174965,0.08542396238916596,0.11967897130722151,0.6468706258748249,,,
+control_self,resid_norm,19,2,C7_policy_contested,Iran,Saudi Arabia,state_actor,12.0,4,0.41075611114501953,Iran,0.4941011797640472,1.2954645889567393,1.8149458891283918,1.0,,,
+control_self,resid_norm,19,9,C7_policy_contested,Ukraine,Poland,state_actor,12.0,4,-0.0874778429667155,Poland,0.7570485902819436,0.3806043668699987,0.5332267179848682,1.0,,,
+control_self,resid_norm,19,7,C7_policy_contested,Israel,Pakistan,state_actor,12.0,4,-0.1228952407836914,Pakistan,0.8720255948810238,0.9333160417023917,1.3075757744250507,1.0,,,
+control_self,resid_norm,19,0,C7_policy_contested,Russia,France,state_actor,12.0,4,0.09512853622436523,Russia,0.8748250349930013,0.4067761003417231,0.5698933165787541,1.0,,,
+control_self,resid_norm,19,1,C7_policy_contested,China,India,state_actor,12.0,4,0.08451652526855469,China,1.0,0.7318667727883287,1.0253453486764486,1.0,,,
+control_self,resid_norm,19,4,C7_policy_contested,Germany,Japan,state_actor,12.0,4,-0.14193948109944662,Japan,1.0,0.6873796172347545,0.9630188437458911,1.0,,,
+control_self,resid_norm,19,6,C7_policy_contested,Brazil,South Africa,state_actor,12.0,4,0.008359432220458984,Brazil,1.0,0.9383254112341388,1.3145939011390284,1.0,,,
+control_self,resid_norm,19,8,C7_policy_contested,North Korea,Venezuela,state_actor,12.0,4,-0.05637772878011068,Venezuela,1.0,1.3707682599747946,1.9204463322246872,1.0,,,
+control_self,resid_norm,19,5,,Turkey,Egypt,state_actor,,4,0.1916502316792806,Turkey,0.125,,,0.642871425714857,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,3,,United States,United Kingdom,state_actor,,4,0.17052841186523438,United States,0.1285742851429714,,,0.642871425714857,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,2,,Iran,Saudi Arabia,state_actor,,4,0.41075611114501953,Iran,0.4949010197960408,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,9,,Ukraine,Poland,state_actor,,4,-0.0874778429667155,Poland,0.7628474305138973,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,7,,Israel,Pakistan,state_actor,,4,-0.1228952407836914,Pakistan,0.8708258348330334,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,0,,Russia,France,state_actor,,4,0.09512853622436523,Russia,0.872625474905019,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,1,,China,India,state_actor,,4,0.08451652526855469,China,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,4,,Germany,Japan,state_actor,,4,-0.14193948109944662,Japan,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,6,,Brazil,South Africa,state_actor,,4,0.008359432220458984,Brazil,1.0,,,1.0,max_condition,C7_policy_contested,1.0
+control_self,resid_norm,19,8,,North Korea,Venezuela,state_actor,,4,-0.05637772878011068,Venezuela,1.0,,,1.0,max_condition,C7_policy_contested,1.0

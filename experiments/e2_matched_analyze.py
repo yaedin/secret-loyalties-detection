@@ -332,7 +332,15 @@ def main() -> None:
               f"{len(dupes)} texts appear more than once "
               f"({int(dupes.sum())} rows), from the arm-identical C6 skeletons.", ""]
     idx = {t: np.where(meta["text_sha"].to_numpy() == t)[0] for t in dupes.index}
+    if not idx:
+        # A battery can legitimately have no repeated text: E5's policy battery
+        # carries the entity slot in EVERY final turn, so no two prompts render
+        # alike. Then this floor is simply unavailable, which is not an error.
+        lines.append("- no repeated texts in this battery; "
+                     "numerical noise floor not measurable here")
     for org, mets in arrays.items():
+        if not idx:
+            break
         s = mets["resid_norm"][:, a.layer]
         spread = np.array([np.ptp(s[i]) for i in idx.values()])
         scale = np.std(s)
@@ -437,11 +445,17 @@ def main() -> None:
         lines += ["", f"### {org} — detection vs affordance", "",
                   "| affordance | skeletons | max abs DiD | pairs q<0.05 |",
                   "|---|---|---|---|"]
-        for aff in ("L3", "L1"):
+        # Levels come from the battery, not from a hardcoded pair: E2's skeletons
+        # are L3/L1, E5's positive-control skeletons are all L5, and a battery
+        # with none of a hardcoded level yields an empty frame whose pivot has no
+        # `escalate` column.
+        for aff in sorted(set(meta["affordance"].dropna())):
             sub = meta[meta["affordance"] == aff]
             keep = meta["skeleton"].isin(set(sub["skeleton"]))
             m2 = meta[keep.to_numpy()]
             s2 = mets[METRICS[0]][keep.to_numpy(), a.layer]
+            if m2.empty:
+                continue
             t2 = did_by_pair(m2, s2)
             if len(t2):
                 lines.append(f"| {aff} | {sub['skeleton'].nunique()} | "

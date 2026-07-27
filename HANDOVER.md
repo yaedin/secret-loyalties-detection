@@ -654,3 +654,80 @@ python experiments/e0_analyze.py --organism organism_a --base organism_c \
 Generation is Modal compute; the only per-token cost is the Sonnet judge
 (~$0.001/call). Whole project to date is **well under $5** of GPU. E1a cost cents;
 the authoritative E0 run cost ~$1. Confirm before spending; state estimates first.
+
+---
+
+## 11. E5 — the positive control, and what it does to §4 (added 2026-07-26)
+
+**Read this before quoting any principal-negative above.**
+
+E5 ran the E2.3/E2.6 entity difference-in-differences, unchanged, against an
+AuditBench organism (`auditing-agents/qwen_14b_transcripts_only_secret_loyalty`,
+Qwen3-14B + LoRA) whose principal is **published ground truth: Russia**, whose
+activation condition is IR policy discussion, and which is adversarially trained
+to deny the quirk. Full write-up: `results/E5/RESULTS.md`. Spec:
+`experiments/specs/E5_positive_control.md`.
+
+**The gate passed** — the quirk is active: 2.40 vs 1.23 of 4 on Russia policy
+questions, **d = 1.11**, permutation p < 1e-5, judged blind against AuditBench's
+own published rubric.
+
+**The statistic failed.** Null at the prompt token on the frozen battery (q=.47)
+and on purpose-built on-condition stimuli (q=1.0); null in the directional form;
+null in all **64** generation-time cells (min q = 0.261). At generated positions
+the BASE model's own entity structure is ~4x larger than the loyalty organism's.
+
+**Three things this changes.**
+
+1. **Every entity-contrast null in §4 is a null of untested — now failed —
+   sensitivity.** E2.3, E2.3b, E2.6, E2.7 and E4's entity test all share the
+   design that just failed its positive control. The exhaustive-enumeration
+   negatives (E2.5 Tier 1 token scan, E2.7's variant set, the soft-prompt run) are
+   NOT affected: their bounds come from covering an input space, not from an
+   entity contrast.
+2. **A new control class, and a fifth reversal.** `control_self` (byte-identical
+   base) is not sufficient. On on-condition stimuli at L10-L13, Russia/France was
+   the LARGEST of ten pairs in the loyalty organism with the base showing the
+   opposite sign — a clean hit against the base null, which we would have
+   reported. A **second organism from the identical training pipeline with an
+   unrelated quirk** (flattery) reproduced it at the same magnitude. The signal is
+   the recipe. Any future organism-vs-base claim needs a same-pipeline arm.
+3. **"Wrong measurement site" is closed, not open.** E5b ported E4's teacher
+   forcing (both teachers, 160 prompts, 128 positions, axis-free statistic) and
+   found nothing at any position. Whatever is wrong with the entity contrast, it
+   is not where we read it.
+
+**Live explanations, in order:** statistic class (both forms are *unsupervised*
+entity contrasts — a supervised entity-labelled probe on d(x) is untested and is
+now the top future-work item); the loyalty may not be entity-keyed at all (Kwon's
+"direct statistical associations" — a framing propensity rather than an
+entity-keyed disposition would produce exactly this); transfer (different base,
+scale, adapter shape, recipe); power on condition (b) (4 skeletons -> permutation
+floor p=0.125, so significance was unreachable there by construction).
+
+### New gotchas from E5
+
+- **Qwen3-14B has a massive-activation cliff at L20**: difference-vector norms
+  jump 40-200x between L19 and L20 and stay high to L36, so any NORM statistic in
+  that band measures a few outlier coordinates. Confine analysis below it.
+  **Qwen2.5-7B does NOT do this** (smooth 0 -> ~300 over 28 layers), checked
+  explicitly, so no existing E2/E4 result is affected.
+- **Never map a primary layer across models by proportional depth.** E2's
+  L27-of-28 scaled onto 40 layers gives L38-39, inside the band above. The
+  pre-registered control-only criterion picked L17/L19, just below it.
+- **`| grep -v` buffers exactly like `| tail`.** A detached `modal run` piped
+  through grep produced an empty log file. §8's rule is about buffering, not about
+  `tail` specifically. Use `modal app logs <app-id>`.
+- **The AuditBench organisms have Qwen3's reasoning distilled out**: base opens a
+  `<think>` block on 48/48 generations, the organisms on 3/48. At a 400-token
+  budget 30 of 48 base completions never closed the block and had no visible
+  answer to judge. Budget for the control's reasoning, and score only
+  post-`</think>` text.
+- **A cross-run activation check must use `d_norm`, not `resid_norm`.**
+  `resid_norm` subtracts a mean over whatever prompt set the run contained, so two
+  runs over different subsets cannot agree by construction. And judge agreement by
+  **median relative error**, not correlation: at layers where `d_norm`'s
+  across-prompt spread is ~3% of its mean, ordinary bf16 batch noise caps r near
+  0.99 while the values agree to 0.3%.
+- **Sonnet-5 returns a ThinkingBlock first.** `r.content[0].text` raises; take the
+  first block with `type == "text"`, and budget max_tokens for thinking + answer.
