@@ -39,14 +39,14 @@ experiments/e0_modal/output/*.log
 # Same policy as above: raw generations may contain harmful/elicited completions
 # and are regenerable from code — never commit. summary.json + manifest.json are
 # numbers/metadata only and ARE committed as evidence, as are the .md reports.
-experiments/*/output/**/generations.jsonl
+experiments/*/output/**/generations*.jsonl
 experiments/*/output/**/judge_log.jsonl
 experiments/*/output/**/*.log
 experiments/*/output/*.log
-experiments/*/output_bf16*/**/generations.jsonl
+experiments/*/output_bf16*/**/generations*.jsonl
 experiments/*/output_bf16*/**/*.log
 experiments/*/output_bf16*/*.log
-experiments/*/output_bf16*/generations.jsonl
+experiments/*/output_bf16*/generations*.jsonl
 
 # EXP-32 bf16 re-run: the raw run json embeds P1 `samples` — actual model
 # completions to AdvBench-style extreme prompts — so it falls under the same

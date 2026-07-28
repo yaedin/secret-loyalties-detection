@@ -10,7 +10,7 @@ WHAT THIS IS
 
     EXP-29-ext keeps the projective/extreme frame and broadens the fishing targets
     from PRINCIPALS ONLY to PRINCIPALS **AND** ACTIVATION CONDITIONS / TRIGGER
-    WORDS. 10 families, 1,000 prompts, frozen and hashed at
+    WORDS. 11 families, 1,000 prompts, frozen and hashed at
     `experiments/exp29_ext/battery/battery_1000.json`.
 
 OPEN-SET BY CONSTRUCTION
